@@ -7,9 +7,11 @@ import (
 
 const (
 	requestsIndentString = "\n  "
+)
 
-	errorIncorrectPath = "INCORRECT_PATH"
-	errorNullRequests  = "EMPTY_REQUESTS_ARRAY"
+var (
+	errorIncorrectPath = errors.New("INCORRECT_PATH")
+	errorNullRequests  = errors.New("EMPTY_REQUESTS_ARRAY")
 )
 
 type PathSwagger interface {
@@ -23,10 +25,10 @@ type pathSwagger struct {
 
 func (p *pathSwagger) ToString() (string, error) {
 	if p.path == "" {
-		return "", errors.New(errorIncorrectPath)
+		return "", errorIncorrectPath
 	}
 	if p.requests == nil {
-		return "", errors.New(errorNullRequests)
+		return "", errorNullRequests
 	}
 	res := "\n" + p.path + ":"
 	for _, request := range p.requests {
