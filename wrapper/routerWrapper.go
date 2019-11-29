@@ -1,12 +1,12 @@
 package wrapper
 
 import (
-	"SwaggerGin/swaggerFileGenerator"
-	"SwaggerGin/swaggerFileGenerator/parameters"
 	"github.com/gin-gonic/gin"
 	"io"
 	"os"
 	"strings"
+	"swagger-gin-generator/swaggerFileGenerator"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
 type SwaggRouterWrapper interface {
@@ -15,10 +15,7 @@ type SwaggRouterWrapper interface {
 }
 
 type swaggWrapper struct {
-	title       string
-	description string
-	version     string
-	bPath       string
+	params map[string]interface{}
 	paths       []swaggerFileGenerator.PathSwagger
 	definitions []parameters.SwaggParameter
 
@@ -27,12 +24,9 @@ type swaggWrapper struct {
 	router *gin.Engine
 }
 
-func NewSwaggerRouterWrapper(title, description, version, bPath string, r *gin.Engine) SwaggRouterWrapper {
+func NewSwaggerRouterWrapper(params map[string]interface{}, r *gin.Engine) SwaggRouterWrapper {
 	return &swaggWrapper{
-		title:       title,
-		description: description,
-		version:     version,
-		bPath:       bPath,
+		params:params,
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
 		groups:      []SwaggGroupWrapper{},
@@ -56,10 +50,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 	}
 	s.definitions = sliceUniqMap(s.definitions)
 	mainSwagg := swaggerFileGenerator.NewMainSwagg(
-		s.title,
-		s.description,
-		s.version,
-		s.bPath,
+		s.params,
 		s.paths,
 		s.definitions)
 	str, err := mainSwagg.ToString()

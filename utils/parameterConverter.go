@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"SwaggerGin/swaggerFileGenerator/parameters"
 	"reflect"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
 type Parameter interface {

@@ -1,16 +1,16 @@
 package swaggerFileGenerator
 
 import (
-	"SwaggerGin/swaggerFileGenerator/parameters"
 	"errors"
 	"strings"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
 const (
 	swaggerString         = "swagger: '2.0'"
 	infoString            = "\ninfo:"
 	infoTitleString       = "\n  title:"
-	infoDescriptionString = "\n  title:"
+	infoDescriptionString = "\n  description:"
 	infoVersionString     = "\n  version:"
 	basePathString        = "\nbasePath:"
 	pathsString           = "\npaths:"
@@ -26,10 +26,8 @@ type MainSwagg interface {
 }
 
 type mainSwagg struct {
-	title       string
-	description string
-	version     string
-	basePath    string
+	params map[string]interface{}
+
 	paths       []PathSwagger
 	definitions []parameters.SwaggParameter
 	//TODO: security
@@ -40,14 +38,30 @@ func (m *mainSwagg) ToString() (string, error) {
 		return "", errors.New(errorEmptyPaths)
 	}
 	res := swaggerString
-	res += infoString
-	res += infoTitleString + m.description
-	res += infoDescriptionString + m.title
-	res += infoVersionString + m.version
-	if m.basePath == "" {
+	infoExists := false
+	if val, ok := m.params["description"]; ok {
+		res += infoString
+		res += infoDescriptionString + val.(string)
+		infoExists = true
+	}
+	if val, ok := m.params["title"]; ok {
+		if !infoExists {
+			res += infoString
+			infoExists = true
+		}
+		res += infoTitleString + val.(string)
+	}
+	if val, ok := m.params["version"]; ok {
+		if !infoExists {
+			res += infoString
+			infoExists = true
+		}
+		res += infoVersionString + val.(string)
+	}
+	if val, ok := m.params["basePath"]; ok {
 		res += basePathString + "/"
 	} else {
-		res += basePathString + m.basePath
+		res += basePathString + val.(string)
 	}
 	res += pathsString
 	for _, path := range m.paths {
@@ -68,12 +82,9 @@ func (m *mainSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-func NewMainSwagg(title, descr, vers, bPath string, paths []PathSwagger, def []parameters.SwaggParameter) MainSwagg {
+func NewMainSwagg(params map[string]interface{}, paths []PathSwagger, def []parameters.SwaggParameter) MainSwagg {
 	return &mainSwagg{
-		title:       title,
-		description: descr,
-		version:     vers,
-		basePath:    bPath,
+		params:      params,
 		paths:       paths,
 		definitions: def,
 	}

@@ -28,16 +28,16 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
-				"in": "in",
-				"name": "name",
-				"required": true,
-				"format": "date",
-				"minLength": 79,
-				"maxLength": 239,
-				"pattern": "pattern",
+				"in":              "in",
+				"name":            "name",
+				"required":        true,
+				"format":          "date",
+				"minLength":       79,
+				"maxLength":       239,
+				"pattern":         "pattern",
 				"allowEmptyValue": false,
-				"description": "description",
-				"enum": []string{"EIN", "ZWEI", "DREI"},
+				"description":     "description",
+				"enum":            []string{"EIN", "ZWEI", "DREI"},
 			}
 			a := &stringSwaggParameter{
 				params: params,

@@ -28,11 +28,11 @@ func TestBoolSwaggParameter_ToString(t *testing.T) {
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
-				"in": "in",
-				"name": "name",
-				"required": true,
+				"in":              "in",
+				"name":            "name",
+				"required":        true,
 				"allowEmptyValue": false,
-				"description": "description",
+				"description":     "description",
 			}
 			a := &boolSwaggParameter{
 				params: params,

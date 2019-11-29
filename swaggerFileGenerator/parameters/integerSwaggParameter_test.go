@@ -28,17 +28,17 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
-				"in": "in",
-				"name": "name",
-				"required": true,
-				"defaultValue": 10,
-				"minimumValue": -2000000000,
+				"in":                    "in",
+				"name":                  "name",
+				"required":              true,
+				"defaultValue":          10,
+				"minimumValue":          -2000000000,
 				"exclusiveMinimumValue": true,
-				"maximumValue": 2000000000,
+				"maximumValue":          2000000000,
 				"exclusiveMaximumValue": false,
-				"multipleOf": 4,
-				"allowEmptyValue": false,
-				"description": "description",
+				"multipleOf":            4,
+				"allowEmptyValue":       false,
+				"description":           "description",
 			}
 			a := &integerSwaggParameter{
 				params: params,
@@ -47,8 +47,8 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 				inString + "in" +
 				nameString + "name" +
 				requiredString + "true" +
-				defaultValueString + "10"  +
-				minimumValueString + "-2000000000"  +
+				defaultValueString + "10" +
+				minimumValueString + "-2000000000" +
 				exclusiveMinimumValueString + "true" +
 				maximumValueString + "2000000000" +
 				exclusiveMaximumValueString + "false" +

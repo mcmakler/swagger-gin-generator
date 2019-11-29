@@ -1,9 +1,9 @@
 package wrapper
 
 import (
-	"SwaggerGin/swaggerFileGenerator"
-	"SwaggerGin/swaggerFileGenerator/parameters"
 	"github.com/gin-gonic/gin"
+	"swagger-gin-generator/swaggerFileGenerator"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
 type SwaggGroupWrapper interface {
@@ -56,6 +56,6 @@ func (s *swaggGroupWrapper) Generate() []swaggerFileGenerator.PathSwagger {
 	return res
 }
 
-func (s *swaggGroupWrapper)  Definitions() []parameters.SwaggParameter {
+func (s *swaggGroupWrapper) Definitions() []parameters.SwaggParameter {
 	return s.definitions
 }

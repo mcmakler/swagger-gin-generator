@@ -1,9 +1,9 @@
 package swaggerFileGenerator
 
 import (
-	"SwaggerGin/swaggerFileGenerator/parameters"
 	"errors"
 	"strings"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
 const (

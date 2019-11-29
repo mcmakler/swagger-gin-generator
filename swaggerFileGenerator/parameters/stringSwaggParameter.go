@@ -16,7 +16,7 @@ const (
 )
 
 type stringSwaggParameter struct {
-	params          map[string]interface{}
+	params map[string]interface{}
 }
 
 func (s *stringSwaggParameter) ToString() (string, error) {

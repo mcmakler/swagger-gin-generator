@@ -1,7 +1,7 @@
 package swaggerFileGenerator
 
 import (
-	"SwaggerGin/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"strings"
@@ -100,7 +100,7 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				tagsString + tagsIndentString + "t1" + tagsIndentString + "t2" +
 				summaryString + "summary" +
 				parametersString
-			str, _ :=swagP1.ToString()
+			str, _ := swagP1.ToString()
 			expected += strings.Replace(str, "\n", parametersIndentString, -1)
 			str, _ = swagP2.ToString()
 			expected += strings.Replace(str, "\n", parametersIndentString, -1) +

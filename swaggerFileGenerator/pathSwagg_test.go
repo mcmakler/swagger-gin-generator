@@ -8,25 +8,25 @@ import (
 
 func TestPathSwagger_ToString(t *testing.T) {
 	t.Run("Test: PathSwagger.ToString()", func(t *testing.T) {
-		t.Run("Should: return error " + errorIncorrectPath.Error(), func(t *testing.T) {
+		t.Run("Should: return error "+errorIncorrectPath.Error(), func(t *testing.T) {
 			a := &pathSwagger{
-				path: "",
+				path:     "",
 				requests: nil,
 			}
 			_, error := a.ToString()
 			assert.Equal(t, error, errorIncorrectPath)
 		})
 
-		t.Run("Should: return error " + errorNullRequests.Error(), func(t *testing.T) {
+		t.Run("Should: return error "+errorNullRequests.Error(), func(t *testing.T) {
 			a := &pathSwagger{
-				path: "path",
+				path:     "path",
 				requests: nil,
 			}
 			_, error := a.ToString()
 			assert.Equal(t, error, errorNullRequests)
 		})
 
-		t.Run("Should: return error " + errorEmptyTypeRequest.Error(), func(t *testing.T) {
+		t.Run("Should: return error "+errorEmptyTypeRequest.Error(), func(t *testing.T) {
 			a := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
@@ -37,8 +37,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 			assert.Equal(t, error, errorEmptyTypeRequest)
 		})
 
-
-		t.Run("Should: return error " + errorEmptyTypeRequest.Error(), func(t *testing.T) {
+		t.Run("Should: return error "+errorEmptyTypeRequest.Error(), func(t *testing.T) {
 			swaggParams := map[string]interface{}{
 				"typeRequest": "GET",
 			}
@@ -46,7 +45,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 				NewRequestSwagg(swaggParams, nil, nil),
 			}
 			a := &pathSwagger{
-				path: "path",
+				path:     "path",
 				requests: req,
 			}
 			str, _ := req[0].ToString()
