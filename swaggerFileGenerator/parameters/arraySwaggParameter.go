@@ -21,13 +21,13 @@ type arraySwaggParameter struct {
 }
 
 var (
-	errorNillItemsParameter = errors.New("ERROR_EMPTY_ITEMS")
+	ErrorNillItemsParameter = errors.New("ERROR_EMPTY_ITEMS")
 )
 
 func (a *arraySwaggParameter) ToString() (string, error) {
 	res := typeString + arrayType
 	if a.items == nil {
-		return "", errorNillItemsParameter
+		return "", ErrorNillItemsParameter
 	}
 	if val, ok := a.params["in"]; ok {
 		res += inString + val.(string)

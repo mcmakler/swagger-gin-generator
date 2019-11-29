@@ -17,8 +17,6 @@ const (
 	definitionsString     = "\ndefinitions:"
 
 	mainIndentString = "\n  "
-
-	errorEmptyPaths = "EMPTY_PATHS"
 )
 
 type MainSwagg interface {
@@ -33,9 +31,11 @@ type mainSwagg struct {
 	//TODO: security
 }
 
+var errorEmptyPaths = errors.New("EMPTY_PATHS")
+
 func (m *mainSwagg) ToString() (string, error) {
 	if m.paths == nil {
-		return "", errors.New(errorEmptyPaths)
+		return "", errorEmptyPaths
 	}
 	res := swaggerString
 	infoExists := false
@@ -58,7 +58,7 @@ func (m *mainSwagg) ToString() (string, error) {
 		}
 		res += infoVersionString + val.(string)
 	}
-	if val, ok := m.params["basePath"]; ok {
+	if val, ok := m.params["basePath"]; !ok {
 		res += basePathString + "/"
 	} else {
 		res += basePathString + val.(string)
@@ -71,13 +71,15 @@ func (m *mainSwagg) ToString() (string, error) {
 		}
 		res += strings.Replace(str, "\n", mainIndentString, -1)
 	}
-	res += definitionsString
-	for _, def := range m.definitions {
-		str, err := def.ToString()
-		if err != nil {
-			return "", err
+	if m.definitions != nil {
+		res += definitionsString
+		for _, def := range m.definitions {
+			str, err := def.ToString()
+			if err != nil {
+				return "", err
+			}
+			res += strings.Replace(str, "\n", mainIndentString, -1)
 		}
-		res += strings.Replace(str, "\n", mainIndentString, -1)
 	}
 	return res, nil
 }
