@@ -74,7 +74,7 @@ func (m *mainSwagg) ToString() (string, error) {
 	if m.definitions != nil {
 		res += definitionsString
 		for _, def := range m.definitions {
-			str, err := def.ToString()
+			str, err := def.ToString(true)
 			if err != nil {
 				return "", err
 			}

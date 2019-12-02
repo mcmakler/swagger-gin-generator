@@ -19,8 +19,13 @@ type stringSwaggParameter struct {
 	params map[string]interface{}
 }
 
-func (s *stringSwaggParameter) ToString() (string, error) {
-	res := typeString + stringType
+func (s *stringSwaggParameter) ToString(isDefinition bool) (string, error) {
+	var res string
+	if isDefinition {
+		res = typeString + stringType
+	} else {
+		res = typeDeficeString + stringType
+	}
 	if s.params == nil {
 		return res, nil
 	}

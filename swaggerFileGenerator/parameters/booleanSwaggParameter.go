@@ -12,8 +12,13 @@ type boolSwaggParameter struct {
 	params map[string]interface{}
 }
 
-func (s *boolSwaggParameter) ToString() (string, error) {
-	res := typeString + boolType
+func (s *boolSwaggParameter) ToString(isDefinition bool) (string, error) {
+	var res string
+	if isDefinition {
+		res = typeString + boolType
+	} else {
+		res = typeDeficeString + boolType
+	}
 	if s.params == nil {
 		return res, nil
 	}

@@ -11,8 +11,8 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 			a := &stringSwaggParameter{
 				params: nil,
 			}
-			expected := typeString + stringType
-			actual, _ := a.ToString()
+			expected := typeDeficeString + stringType
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 		t.Run("Should: return string with empty params", func(t *testing.T) {
@@ -22,8 +22,8 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 			a := &stringSwaggParameter{
 				params: params,
 			}
-			expected := typeString + stringType
-			actual, _ := a.ToString()
+			expected := typeDeficeString + stringType
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {
@@ -42,7 +42,7 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 			a := &stringSwaggParameter{
 				params: params,
 			}
-			expected := typeString + stringType +
+			expected := typeDeficeString + stringType +
 				inString + "in" +
 				nameString + "name" +
 				requiredString + "true" +
@@ -53,7 +53,7 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 				allowEmptyValueString + "false" +
 				descriptionString + "description" +
 				enumString + enumNewString + "EIN" + enumNewString + "ZWEI" + enumNewString + "DREI"
-			actual, _ := a.ToString()
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 	})

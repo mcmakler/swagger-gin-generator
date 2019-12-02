@@ -2,7 +2,8 @@ package parameters
 
 const (
 	inString              = "\n  in: "
-	typeString            = "\n- type: "
+	typeString            = "\n  type: "
+	typeDeficeString      = "\n- type: "
 	nameString            = "\n  name: "
 	requiredString        = "\n  required: "
 	allowEmptyValueString = "\n  allowEmptyValue: "
@@ -19,5 +20,5 @@ const (
 )
 
 type SwaggParameter interface {
-	ToString() (string, error)
+	ToString(isDefinition bool) (string, error)
 }

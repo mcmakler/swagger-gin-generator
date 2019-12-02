@@ -11,8 +11,8 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 			a := &integerSwaggParameter{
 				params: nil,
 			}
-			expected := typeString + integerType
-			actual, _ := a.ToString()
+			expected := typeDeficeString + integerType
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 		t.Run("Should: return string with empty params", func(t *testing.T) {
@@ -22,8 +22,8 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 			a := &integerSwaggParameter{
 				params: params,
 			}
-			expected := typeString + integerType
-			actual, _ := a.ToString()
+			expected := typeDeficeString + integerType
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {
@@ -43,7 +43,7 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 			a := &integerSwaggParameter{
 				params: params,
 			}
-			expected := typeString + integerType +
+			expected := typeDeficeString + integerType +
 				inString + "in" +
 				nameString + "name" +
 				requiredString + "true" +
@@ -55,7 +55,7 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 				multipleOfString + "4" +
 				allowEmptyValueString + "false" +
 				descriptionString + "description"
-			actual, _ := a.ToString()
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 	})

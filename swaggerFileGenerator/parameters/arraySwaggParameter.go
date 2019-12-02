@@ -24,10 +24,15 @@ var (
 	ErrorNillItemsParameter = errors.New("ERROR_EMPTY_ITEMS")
 )
 
-func (a *arraySwaggParameter) ToString() (string, error) {
-	res := typeString + arrayType
+func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
 	if a.items == nil {
 		return "", ErrorNillItemsParameter
+	}
+	var res string
+	if isDefinition {
+		res = typeString + arrayType
+	} else {
+		res = typeDeficeString + arrayType
 	}
 	if val, ok := a.params["in"]; ok {
 		res += inString + val.(string)
@@ -53,7 +58,7 @@ func (a *arraySwaggParameter) ToString() (string, error) {
 	if val, ok := a.params["description"]; ok {
 		res += descriptionString + val.(string)
 	}
-	items, err := a.items.ToString()
+	items, err := a.items.ToString(true)
 	if err != nil {
 		return "", err
 	}

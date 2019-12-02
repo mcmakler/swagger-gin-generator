@@ -212,7 +212,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				},
 			}
 			strPath, _ := path.ToString()
-			strDef, _ := def.ToString()
+			strDef, _ := def.ToString(true)
 			expected := swaggerString + infoString +
 				infoDescriptionString + "description" +
 				infoTitleString + "title" +

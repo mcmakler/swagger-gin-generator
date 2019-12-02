@@ -100,9 +100,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				tagsString + tagsIndentString + "t1" + tagsIndentString + "t2" +
 				summaryString + "summary" +
 				parametersString
-			str, _ := swagP1.ToString()
+			str, _ := swagP1.ToString(false)
 			expected += strings.Replace(str, "\n", parametersIndentString, -1)
-			str, _ = swagP2.ToString()
+			str, _ = swagP2.ToString(false)
 			expected += strings.Replace(str, "\n", parametersIndentString, -1) +
 				responsesString
 			str, _ = responseSwagg1.ToString()

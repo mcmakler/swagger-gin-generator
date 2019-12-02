@@ -13,7 +13,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     nil,
 				properties: nil,
 			}
-			_, expectedError := a.ToString()
+			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)
 		})
 
@@ -25,7 +25,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     params,
 				properties: nil,
 			}
-			_, expectedError := a.ToString()
+			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)
 		})
 
@@ -43,7 +43,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     params,
 				properties: properties,
 			}
-			_, expectedError := a.ToString()
+			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)
 		})
 
@@ -55,8 +55,8 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     params,
 				properties: nil,
 			}
-			expected := "\nname:" + typeString + objectType
-			actual, _ := a.ToString()
+			expected := "\nname:" + typeDeficeString + objectType
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {
@@ -68,9 +68,9 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     params,
 				properties: nil,
 			}
-			expected := "\nname:" + typeString + objectType +
+			expected := "\nname:" + typeDeficeString + objectType +
 				requiredIndentStr + "req1" + requiredIndentStr + "req2"
-			actual, _ := a.ToString()
+			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
@@ -97,22 +97,22 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     params,
 				properties: properties,
 			}
-			expected := "\nname:" + typeString + objectType +
+			expected := "\nname:" + typeDeficeString + objectType +
 				requiredIndentStr + "req1" + requiredIndentStr + "req2" +
 				propertiesStr
-			str, _ := properties["boolParam"].ToString()
+			str, _ := properties["boolParam"].ToString(false)
 			boolStrExpexted := propertyIndentStr + "boolParam:" + strings.Replace(str, "\n", propertyIndentStr, -1)
-			str, _ = properties["stringParam"].ToString()
+			str, _ = properties["stringParam"].ToString(false)
 			stringStrExpected := propertyIndentStr + "stringParam:" + strings.Replace(str, "\n", propertyIndentStr, -1)
-			str, _ = properties["integerParam"].ToString()
+			str, _ = properties["integerParam"].ToString(false)
 			integerStrExpected := propertyIndentStr + "integerParam:" + strings.Replace(str, "\n", propertyIndentStr, -1)
-			str, _ = properties["numberParam"].ToString()
+			str, _ = properties["numberParam"].ToString(false)
 			numberStrExpected := propertyIndentStr + "numberParam:" + strings.Replace(str, "\n", propertyIndentStr, -1)
-			str, _ = properties["arrayParam"].ToString()
+			str, _ = properties["arrayParam"].ToString(false)
 			arrayStrExpected := propertyIndentStr + "arrayParam:" + strings.Replace(str, "\n", propertyIndentStr, -1)
-			str, _ = properties["objectParam"].ToString()
+			str, _ = properties["objectParam"].ToString(false)
 			objectStrExpected := propertyIndentStr + "objectParam:" + strings.Replace(str, "\n", propertyIndentStr, -1)
-			actual, _ := a.ToString()
+			actual, _ := a.ToString(false)
 			assert.True(t, strings.Contains(actual, expected))
 			assert.True(t, strings.Contains(actual, boolStrExpexted))
 			assert.True(t, strings.Contains(actual, stringStrExpected))

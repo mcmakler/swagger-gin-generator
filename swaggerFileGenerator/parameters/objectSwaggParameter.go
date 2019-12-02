@@ -22,7 +22,7 @@ var (
 	errorNilObjectName = errors.New("NIL_OBJECT_NAME")
 )
 
-func (o *objectSwaggerParameter) ToString() (string, error) {
+func (o *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 	//TODO: other parameters (description, required ...)
 	if o.params == nil {
 		return "", errorNilObjectName
@@ -31,7 +31,11 @@ func (o *objectSwaggerParameter) ToString() (string, error) {
 		return "", errorNilObjectName
 	}
 	res := "\n" + o.params["name"].(string) + ":"
-	res += typeString + objectType
+	if isDefinition {
+		res += typeString + objectType
+	} else {
+		res += typeDeficeString + objectType
+	}
 	if val, ok := o.params["required"]; ok {
 		for _, val := range val.([]string) {
 			res += requiredIndentStr + val
@@ -41,7 +45,7 @@ func (o *objectSwaggerParameter) ToString() (string, error) {
 		res += propertiesStr
 		for index, val := range o.properties {
 			res += propertyIndentStr + index + ":"
-			str, err := val.ToString()
+			str, err := val.ToString(isDefinition)
 			if err != nil {
 				return "", err
 			}
