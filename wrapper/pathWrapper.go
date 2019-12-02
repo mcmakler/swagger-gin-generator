@@ -117,7 +117,7 @@ func (s *swaggPathWrapper) Post(
 	responsesP map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.GET(s.path, handlerFuncP...)
+	s.group.POST(s.path, handlerFuncP...)
 
 	var responses []swaggerFileGenerator.ResponseSwagg
 
