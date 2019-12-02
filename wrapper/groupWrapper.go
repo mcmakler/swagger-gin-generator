@@ -45,10 +45,10 @@ func (s *swaggGroupWrapper) Path(path string) SwaggPathWrapper {
 func (s *swaggGroupWrapper) Generate() []swaggerFileGenerator.PathSwagger {
 	var res []swaggerFileGenerator.PathSwagger
 	for _, val := range s.swaggWrappers {
-		for _, def := range val.Definitions() {
+		for _, def := range val.getDefinitions() {
 			s.definitions = append(s.definitions, def)
 		}
-		res = append(res, val.Generate())
+		res = append(res, val.generate())
 	}
 	return res
 }

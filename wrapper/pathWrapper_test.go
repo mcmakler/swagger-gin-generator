@@ -35,13 +35,13 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 					},
 				},
 				func(c *gin.Context){})
-			a := spw.Generate()
+			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
 			expectedDefinitions := []parameters.SwaggParameter{
 				utils.ConvertObjectToSwaggParameter(nil, true),
 			}
-			assert.Equal(t, expectedDefinitions, spw.Definitions())
+			assert.Equal(t, expectedDefinitions, spw.getDefinitions())
 		})
 
 
@@ -70,7 +70,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 					},
 				},
 				func(c *gin.Context){})
-			a := spw.Generate()
+			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
 		})
