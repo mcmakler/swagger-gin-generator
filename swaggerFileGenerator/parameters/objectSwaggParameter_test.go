@@ -123,3 +123,17 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 		})
 	})
 }
+
+func TestNewObjectSwagParameter(t *testing.T) {
+	t.Run("Test: NewStringSwagParameter", func(t *testing.T) {
+		params := map[string]interface{}{
+			"name": "name",
+		}
+		expect := &objectSwaggerParameter{
+			params:     params,
+			properties: nil,
+		}
+		actual := NewObjectSwaggerParameter(params, nil)
+		assert.Equal(t, expect, actual)
+	})
+}

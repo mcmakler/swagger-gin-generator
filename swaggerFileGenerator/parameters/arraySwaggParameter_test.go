@@ -79,3 +79,14 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 		})
 	})
 }
+
+func TestNewArraySwaggParameter(t *testing.T) {
+	t.Run("Test: NewArraySwaggParameter", func(t *testing.T) {
+		expect := &arraySwaggParameter{
+			params: nil,
+			items:  NewBoolSwagParameter(nil),
+		}
+		actual := NewArraySwaggParameter(nil, NewBoolSwagParameter(nil))
+		assert.Equal(t, expect, actual)
+	})
+}

@@ -60,3 +60,11 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 		})
 	})
 }
+
+func TestNewIntegerSwagParameter(t *testing.T) {
+	t.Run("Test: NewIntegerSwagParameter", func(t *testing.T) {
+		expect := &integerSwaggParameter{params:nil}
+		actual := NewIntegerSwagParameter(nil)
+		assert.Equal(t, expect, actual)
+	})
+}
