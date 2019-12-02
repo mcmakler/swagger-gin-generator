@@ -42,3 +42,15 @@ func TestResponseSwagg_ToString(t *testing.T) {
 		})
 	})
 }
+
+func TestNewResponseSwagg(t *testing.T) {
+	t.Run("Should: return response swag", func(t *testing.T) {
+		expected := &responseSwagg{
+			code:         200,
+			description:  "description",
+			linkOnSchema: "linkonschema",
+		}
+		actual := NewResponseSwagg(200, "description", "linkonschema")
+		assert.Equal(t, expected, actual)
+	})
+}

@@ -187,8 +187,6 @@ func TestMainSwagg_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
-
-
 		t.Run("Should: return ok", func(t *testing.T) {
 			path := &pathSwagger{
 				path: "path",
@@ -202,9 +200,9 @@ func TestMainSwagg_ToString(t *testing.T) {
 			a := &mainSwagg{
 				params: map[string]interface{}{
 					"description": "description",
-					"title": "title",
-					"version": "version",
-					"basePath": "basePath",
+					"title":       "title",
+					"version":     "version",
+					"basePath":    "basePath",
 				},
 				paths: []PathSwagger{
 					path,
@@ -225,5 +223,29 @@ func TestMainSwagg_ToString(t *testing.T) {
 			actual, _ := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
+	})
+}
+
+func TestNewMainSwagg(t *testing.T) {
+	t.Run("Test: NewMainSwag", func(t *testing.T) {
+		path := &pathSwagger{
+			path: "path",
+			requests: []RequestSwagg{
+				NewRequestSwagg(map[string]interface{}{
+					"typeRequest": "GET",
+				}, nil, nil),
+			},
+		}
+		expected := &mainSwagg{
+			params: nil,
+			paths: []PathSwagger{
+				path,
+			},
+			definitions: nil,
+		}
+		actual := NewMainSwagg(nil, []PathSwagger{
+			path,
+		}, nil)
+		assert.Equal(t, expected, actual)
 	})
 }

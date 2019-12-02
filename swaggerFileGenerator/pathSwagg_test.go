@@ -37,7 +37,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 			assert.Equal(t, error, errorEmptyTypeRequest)
 		})
 
-		t.Run("Should: return error "+errorEmptyTypeRequest.Error(), func(t *testing.T) {
+		t.Run("Should: pass", func(t *testing.T) {
 			swaggParams := map[string]interface{}{
 				"typeRequest": "GET",
 			}
@@ -53,5 +53,22 @@ func TestPathSwagger_ToString(t *testing.T) {
 			actual, _ := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
+	})
+}
+
+func TestNewPathSwagger(t *testing.T) {
+	t.Run("Should: return new path swagger", func(t *testing.T) {
+		swaggParams := map[string]interface{}{
+			"typeRequest": "GET",
+		}
+		req := []RequestSwagg{
+			NewRequestSwagg(swaggParams, nil, nil),
+		}
+		expected := &pathSwagger{
+			path:     "path",
+			requests: req,
+		}
+		actual := NewPathSwagger("path", req)
+		assert.Equal(t, expected, actual)
 	})
 }

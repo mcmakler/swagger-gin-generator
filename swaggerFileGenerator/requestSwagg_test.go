@@ -114,3 +114,31 @@ func TestRequestSwagg_ToString(t *testing.T) {
 		})
 	})
 }
+
+func TestNewRequestSwagg(t *testing.T) {
+	t.Run("Test: NewRequestSwagg", func(t *testing.T) {
+		swaggParams := map[string]interface{}{
+			"typeRequest": "GET",
+			"description": "description",
+			"consumes":    []string{"c1", "c2"},
+			"produces":    []string{"p1", "p2"},
+			"tags":        []string{"t1", "t2"},
+			"summary":     "summary",
+		}
+		swagP1 := parameters.NewBoolSwagParameter(nil)
+		swagP2 := parameters.NewStringSwagParameter(nil)
+		responseSwagg1 := NewResponseSwagg(200, "", "")
+		responseSwagg2 := NewResponseSwagg(300, "", "")
+		expected := &requestSwagg{
+			swaggParams: swaggParams,
+			parameters:  []parameters.SwaggParameter{swagP1, swagP2},
+			responses:   []ResponseSwagg{responseSwagg1, responseSwagg2},
+		}
+		actual := NewRequestSwagg(
+			swaggParams,
+			[]parameters.SwaggParameter{swagP1, swagP2},
+			[]ResponseSwagg{responseSwagg1, responseSwagg2},
+			)
+		assert.Equal(t, expected, actual)
+	})
+}
