@@ -33,7 +33,7 @@ type SwaggPathWrapper interface {
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
-	Generate() *swaggerFileGenerator.PathSwagger
+	Generate() swaggerFileGenerator.PathSwagger
 	Definitions() []parameters.SwaggParameter
 }
 
@@ -153,9 +153,9 @@ func (s *swaggPathWrapper) Post(
 	))
 }
 
-func (s *swaggPathWrapper) Generate() *swaggerFileGenerator.PathSwagger {
+func (s *swaggPathWrapper) Generate() swaggerFileGenerator.PathSwagger {
 	res := swaggerFileGenerator.NewPathSwagger(s.path, s.requests)
-	return &res
+	return res
 }
 
 func (s *swaggPathWrapper) Definitions() []parameters.SwaggParameter {

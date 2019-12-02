@@ -51,7 +51,7 @@ func (s *swaggGroupWrapper) Generate() []swaggerFileGenerator.PathSwagger {
 		for _, def := range val.Definitions() {
 			s.definitions = append(s.definitions, def)
 		}
-		res = append(res, *val.Generate())
+		res = append(res, val.Generate())
 	}
 	return res
 }

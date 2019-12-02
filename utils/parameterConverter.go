@@ -33,8 +33,10 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 
 	properties := make(map[string]parameters.SwaggParameter)
 
-	for i := 0; i < typ.NumField(); i++ {
-		properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface())
+	if reflect.TypeOf(object).Kind() == reflect.Struct {
+		for i := 0; i < typ.NumField(); i++ {
+			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface())
+		}
 	}
 
 	if params == nil {
