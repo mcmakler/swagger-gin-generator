@@ -193,3 +193,14 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 		})
 	})
 }
+
+func TestNewParameter(t *testing.T) {
+	t.Run("Test: NewParameter", func(t *testing.T) {
+		expected := &parameter{
+			listOfparameters: nil,
+			object:           nil,
+		}
+		actual := NewParameter(nil, nil)
+		assert.Equal(t, expected, actual)
+	})
+}
