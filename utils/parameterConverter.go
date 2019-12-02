@@ -14,6 +14,7 @@ type parameter struct {
 	object           interface{}
 }
 
+//Obj -- EXEMPLAR of an object
 func NewParameter(params map[string]interface{}, obj interface{}) Parameter {
 	return &parameter{
 		listOfparameters: params,
@@ -27,7 +28,7 @@ func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
 
 //TODO: required
 func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
-	e := reflect.ValueOf(&object).Elem()
+	e := reflect.ValueOf(object).Elem()
 
 	properties := make(map[string]parameters.SwaggParameter)
 
@@ -38,25 +39,25 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 	if params == nil {
 		params = make(map[string]interface{})
 	}
-	params["name"] = reflect.ValueOf(&object).Type().Name()
+	params["name"] = reflect.ValueOf(object).Type().Name()
 	res := parameters.NewObjectSwaggerParameter(params, properties)
 
 	return res
 }
 
 func setValueByType(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
-	switch reflect.TypeOf(&object).Kind() {
-	case reflect.String:
-		return parameters.NewStringSwagParameter(params)
+	switch reflect.TypeOf(object).Kind() {
 	case reflect.Bool:
 		return parameters.NewBoolSwagParameter(params)
+	case reflect.String:
+		return parameters.NewStringSwagParameter(params)
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 		return parameters.NewIntegerSwagParameter(params)
 	case reflect.Float32, reflect.Float64:
 		return parameters.NewNumberSwagParameter(params)
 	case reflect.Array, reflect.Slice:
 		//TODO: check is it work
-		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object))))
+		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface()))
 	//TODO: map?
 	default:
 		return ConvertObjectToSwaggParameter(params, &object)
