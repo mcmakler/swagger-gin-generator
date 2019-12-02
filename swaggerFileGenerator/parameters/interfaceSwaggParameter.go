@@ -1,8 +1,8 @@
 package parameters
 
 const (
-	inString              = "\n- in: "
-	typeString            = "\n  type: "
+	inString              = "\n  in: "
+	typeString            = "\n- type: "
 	nameString            = "\n  name: "
 	requiredString        = "\n  required: "
 	allowEmptyValueString = "\n  allowEmptyValue: "

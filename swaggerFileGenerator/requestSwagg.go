@@ -13,7 +13,7 @@ const (
 	producesString         = "\n  produces: "
 	producesIndentString   = "\n  - "
 	tagsString             = "\n  tags: "
-	tagsIndentString       = "\n  tags: "
+	tagsIndentString       = "\n    - "
 	summaryString          = "\n  summary: "
 	parametersString       = "\n  parameters:"
 	parametersIndentString = "\n    "
