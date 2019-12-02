@@ -3,6 +3,7 @@ package wrapper
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 	"swagger-gin-generator/utils"
 	"testing"
 )
@@ -20,7 +21,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 				"getDescription",
 				[]string{"getConsume"},
 				[]string{"getProduce"},
-				[]string{"getTag"},
+				nil,
 				"getSummary",
 				[]utils.Parameter{
 					utils.NewParameter(map[string]interface{}{
@@ -37,6 +38,10 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 			a := spw.Generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
+			expectedDefinitions := []parameters.SwaggParameter{
+				utils.ConvertObjectToSwaggParameter(nil, true),
+			}
+			assert.Equal(t, expectedDefinitions, spw.Definitions())
 		})
 
 

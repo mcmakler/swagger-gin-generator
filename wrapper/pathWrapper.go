@@ -68,14 +68,14 @@ func (s *swaggPathWrapper) Get(
 	tagsP []string,
 	summaryP string,
 	parametersP []utils.Parameter,
-	responsesP map[int]Request,
+	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.GET(s.path, handlerFuncP...)
 
 	var responses []swaggerFileGenerator.ResponseSwagg
 
-	for key, val := range responsesP {
+	for key, val := range requests {
 		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, schemaPrefix+"/"+reflect.ValueOf(&val.object).Type().Name())
 		responses = append(responses, respSwag)
 		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
@@ -114,14 +114,14 @@ func (s *swaggPathWrapper) Post(
 	tagsP []string,
 	summaryP string,
 	parametersP []utils.Parameter,
-	responsesP map[int]Request,
+	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.POST(s.path, handlerFuncP...)
 
 	var responses []swaggerFileGenerator.ResponseSwagg
 
-	for key, val := range responsesP {
+	for key, val := range requests {
 		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, schemaPrefix+"/"+reflect.ValueOf(&val.object).Type().Name())
 		responses = append(responses, respSwag)
 		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
