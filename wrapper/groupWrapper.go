@@ -8,7 +8,7 @@ import (
 
 type SwaggGroupWrapper interface {
 	Use(middleware ...gin.HandlerFunc)
-	Path(string) *SwaggPathWrapper
+	Path(string) SwaggPathWrapper
 	Generate() []swaggerFileGenerator.PathSwagger
 	Definitions() []parameters.SwaggParameter
 }
@@ -36,13 +36,10 @@ func (s *swaggGroupWrapper) Use(middlware ...gin.HandlerFunc) {
 	s.group.Use(middlware...)
 }
 
-func (s *swaggGroupWrapper) Path(path string) *SwaggPathWrapper {
+func (s *swaggGroupWrapper) Path(path string) SwaggPathWrapper {
 	res := NewSwaggPathWrapper(s.path+path, s.tag, s.group)
-	for _, el := range res.Definitions() {
-		s.definitions = append(s.definitions, el)
-	}
 	s.swaggWrappers = append(s.swaggWrappers, res)
-	return &res
+	return res
 }
 
 func (s *swaggGroupWrapper) Generate() []swaggerFileGenerator.PathSwagger {
