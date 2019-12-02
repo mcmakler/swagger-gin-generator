@@ -28,12 +28,13 @@ func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
 
 //TODO: required
 func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
-	e := reflect.ValueOf(object).Elem()
+	typ := reflect.TypeOf(object)
+	val := reflect.ValueOf(object)
 
 	properties := make(map[string]parameters.SwaggParameter)
 
-	for i := 0; i < e.NumField(); i++ {
-		properties[e.Type().Field(i).Name] = setValueByType(nil, e.Field(i).Interface())
+	for i := 0; i < typ.NumField(); i++ {
+		properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface())
 	}
 
 	if params == nil {
