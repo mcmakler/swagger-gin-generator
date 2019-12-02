@@ -13,13 +13,21 @@ type testStructBool struct {
 	B bool
 }
 
+type testStructArr struct {
+	A []bool
+}
+
+type testStructSubstr struct {
+	Substr testStructBool
+}
+
 type testStructFull struct {
-	b      bool
-	s      string
-	i      int
-	f      float64
-	a      []bool
-	substr testStructBool
+	B      bool
+	S      string
+	I      int
+	F      float64
+	A      []bool
+	Substr testStructBool
 }
 
 func TestConvertObjectToSwaggParameter(t *testing.T) {
@@ -36,11 +44,67 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 			params := map[string]interface{}{
 				"name": "testStructBool",
 			}
-			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter {
+			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"B": parameters.NewBoolSwagParameter(nil),
 			})
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructBool{
 				B: true,
+			}))
+		})
+
+		t.Run("Should: return swag object with arr param", func(t *testing.T) {
+			params := map[string]interface{}{
+				"name": "testStructArr",
+			}
+			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
+				"A": parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil)),
+			})
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructArr{
+				A: []bool{true},
+			}))
+		})
+
+		t.Run("Should: return swag object with arr param", func(t *testing.T) {
+			params := map[string]interface{}{
+				"name": "testStructSubstr",
+			}
+			paramsBool := map[string]interface{}{
+				"name": "testStructBool",
+			}
+			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
+				"Substr": parameters.NewObjectSwaggerParameter(paramsBool, map[string]parameters.SwaggParameter{
+					"B": parameters.NewBoolSwagParameter(nil),
+				}),
+			})
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructSubstr{
+				Substr: testStructBool{B:false},
+			}))
+		})
+
+		t.Run("Should: return swag object with bool param", func(t *testing.T) {
+			params := map[string]interface{}{
+				"name": "testStructFull",
+			}
+			paramsBool := map[string]interface{}{
+				"name": "testStructBool",
+			}
+			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
+				"B": parameters.NewBoolSwagParameter(nil),
+				"S": parameters.NewStringSwagParameter(nil),
+				"I": parameters.NewIntegerSwagParameter(nil),
+				"F": parameters.NewNumberSwagParameter(nil),
+				"A": parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil)),
+				"Substr": parameters.NewObjectSwaggerParameter(paramsBool, map[string]parameters.SwaggParameter{
+					"B": parameters.NewBoolSwagParameter(nil),
+				}),
+			})
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructFull{
+				B:      false,
+				S:      "",
+				I:      0,
+				F:      0,
+				A:      []bool{true},
+				Substr: testStructBool{B: false},
 			}))
 		})
 	})

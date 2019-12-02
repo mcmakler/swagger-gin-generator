@@ -40,7 +40,7 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 	if params == nil {
 		params = make(map[string]interface{})
 	}
-	params["name"] = reflect.ValueOf(object).Type().Name()
+	params["name"] = reflect.TypeOf(object).Name()
 	res := parameters.NewObjectSwaggerParameter(params, properties)
 
 	return res
@@ -61,6 +61,6 @@ func setValueByType(params map[string]interface{}, object interface{}) parameter
 		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface()))
 	//TODO: map?
 	default:
-		return ConvertObjectToSwaggParameter(params, &object)
+		return ConvertObjectToSwaggParameter(params, object)
 	}
 }
