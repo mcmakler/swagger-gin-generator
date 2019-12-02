@@ -9,10 +9,10 @@ import (
 const (
 	swaggerString         = "swagger: '2.0'"
 	infoString            = "\ninfo:"
-	infoTitleString       = "\n  title:"
-	infoDescriptionString = "\n  description:"
-	infoVersionString     = "\n  version:"
-	basePathString        = "\nbasePath:"
+	infoTitleString       = "\n  title: "
+	infoDescriptionString = "\n  description: "
+	infoVersionString     = "\n  version: "
+	basePathString        = "\nbasePath: "
 	pathsString           = "\npaths:"
 	definitionsString     = "\ndefinitions:"
 

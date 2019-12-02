@@ -8,10 +8,6 @@ import (
 	"swagger-gin-generator/utils"
 )
 
-const (
-	schemaPrefix = "#/definitions/"
-)
-
 type SwaggPathWrapper interface {
 	Get(
 		description string,
@@ -76,7 +72,7 @@ func (s *swaggPathWrapper) Get(
 	var responses []swaggerFileGenerator.ResponseSwagg
 
 	for key, val := range requests {
-		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, schemaPrefix+"/"+reflect.ValueOf(&val.object).Type().Name())
+		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, reflect.TypeOf(val.object).Name())
 		responses = append(responses, respSwag)
 		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
 	}
@@ -122,7 +118,7 @@ func (s *swaggPathWrapper) Post(
 	var responses []swaggerFileGenerator.ResponseSwagg
 
 	for key, val := range requests {
-		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, schemaPrefix+"/"+reflect.ValueOf(&val.object).Type().Name())
+		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, reflect.TypeOf(val.object).Name())
 		responses = append(responses, respSwag)
 		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
 	}

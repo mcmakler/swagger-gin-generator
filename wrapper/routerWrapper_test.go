@@ -46,7 +46,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     &testStructFull{
+					object:     testStructFull{
 						B:      false,
 						S:      "",
 						I:      0,
@@ -129,7 +129,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     &testStructFull{
+					object:     testStructFull{
 						B:      false,
 						S:      "",
 						I:      0,

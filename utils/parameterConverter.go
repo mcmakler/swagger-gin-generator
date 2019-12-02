@@ -27,6 +27,7 @@ func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
 }
 
 //TODO: required
+//TODO: watch the case, when object is a pointer
 func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
 	typ := reflect.TypeOf(object)
 	val := reflect.ValueOf(object)

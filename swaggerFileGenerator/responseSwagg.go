@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	linkOnSchemaString = "\n  schema:\n    $ref: "
+	linkOnSchemaString = "\n  schema:\n    $ref: '#/definitions/"
 )
 
 var (
@@ -32,7 +32,7 @@ func (r *responseSwagg) ToString() (string, error) {
 		res += descriptionString + r.description
 	}
 	if r.linkOnSchema != "" {
-		res += linkOnSchemaString + r.linkOnSchema
+		res += linkOnSchemaString + r.linkOnSchema + "'"
 	}
 	return res, nil
 }

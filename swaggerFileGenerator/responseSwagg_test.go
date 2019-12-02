@@ -36,7 +36,7 @@ func TestResponseSwagg_ToString(t *testing.T) {
 			}
 			expected := "\n'200':" +
 				descriptionString + "description" +
-				linkOnSchemaString + "linkonschema"
+				linkOnSchemaString + "linkonschema'"
 			actual, _ := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
