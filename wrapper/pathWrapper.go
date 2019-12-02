@@ -19,7 +19,7 @@ type SwaggPathWrapper interface {
 		produces []string,
 		tags []string,
 		summary string,
-		parameters []map[string]string, //TODO: think
+		parameters []utils.Parameter, //TODO: think
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
@@ -29,7 +29,7 @@ type SwaggPathWrapper interface {
 		produces []string,
 		tags []string,
 		summary string,
-		parameters []map[string]string, //TODO: think
+		parameters []utils.Parameter, //TODO: think
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
@@ -67,7 +67,7 @@ func (s *swaggPathWrapper) Get(
 	producesP []string,
 	tagsP []string,
 	summaryP string,
-	parametersP []map[string]string, //TODO: think
+	parametersP []utils.Parameter,
 	responsesP map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
@@ -81,6 +81,18 @@ func (s *swaggPathWrapper) Get(
 		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
 	}
 
+	var paramsSwagg []parameters.SwaggParameter
+	for _, val := range parametersP {
+		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
+	}
+
+	if s.tag != "" {
+		if tagsP == nil {
+			tagsP = []string{}
+		}
+		tagsP = append(tagsP, s.tag)
+	}
+
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
 		map[string]interface{}{
 			"typeRequest": "get",
@@ -90,7 +102,7 @@ func (s *swaggPathWrapper) Get(
 			"produces":    producesP,
 			"tags":        tagsP,
 		},
-		nil, //TODO: set parameters
+		paramsSwagg,
 		responses,
 	))
 }
@@ -101,7 +113,7 @@ func (s *swaggPathWrapper) Post(
 	producesP []string,
 	tagsP []string,
 	summaryP string,
-	parametersP []map[string]string, //TODO: think
+	parametersP []utils.Parameter,
 	responsesP map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
@@ -113,6 +125,11 @@ func (s *swaggPathWrapper) Post(
 		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, schemaPrefix+"/"+reflect.ValueOf(&val.object).Type().Name())
 		responses = append(responses, respSwag)
 		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
+	}
+
+	var paramsSwagg []parameters.SwaggParameter
+	for _, val := range parametersP {
+		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
 	}
 
 	if s.tag != "" {
@@ -131,7 +148,7 @@ func (s *swaggPathWrapper) Post(
 			"produces":    producesP,
 			"tags":        tagsP,
 		},
-		nil, //TODO: set parameters
+		paramsSwagg,
 		responses,
 	))
 }
