@@ -26,9 +26,13 @@ func (i *numberSwaggParameter) ToString(isDefinition bool) (string, error) {
 	}
 	if val, ok := i.params["in"]; ok {
 		res += inString + val.(string)
+	} else if !isDefinition {
+		return "", errorEmptyIn
 	}
 	if val, ok := i.params["name"]; ok {
 		res += nameString + val.(string)
+	} else if !isDefinition {
+		return "", errorEmptyName
 	}
 	if val, ok := i.params["required"]; ok {
 		res += requiredString + strconv.FormatBool(val.(bool))

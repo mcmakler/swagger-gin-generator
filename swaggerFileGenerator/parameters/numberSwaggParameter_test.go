@@ -28,6 +28,30 @@ func TestNumberSwaggParameter_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
+		t.Run("Should: return string with empty params", func(t *testing.T) {
+			params := map[string]interface{}{
+				"test": 1,
+			}
+			a := &numberSwaggParameter{
+				params: params,
+			}
+			expected := errorEmptyIn
+			_, actual := a.ToString(false)
+			assert.Equal(t, expected, actual)
+		})
+
+		t.Run("Should: return string with empty params", func(t *testing.T) {
+			params := map[string]interface{}{
+				"in": "in",
+			}
+			a := &numberSwaggParameter{
+				params: params,
+			}
+			expected := errorEmptyName
+			_, actual := a.ToString(false)
+			assert.Equal(t, expected, actual)
+		})
+
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":                    "in",

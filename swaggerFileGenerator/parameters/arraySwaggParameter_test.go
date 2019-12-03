@@ -16,24 +16,54 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, ErrorNillItemsParameter)
 		})
+
 		t.Run("Should: return error empty Object name", func(t *testing.T) {
 			a := &arraySwaggParameter{
 				params: nil,
 				items:  NewObjectSwaggerParameter(nil, nil, false),
 			}
-			_, expectedError := a.ToString(false)
-			assert.Equal(t, expectedError, errorNilObjectName)
+			expected := errorEmptyIn
+			_, actual := a.ToString(false)
+			assert.Equal(t, expected, actual)
 		})
+
 		t.Run("Should: return string with empty params", func(t *testing.T) {
 			a := &arraySwaggParameter{
 				params: nil,
 				items:  NewStringSwagParameter(nil),
 			}
-			str, _ := a.items.ToString(true)
-			expected := typeDeficeString + arrayType + itemsString + strings.Replace(str, "\n", "\n  ", -1)
-			actual, _ := a.ToString(false)
+			expected := errorEmptyIn
+			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
+
+		t.Run("Should: return string with empty params", func(t *testing.T) {
+			params := map[string]interface{}{
+				"in": "in",
+			}
+			a := &arraySwaggParameter{
+				params: params,
+				items:  NewBoolSwagParameter(nil),
+			}
+			expected := errorEmptyName
+			_, actual := a.ToString(false)
+			assert.Equal(t, expected, actual)
+		})
+
+		t.Run("Should: return string with empty params", func(t *testing.T) {
+			params := map[string]interface{}{
+				"in": "in",
+				"name": "name",
+			}
+			a := &arraySwaggParameter{
+				params: params,
+				items:  NewArraySwaggParameter(nil, nil),
+			}
+			expected := ErrorNillItemsParameter
+			_, actual := a.ToString(false)
+			assert.Equal(t, expected, actual)
+		})
+
 		t.Run("Should: return string with empty params", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
@@ -47,6 +77,7 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 			actual, _ := a.ToString(true)
 			assert.Equal(t, expected, actual)
 		})
+
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":              "in",

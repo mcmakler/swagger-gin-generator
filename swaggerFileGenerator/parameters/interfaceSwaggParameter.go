@@ -1,5 +1,7 @@
 package parameters
 
+import "errors"
+
 const (
 	inString              = "\n  in: "
 	typeString            = "\n  type: "
@@ -15,8 +17,11 @@ const (
 	maximumValueString          = "\n  maximum: "
 	exclusiveMaximumValueString = "\n  exclusiveMaximum: "
 	multipleOfString            = "\n  multipleOf: "
+)
 
-	errorNilInParameter = "ERROR_EMPTY_IN"
+var (
+	errorEmptyName = errors.New("ERROR_NAME_IS_MANDATORY")
+	errorEmptyIn   = errors.New("ERROR_IN_IS_MANDATORY")
 )
 
 type SwaggParameter interface {

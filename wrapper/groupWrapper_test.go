@@ -23,6 +23,8 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 			"getSummary",
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
+					"name": "name",
+					"in": "in",
 					"description": "boolGetParameter",
 				}, true),
 			},

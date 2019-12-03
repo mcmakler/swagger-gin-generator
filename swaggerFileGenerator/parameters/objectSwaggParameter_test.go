@@ -76,25 +76,30 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name":     "name",
+				"name": "name",
+				"in": "in",
+			}
+			objParams := map[string]interface{}{
+				"name": "name",
+				"in": "in",
 				"required": []string{"req1", "req2"},
 			}
 			properties := map[string]SwaggParameter{
-				"boolParam":    &boolSwaggParameter{params: nil},
-				"stringParam":  &stringSwaggParameter{params: nil},
-				"integerParam": &integerSwaggParameter{params: nil},
-				"numberParam":  &numberSwaggParameter{params: nil},
+				"boolParam":    &boolSwaggParameter{params: params},
+				"stringParam":  &stringSwaggParameter{params: params},
+				"integerParam": &integerSwaggParameter{params: params},
+				"numberParam":  &numberSwaggParameter{params: params},
 				"arrayParam": &arraySwaggParameter{
-					params: nil,
+					params: params,
 					items:  &boolSwaggParameter{params: nil},
 				},
 				"objectParam": &objectSwaggerParameter{
-					params:     params,
+					params:     objParams,
 					properties: nil,
 				},
 			}
 			a := &objectSwaggerParameter{
-				params:     params,
+				params:     objParams,
 				properties: properties,
 			}
 			expected := "\nname:" + typeDeficeString + objectType +
