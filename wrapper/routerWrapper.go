@@ -67,11 +67,14 @@ func (s *swaggWrapper) Generate(filepath string) error {
 }
 
 func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
-	keys := make(map[parameters.SwaggParameter]bool)
+	keys := make(map[string]bool)
 	var list []parameters.SwaggParameter
 	for _, entry := range s {
-		if _, value := keys[entry]; !value {
-			keys[entry] = true
+		//TODO: Maybe some better solution
+		str, _ := entry.ToString(true)
+		str = strings.Split(str, ":")[0]
+		if _, value := keys[str]; !value {
+			keys[str] = true
 			list = append(list, entry)
 		}
 	}
