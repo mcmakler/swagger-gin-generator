@@ -34,6 +34,17 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"version":     "version",
 			},
 			g)
+		emptyGroup := srw.Group("", "health")
+		emptyPath := emptyGroup.Path("/health")
+		emptyPath.Get(
+			nil,
+			nil,
+			map[int]Request{
+				200: {
+					description: "getReqDef",
+				},
+			},)
+
 		firstGroup := srw.Group("/group1", "firstGroup")
 		path1 := firstGroup.Path("/path1")
 		path1.Get(
