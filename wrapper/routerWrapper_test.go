@@ -3,7 +3,6 @@ package wrapper
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"swagger-gin-generator/utils"
 	"testing"
 )
 
@@ -54,8 +53,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"produces":    []string{"getProduce"},
 				"summary":     "getSummary",
 			},
-			[]utils.Parameter{
-				utils.NewParameter(map[string]interface{}{
+			[]Parameter{
+				NewParameter(map[string]interface{}{
 					"name":        "name",
 					"description": "boolGetParameter",
 					"in":          "header",
@@ -80,8 +79,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]utils.Parameter{
-				utils.NewParameter(map[string]interface{}{
+			[]Parameter{
+				NewParameter(map[string]interface{}{
 					"name":        "name",
 					"description": "boolGetParameter",
 					"in":          "header",
@@ -126,8 +125,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]utils.Parameter{
-				utils.NewParameter(map[string]interface{}{
+			[]Parameter{
+				NewParameter(map[string]interface{}{
 					"name":        "name",
 					"description": "boolGetParameter",
 					"in":          "header",
