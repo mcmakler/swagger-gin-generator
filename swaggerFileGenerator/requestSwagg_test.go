@@ -51,7 +51,7 @@ func TestRequestSwagg_ToString(t *testing.T) {
 			swaggParams := map[string]interface{}{
 				"typeRequest": "GET",
 			}
-			swagP1 := parameters.NewObjectSwaggerParameter(nil, nil)
+			swagP1 := parameters.NewObjectSwaggerParameter(nil, nil, false)
 			a := &requestSwagg{
 				swaggParams: swaggParams,
 				parameters:  []parameters.SwaggParameter{swagP1},

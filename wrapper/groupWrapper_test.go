@@ -43,7 +43,7 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 		}
 		assert.NoError(t, err)
 		expectedDefinitions := []parameters.SwaggParameter{
-			utils.ConvertObjectToSwaggParameter(nil, true),
+			utils.ConvertObjectToSwaggParameter(nil, true, false),
 		}
 		assert.Equal(t, expectedDefinitions, sgw.Definitions())
 	})

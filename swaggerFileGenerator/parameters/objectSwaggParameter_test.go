@@ -133,7 +133,7 @@ func TestNewObjectSwagParameter(t *testing.T) {
 			params:     params,
 			properties: nil,
 		}
-		actual := NewObjectSwaggerParameter(params, nil)
+		actual := NewObjectSwaggerParameter(params, nil, false)
 		assert.Equal(t, expect, actual)
 	})
 }

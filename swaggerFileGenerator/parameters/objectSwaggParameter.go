@@ -16,6 +16,7 @@ const (
 type objectSwaggerParameter struct {
 	params     map[string]interface{}
 	properties map[string]SwaggParameter
+	subObject  bool
 }
 
 var (
@@ -30,7 +31,10 @@ func (o *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 	if _, ok := o.params["name"]; !ok {
 		return "", errorNilObjectName
 	}
-	res := "\n" + o.params["name"].(string) + ":"
+	res := ""
+	if !o.subObject {
+		res = "\n" + o.params["name"].(string) + ":"
+	}
 	if isDefinition {
 		res += typeString + objectType
 	} else {
@@ -55,9 +59,10 @@ func (o *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 	return res, nil
 }
 
-func NewObjectSwaggerParameter(params map[string]interface{}, prop map[string]SwaggParameter) SwaggParameter {
+func NewObjectSwaggerParameter(params map[string]interface{}, prop map[string]SwaggParameter, subObj bool) SwaggParameter {
 	return &objectSwaggerParameter{
 		params:     params,
 		properties: prop,
+		subObject:  subObj,
 	}
 }

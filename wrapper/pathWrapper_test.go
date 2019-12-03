@@ -39,7 +39,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 			_, err := a.ToString()
 			assert.NoError(t, err)
 			expectedDefinitions := []parameters.SwaggParameter{
-				utils.ConvertObjectToSwaggParameter(nil, true),
+				utils.ConvertObjectToSwaggParameter(nil, true, false),
 			}
 			assert.Equal(t, expectedDefinitions, spw.getDefinitions())
 		})

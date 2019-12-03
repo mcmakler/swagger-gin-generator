@@ -74,7 +74,7 @@ func (s *swaggPathWrapper) Get(
 	for key, val := range requests {
 		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, reflect.TypeOf(val.object).Name())
 		responses = append(responses, respSwag)
-		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
+		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
 	}
 
 	var paramsSwagg []parameters.SwaggParameter
@@ -120,7 +120,7 @@ func (s *swaggPathWrapper) Post(
 	for key, val := range requests {
 		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, reflect.TypeOf(val.object).Name())
 		responses = append(responses, respSwag)
-		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object))
+		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
 	}
 
 	var paramsSwagg []parameters.SwaggParameter

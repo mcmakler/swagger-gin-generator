@@ -19,7 +19,7 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 		t.Run("Should: return error empty Object name", func(t *testing.T) {
 			a := &arraySwaggParameter{
 				params: nil,
-				items:  NewObjectSwaggerParameter(nil, nil),
+				items:  NewObjectSwaggerParameter(nil, nil, false),
 			}
 			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)

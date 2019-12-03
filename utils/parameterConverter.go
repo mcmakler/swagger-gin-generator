@@ -23,12 +23,12 @@ func NewParameter(params map[string]interface{}, obj interface{}) Parameter {
 }
 
 func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
-	return setValueByType(p.listOfparameters, p.object)
+	return setValueByType(p.listOfparameters, p.object, false)
 }
 
 //TODO: required
 //TODO: watch the case, when object is a pointer
-func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
+func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
 	typ := reflect.TypeOf(object)
 	val := reflect.ValueOf(object)
 
@@ -36,7 +36,7 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 
 	if reflect.TypeOf(object).Kind() == reflect.Struct {
 		for i := 0; i < typ.NumField(); i++ {
-			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface())
+			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface(), true)
 		}
 	}
 
@@ -44,12 +44,12 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 		params = make(map[string]interface{})
 	}
 	params["name"] = reflect.TypeOf(object).Name()
-	res := parameters.NewObjectSwaggerParameter(params, properties)
+	res := parameters.NewObjectSwaggerParameter(params, properties, subObj)
 
 	return res
 }
 
-func setValueByType(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
+func setValueByType(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
 	switch reflect.TypeOf(object).Kind() {
 	case reflect.Bool:
 		return parameters.NewBoolSwagParameter(params)
@@ -61,9 +61,9 @@ func setValueByType(params map[string]interface{}, object interface{}) parameter
 		return parameters.NewNumberSwagParameter(params)
 	case reflect.Array, reflect.Slice:
 		//TODO: check is it work
-		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface()))
+		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface(), false))
 	//TODO: map?
 	default:
-		return ConvertObjectToSwaggParameter(params, object)
+		return ConvertObjectToSwaggParameter(params, object, subObj)
 	}
 }
