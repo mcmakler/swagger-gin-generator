@@ -36,7 +36,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			g)
 		emptyGroup := srw.Group("", "health")
 		emptyPath := emptyGroup.Path("/health")
-		emptyPath.Get(
+		emptyPath.GET(
 			nil,
 			nil,
 			map[int]Request{
@@ -47,7 +47,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 
 		firstGroup := srw.Group("/group1", "firstGroup")
 		path1 := firstGroup.Path("/path1")
-		path1.Get(
+		path1.GET(
 			map[string]interface{}{
 				"description": "getDescription",
 				"consumes":    []string{"getConsume"},
@@ -72,7 +72,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		path1.Post(
+		path1.POST(
 			map[string]interface{}{
 				"description": "getDescription",
 				"consumes":    []string{"getConsume"},
@@ -96,7 +96,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			func(c *gin.Context) {})
 
 		path2 := firstGroup.Path("/path2")
-		path2.Get(
+		path2.GET(
 			nil,
 			nil,
 			map[int]Request{
@@ -106,7 +106,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		path2.Post(
+		path2.POST(
 			nil,
 			nil,
 			map[int]Request{
@@ -118,7 +118,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			func(c *gin.Context) {})
 		secondGroup := srw.Group("/group2", "secondGroup")
 		paht22 := secondGroup.Path("/path2")
-		paht22.Get(
+		paht22.GET(
 			map[string]interface{}{
 				"description": "getDescription",
 				"consumes":    []string{"getConsume"},

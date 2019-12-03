@@ -17,7 +17,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 				"path",
 				"tag",
 				gr)
-			spw.Get(
+			spw.GET(
 				map[string]interface{}{
 					"description": "getDescription",
 					"consumes":    []string{"getConsume"},
@@ -55,7 +55,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 				"path",
 				"tag",
 				gr)
-			spw.Post(
+			spw.POST(
 				map[string]interface{}{
 					"description": "getDescription",
 					"consumes":    []string{"getConsume"},
@@ -74,6 +74,63 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 					200: {
 						description: "getReqDef",
 						object:      true,
+					},
+				},
+				func(c *gin.Context) {})
+			a := spw.generate()
+			_, err := a.ToString()
+			assert.NoError(t, err)
+		})
+
+		t.Run("Should: other types test", func(t *testing.T) {
+			g := gin.Default()
+			gr := g.Group("/")
+			spw := newSwaggPathWrapper(
+				"path",
+				"tag",
+				gr)
+			spw.DELETE(
+				nil,
+				nil,
+				map[int]Request{
+					200: {
+						description: "getReqDef",
+					},
+				},
+				func(c *gin.Context) {})
+			spw.HEAD(
+				nil,
+				nil,
+				map[int]Request{
+					200: {
+						description: "getReqDef",
+					},
+				},
+				func(c *gin.Context) {})
+			spw.OPTIONS(
+				nil,
+				nil,
+				map[int]Request{
+					200: {
+						description: "getReqDef",
+					},
+				},
+				func(c *gin.Context) {})
+			spw.PATCH(
+				nil,
+				nil,
+				map[int]Request{
+					200: {
+						description: "getReqDef",
+					},
+				},
+				func(c *gin.Context) {})
+			spw.PUT(
+				nil,
+				nil,
+				map[int]Request{
+					200: {
+						description: "getReqDef",
 					},
 				},
 				func(c *gin.Context) {})

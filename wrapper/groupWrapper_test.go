@@ -15,7 +15,7 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 		sgw := newSwaggGroupWrapper("path", "tag", group)
 		sgw.Use(func(c *gin.Context) {})
 		spw := sgw.Path("path")
-		spw.Get(
+		spw.GET(
 			map[string]interface{}{
 				"description": "getDescription",
 				"consumes":    []string{"getConsume"},
