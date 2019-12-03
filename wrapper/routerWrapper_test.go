@@ -95,13 +95,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		path2 := firstGroup.Path("/path2")
 		path2.Get(
 			nil,
-			[]utils.Parameter{
-				utils.NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
-			},
+			nil,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -111,12 +105,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			func(c *gin.Context) {})
 		path2.Post(
 			nil,
-			[]utils.Parameter{
-				utils.NewParameter(map[string]interface{}{
-					"name": "name",
-					"in":   "header",
-				}, true),
-			},
+			nil,
 			map[int]Request{
 				200: {
 					description: "getReqDef",

@@ -42,8 +42,8 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				parameters:  nil,
 				responses:   nil,
 			}
-			expected := "\nGET:"
-			actual, _ := a.ToString()
+			expected := errorEmptyResponses
+			_, actual := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
 
@@ -52,10 +52,11 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				"typeRequest": "GET",
 			}
 			swagP1 := parameters.NewObjectSwaggerParameter(nil, nil, false)
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			a := &requestSwagg{
 				swaggParams: swaggParams,
 				parameters:  []parameters.SwaggParameter{swagP1},
-				responses:   nil,
+				responses:   []ResponseSwagg{responseSwagg1},
 			}
 			_, err := a.ToString()
 			assert.Equal(t, errors.New("NIL_OBJECT_NAME"), err)

@@ -41,8 +41,9 @@ func TestPathSwagger_ToString(t *testing.T) {
 			swaggParams := map[string]interface{}{
 				"typeRequest": "GET",
 			}
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			req := []RequestSwagg{
-				NewRequestSwagg(swaggParams, nil, nil),
+				NewRequestSwagg(swaggParams, nil, []ResponseSwagg{responseSwagg1}),
 			}
 			a := &pathSwagger{
 				path:     "path",

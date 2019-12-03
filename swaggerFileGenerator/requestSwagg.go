@@ -33,6 +33,7 @@ type requestSwagg struct {
 
 var (
 	errorEmptyTypeRequest = errors.New("EMPTY_TYPE_OF_REQUEST")
+	errorEmptyResponses = errors.New("EMPTY_RESPONSES")
 )
 
 //TODO: some checks it need not be empty
@@ -42,6 +43,9 @@ func (r *requestSwagg) ToString() (string, error) {
 	}
 	if _, ok := r.swaggParams["typeRequest"]; !ok {
 		return "", errorEmptyTypeRequest
+	}
+	if r.responses == nil || len(r.responses) == 0 {
+		return "", errorEmptyResponses
 	}
 	res := "\n" + r.swaggParams["typeRequest"].(string) + ":"
 	if val, ok := r.swaggParams["description"]; ok {

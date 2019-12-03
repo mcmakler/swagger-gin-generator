@@ -11,13 +11,13 @@ import (
 type SwaggPathWrapper interface {
 	Get(
 		swaggerParameters map[string]interface{},
-		parameters []utils.Parameter, //TODO: think
+		parameters []utils.Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	Post(
 		swaggerParameters map[string]interface{},
-		parameters []utils.Parameter, //TODO: think
+		parameters []utils.Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)

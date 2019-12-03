@@ -38,12 +38,13 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return error "+parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil, nil),
+					}, nil,  []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -63,12 +64,13 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return empty title", func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil, nil),
+					}, nil,  []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -86,12 +88,13 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return empty version", func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil, nil),
+					}, nil,  []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -109,12 +112,13 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil, nil),
+					}, nil,  []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -138,12 +142,13 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil, nil),
+					}, nil, []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -168,12 +173,13 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
 				path: "path",
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil, nil),
+					}, nil, []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			def := parameters.NewBoolSwagParameter(nil)
