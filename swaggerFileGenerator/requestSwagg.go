@@ -33,7 +33,7 @@ type requestSwagg struct {
 
 var (
 	errorEmptyTypeRequest = errors.New("EMPTY_TYPE_OF_REQUEST")
-	errorEmptyResponses = errors.New("EMPTY_RESPONSES")
+	errorEmptyResponses   = errors.New("EMPTY_RESPONSES")
 )
 
 //TODO: some checks it need not be empty

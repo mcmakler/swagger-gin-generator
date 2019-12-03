@@ -43,7 +43,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				200: {
 					description: "getReqDef",
 				},
-			},)
+			}, )
 
 		firstGroup := srw.Group("/group1", "firstGroup")
 		path1 := firstGroup.Path("/path1")
@@ -64,7 +64,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			map[int]Request{
 				200: {
 					description: "getReqDef",
-					object: &testStructFull{},
+					object:      &testStructFull{},
 				},
 				400: {
 					description: "description",
@@ -136,7 +136,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			map[int]Request{
 				200: {
 					description: "getReqDef",
-					object: &testStructFull{},
+					object:      &testStructFull{},
 				},
 			},
 			func(c *gin.Context) {})

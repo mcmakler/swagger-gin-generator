@@ -44,7 +44,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil,  []ResponseSwagg{responseSwagg1}),
+					}, nil, []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -70,7 +70,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil,  []ResponseSwagg{responseSwagg1}),
+					}, nil, []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -94,7 +94,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil,  []ResponseSwagg{responseSwagg1}),
+					}, nil, []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
@@ -118,7 +118,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				requests: []RequestSwagg{
 					NewRequestSwagg(map[string]interface{}{
 						"typeRequest": "GET",
-					}, nil,  []ResponseSwagg{responseSwagg1}),
+					}, nil, []ResponseSwagg{responseSwagg1}),
 				},
 			}
 			a := &mainSwagg{
