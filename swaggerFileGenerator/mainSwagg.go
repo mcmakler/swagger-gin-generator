@@ -19,6 +19,11 @@ const (
 	mainIndentString = "\n  "
 )
 
+var (
+	errorEmptyTitle = errors.New("ERROR_EMPTY_TITLE")
+	errorEmptyVersion = errors.New("ERROR_EMPTY_VERSION")
+)
+
 type MainSwagg interface {
 	ToString() (string, error)
 }
@@ -37,26 +42,19 @@ func (m *mainSwagg) ToString() (string, error) {
 	if m.paths == nil {
 		return "", errorEmptyPaths
 	}
-	res := swaggerString
-	infoExists := false
-	if val, ok := m.params["description"]; ok {
-		res += infoString
-		res += infoDescriptionString + val.(string)
-		infoExists = true
-	}
+	res := swaggerString + infoString
 	if val, ok := m.params["title"]; ok {
-		if !infoExists {
-			res += infoString
-			infoExists = true
-		}
 		res += infoTitleString + val.(string)
+	} else {
+		return "", errorEmptyTitle
 	}
 	if val, ok := m.params["version"]; ok {
-		if !infoExists {
-			res += infoString
-			infoExists = true
-		}
 		res += infoVersionString + val.(string)
+	} else {
+		return "", errorEmptyVersion
+	}
+	if val, ok := m.params["description"]; ok {
+		res += infoDescriptionString + val.(string)
 	}
 	if val, ok := m.params["basePath"]; !ok {
 		res += basePathString + "/"
