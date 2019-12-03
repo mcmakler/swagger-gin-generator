@@ -75,6 +75,10 @@ func (s *swaggPathWrapper) Get(
 		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
 	}
 
+	if swaggerParameters == nil {
+		swaggerParameters = map[string]interface{}{}
+	}
+
 	if s.tag != "" {
 		if _, ok := swaggerParameters["tagsP"]; !ok {
 			swaggerParameters["tagsP"] = []string{}
@@ -82,6 +86,7 @@ func (s *swaggPathWrapper) Get(
 		swaggerParameters["tagsP"] = append(swaggerParameters["tagsP"].([]string), s.tag)
 	}
 
+	swaggerParameters["typeRequest"] = "get"
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
 		swaggerParameters,
 		paramsSwagg,
@@ -115,6 +120,10 @@ func (s *swaggPathWrapper) Post(
 		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
 	}
 
+	if swaggerParameters == nil {
+		swaggerParameters = map[string]interface{}{}
+	}
+
 	if s.tag != "" {
 		if _, ok := swaggerParameters["tagsP"]; !ok {
 			swaggerParameters["tagsP"] = []string{}
@@ -122,6 +131,7 @@ func (s *swaggPathWrapper) Post(
 		swaggerParameters["tagsP"] = append(swaggerParameters["tagsP"].([]string), s.tag)
 	}
 
+	swaggerParameters["typeRequest"] = "post"
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
 		swaggerParameters,
 		paramsSwagg,

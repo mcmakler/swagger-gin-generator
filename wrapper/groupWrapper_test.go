@@ -16,11 +16,13 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 		sgw.Use(func(c *gin.Context) {})
 		spw := sgw.Path("path")
 		spw.Get(
-			"getDescription",
-			[]string{"getConsume"},
-			[]string{"getProduce"},
-			nil,
-			"getSummary",
+			map[string]interface{}{
+				"description": "getDescription",
+				"consumes": []string{"getConsume"},
+				"produces": []string{"getProduce"},
+				"tags": []string{"tagget"},
+				"summary": "getSummary",
+			},
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
 					"name": "name",
