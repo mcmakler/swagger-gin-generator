@@ -11,6 +11,10 @@ type testStructBool struct {
 	B bool
 }
 
+type testResponse struct {
+	Text string
+}
+
 type testStructFull struct {
 	B      bool
 	S      string
@@ -25,12 +29,12 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		g := gin.Default()
 		srw := NewSwaggerRouterWrapper(
 			map[string]interface{}{
-				"title": "title",
+				"title":       "title",
 				"description": "description",
-				"version": "version",
+				"version":     "version",
 			},
 			g)
-		firstGroup := srw.Group("group1", "firstGroup")
+		firstGroup := srw.Group("/group1", "firstGroup")
 		path1 := firstGroup.Path("/path1")
 		path1.Get(
 			"getDescription",
@@ -41,22 +45,23 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
 					"description": "boolGetParameter",
+					"in":          "header",
 				}, true),
 			},
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     testStructFull{
+					object: testStructFull{
 						B:      false,
 						S:      "",
 						I:      0,
 						F:      0,
 						A:      nil,
-						Substr: testStructBool{B:false},
+						Substr: testStructBool{B: false},
 					},
 				},
 			},
-			func(c *gin.Context){})
+			func(c *gin.Context) {})
 		path1.Post(
 			"getDescription",
 			[]string{"getConsume"},
@@ -66,15 +71,16 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
 					"description": "boolGetParameter",
+					"in":          "header",
 				}, true),
 			},
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     true,
+					object:     testResponse{"sdsd"},
 				},
 			},
-			func(c *gin.Context){})
+			func(c *gin.Context) {})
 
 		path2 := firstGroup.Path("/path2")
 		path2.Get(
@@ -86,15 +92,16 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
 					"description": "boolGetParameter",
+					"in":          "header",
 				}, true),
 			},
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     true,
+					object:     testResponse{"sdsd"},
 				},
 			},
-			func(c *gin.Context){})
+			func(c *gin.Context) {})
 		path2.Post(
 			"getDescription",
 			[]string{"getConsume"},
@@ -104,16 +111,17 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
 					"description": "boolGetParameter",
+					"in":          "header",
 				}, true),
 			},
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     "object",
+					object:     testResponse{"sdsd"},
 				},
 			},
-			func(c *gin.Context){})
-		secondGroup := srw.Group("group2", "secondGroup")
+			func(c *gin.Context) {})
+		secondGroup := srw.Group("/group2", "secondGroup")
 		paht22 := secondGroup.Path("/path2")
 		paht22.Get(
 			"getDescription",
@@ -124,22 +132,23 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
 					"description": "boolGetParameter",
+					"in":          "header",
 				}, true),
 			},
 			map[int]Request{
 				200: {
 					definition: "getReqDef",
-					object:     testStructFull{
+					object: testStructFull{
 						B:      false,
 						S:      "",
 						I:      0,
 						F:      0,
 						A:      nil,
-						Substr: testStructBool{B:false},
+						Substr: testStructBool{B: false},
 					},
 				},
 			},
-			func(c *gin.Context){})
+			func(c *gin.Context) {})
 		err := srw.Generate("rez.txt")
 		assert.NoError(t, err)
 	})
