@@ -57,41 +57,7 @@ func (s *swaggPathWrapper) Get(
 ) {
 	s.group.GET(s.path, handlerFuncP...)
 
-	var responses []swaggerFileGenerator.ResponseSwagg
-
-	for key, val := range requests {
-		if val.object != nil {
-			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.TypeOf(val.object).Name())
-			responses = append(responses, respSwag)
-			s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
-		} else {
-			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, "")
-			responses = append(responses, respSwag)
-		}
-	}
-
-	var paramsSwagg []parameters.SwaggParameter
-	for _, val := range parametersP {
-		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
-	}
-
-	if swaggerParameters == nil {
-		swaggerParameters = map[string]interface{}{}
-	}
-
-	if s.tag != "" {
-		if _, ok := swaggerParameters["tagsP"]; !ok {
-			swaggerParameters["tagsP"] = []string{}
-		}
-		swaggerParameters["tagsP"] = append(swaggerParameters["tagsP"].([]string), s.tag)
-	}
-
-	swaggerParameters["typeRequest"] = "get"
-	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
-		swaggerParameters,
-		paramsSwagg,
-		responses,
-	))
+	s.addRequest(swaggerParameters, parametersP, requests, "get")
 }
 
 func (s *swaggPathWrapper) Post(
@@ -102,11 +68,34 @@ func (s *swaggPathWrapper) Post(
 ) {
 	s.group.POST(s.path, handlerFuncP...)
 
+	s.addRequest(swaggerParameters, parametersP, requests, "post")
+}
+
+func (s *swaggPathWrapper) generate() swaggerFileGenerator.PathSwagger {
+	res := swaggerFileGenerator.NewPathSwagger(s.path, s.requests)
+	return res
+}
+
+func (s *swaggPathWrapper) getDefinitions() []parameters.SwaggParameter {
+	return s.definitions
+}
+
+func (s *swaggPathWrapper) addRequest(
+	swaggerParameters map[string]interface{},
+	parametersP []utils.Parameter,
+	requests map[int]Request,
+	reqType string,
+) {
 	var responses []swaggerFileGenerator.ResponseSwagg
 
 	for key, val := range requests {
 		if val.object != nil {
-			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.TypeOf(val.object).Name())
+			var respSwag swaggerFileGenerator.ResponseSwagg
+			if reflect.ValueOf(val.object).Kind() == reflect.Ptr {
+				respSwag = swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.ValueOf(val.object).Elem().Type().Name())
+			} else {
+				respSwag = swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.TypeOf(val.object).Name())
+			}
 			responses = append(responses, respSwag)
 			s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
 		} else {
@@ -131,19 +120,10 @@ func (s *swaggPathWrapper) Post(
 		swaggerParameters["tagsP"] = append(swaggerParameters["tagsP"].([]string), s.tag)
 	}
 
-	swaggerParameters["typeRequest"] = "post"
+	swaggerParameters["typeRequest"] = reqType
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
 		swaggerParameters,
 		paramsSwagg,
 		responses,
 	))
-}
-
-func (s *swaggPathWrapper) generate() swaggerFileGenerator.PathSwagger {
-	res := swaggerFileGenerator.NewPathSwagger(s.path, s.requests)
-	return res
-}
-
-func (s *swaggPathWrapper) getDefinitions() []parameters.SwaggParameter {
-	return s.definitions
 }

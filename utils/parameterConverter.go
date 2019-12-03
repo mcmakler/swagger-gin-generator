@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"reflect"
 	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
@@ -29,8 +30,17 @@ func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
 //TODO: required
 //TODO: watch the case, when object is a pointer
 func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
-	typ := reflect.TypeOf(object)
-	val := reflect.ValueOf(object)
+	var typ reflect.Type
+	var val reflect.Value
+	if reflect.ValueOf(object).Kind() == reflect.Ptr {
+		fmt.Println("Value type is:", reflect.ValueOf(object).Elem())
+		typ = reflect.ValueOf(object).Elem().Type()
+		val = reflect.ValueOf(object).Elem()
+		object = reflect.ValueOf(object).Elem()
+	} else {
+		typ = reflect.TypeOf(object)
+		val = reflect.ValueOf(object)
+	}
 
 	properties := make(map[string]parameters.SwaggParameter)
 
@@ -43,7 +53,7 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 	if params == nil {
 		params = make(map[string]interface{})
 	}
-	params["name"] = reflect.TypeOf(object).Name()
+	params["name"] = typ.Name()
 	res := parameters.NewObjectSwaggerParameter(params, properties, subObj)
 
 	return res

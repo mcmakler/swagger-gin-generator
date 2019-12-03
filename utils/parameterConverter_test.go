@@ -6,87 +6,87 @@ import (
 	"testing"
 )
 
-type testStructEmpty struct {
+type TestStructEmpty struct {
 }
 
-type testStructBool struct {
+type TestStructBool struct {
 	B bool
 }
 
-type testStructArr struct {
+type TestStructArr struct {
 	A []bool
 }
 
-type testStructSubstr struct {
-	Substr testStructBool
+type TestStructSubstr struct {
+	Substr TestStructBool
 }
 
-type testStructFull struct {
+type TestStructFull struct {
 	B      bool
 	S      string
 	I      int
 	F      float64
 	A      []bool
-	Substr testStructBool
+	Substr *TestStructBool
 }
 
 func TestConvertObjectToSwaggParameter(t *testing.T) {
 	t.Run("Test: utils.ConvertObjectToSwaggParameter", func(t *testing.T) {
 		t.Run("Should: return empty swag object", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "testStructEmpty",
+				"name": "TestStructEmpty",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, make(map[string]parameters.SwaggParameter), false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructEmpty{}, false))
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructEmpty{}, false))
 		})
 
 		t.Run("Should: return swag object with bool param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "testStructBool",
+				"name": "TestStructBool",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"B": parameters.NewBoolSwagParameter(nil),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructBool{
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructBool{
 				B: true,
 			}, false))
 		})
 
 		t.Run("Should: return swag object with arr param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "testStructArr",
+				"name": "TestStructArr",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"A": parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil)),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructArr{
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructArr{
 				A: []bool{true},
 			}, false))
 		})
 
 		t.Run("Should: return swag object with arr param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "testStructSubstr",
+				"name": "TestStructSubstr",
 			}
 			paramsBool := map[string]interface{}{
-				"name": "testStructBool",
+				"name": "TestStructBool",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"Substr": parameters.NewObjectSwaggerParameter(paramsBool, map[string]parameters.SwaggParameter{
 					"B": parameters.NewBoolSwagParameter(nil),
 				}, true),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructSubstr{
-				Substr: testStructBool{B: false},
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructSubstr{
+				Substr: TestStructBool{B: false},
 			}, false))
 		})
 
 		t.Run("Should: return swag object with bool param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "testStructFull",
+				"name": "TestStructFull",
 			}
 			paramsBool := map[string]interface{}{
-				"name": "testStructBool",
+				"name": "TestStructBool",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"B": parameters.NewBoolSwagParameter(nil),
@@ -98,13 +98,13 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 					"B": parameters.NewBoolSwagParameter(nil),
 				}, true),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructFull{
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructFull{
 				B:      false,
 				S:      "",
 				I:      0,
 				F:      0,
 				A:      []bool{true},
-				Substr: testStructBool{B: false},
+				Substr: &TestStructBool{B: false},
 			}, false))
 		})
 	})
