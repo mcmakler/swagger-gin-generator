@@ -7,40 +7,40 @@ import (
 
 func TestIntegerSwaggParameter_ToString(t *testing.T) {
 	t.Run("Test: IntegerSwaggParameter.ToString()", func(t *testing.T) {
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			a := &integerSwaggParameter{
-				params: nil,
+				configs: nil,
 			}
 			expected := typeDeficeString + integerType
 			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
 			}
 			a := &integerSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := errorEmptyIn
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in": "in",
 			}
 			a := &integerSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := errorEmptyName
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with all params", func(t *testing.T) {
+		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":                    "in",
 				"name":                  "name",
@@ -55,7 +55,7 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 				"description":           "description",
 			}
 			a := &integerSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := typeDeficeString + integerType +
 				inString + "in" +
@@ -77,7 +77,7 @@ func TestIntegerSwaggParameter_ToString(t *testing.T) {
 
 func TestNewIntegerSwagParameter(t *testing.T) {
 	t.Run("Test: NewIntegerSwagParameter", func(t *testing.T) {
-		expect := &integerSwaggParameter{params: nil}
+		expect := &integerSwaggParameter{configs: nil}
 		actual := NewIntegerSwagParameter(nil)
 		assert.Equal(t, expect, actual)
 	})

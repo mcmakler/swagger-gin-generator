@@ -10,8 +10,8 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 	t.Run("Test: IntegerSwaggParameter.ToString()", func(t *testing.T) {
 		t.Run("Should: return error empty items", func(t *testing.T) {
 			a := &arraySwaggParameter{
-				params: nil,
-				items:  nil,
+				configs: nil,
+				items:   nil,
 			}
 			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, ErrorNillItemsParameter)
@@ -19,58 +19,58 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 
 		t.Run("Should: return error empty Object name", func(t *testing.T) {
 			a := &arraySwaggParameter{
-				params: nil,
-				items:  NewObjectSwaggerParameter(nil, nil, false),
+				configs: nil,
+				items:   NewObjectSwaggerParameter(nil, nil, false),
 			}
 			expected := errorEmptyIn
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			a := &arraySwaggParameter{
-				params: nil,
-				items:  NewStringSwagParameter(nil),
+				configs: nil,
+				items:   NewStringSwagParameter(nil),
 			}
 			expected := errorEmptyIn
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in": "in",
 			}
 			a := &arraySwaggParameter{
-				params: params,
-				items:  NewBoolSwagParameter(nil),
+				configs: params,
+				items:   NewBoolSwagParameter(nil),
 			}
 			expected := errorEmptyName
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":   "in",
 				"name": "name",
 			}
 			a := &arraySwaggParameter{
-				params: params,
-				items:  NewArraySwaggParameter(nil, nil),
+				configs: params,
+				items:   NewArraySwaggParameter(nil, nil),
 			}
 			expected := ErrorNillItemsParameter
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
 			}
 			a := &arraySwaggParameter{
-				params: params,
-				items:  NewBoolSwagParameter(nil),
+				configs: params,
+				items:   NewBoolSwagParameter(nil),
 			}
 			str, _ := a.items.ToString(true)
 			expected := typeString + arrayType + itemsString + strings.Replace(str, "\n", "\n  ", -1)
@@ -78,7 +78,7 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with all params", func(t *testing.T) {
+		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":              "in",
 				"name":            "name",
@@ -91,8 +91,8 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 				"enum":            []string{"EIN", "ZWEI", "DREI"},
 			}
 			a := &arraySwaggParameter{
-				params: params,
-				items:  NewIntegerSwagParameter(nil),
+				configs: params,
+				items:   NewIntegerSwagParameter(nil),
 			}
 			str, _ := a.items.ToString(true)
 			expected := typeDeficeString + arrayType +
@@ -114,8 +114,8 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 func TestNewArraySwaggParameter(t *testing.T) {
 	t.Run("Test: NewArraySwaggParameter", func(t *testing.T) {
 		expect := &arraySwaggParameter{
-			params: nil,
-			items:  NewBoolSwagParameter(nil),
+			configs: nil,
+			items:   NewBoolSwagParameter(nil),
 		}
 		actual := NewArraySwaggParameter(nil, NewBoolSwagParameter(nil))
 		assert.Equal(t, expect, actual)

@@ -12,9 +12,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 	t.Run("Test: RequestSwagg.ToString()", func(t *testing.T) {
 		t.Run("Should: return error EMPTY_TYPE_OF_REQUEST", func(t *testing.T) {
 			a := &requestSwagg{
-				swaggParams: nil,
-				parameters:  nil,
-				responses:   nil,
+				configs:    nil,
+				parameters: nil,
+				responses:  nil,
 			}
 			_, error := a.ToString()
 			assert.Equal(t, error, errorEmptyTypeRequest)
@@ -25,9 +25,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				"test": 1,
 			}
 			a := &requestSwagg{
-				swaggParams: swaggParams,
-				parameters:  nil,
-				responses:   nil,
+				configs:    swaggParams,
+				parameters: nil,
+				responses:  nil,
 			}
 			_, error := a.ToString()
 			assert.Equal(t, error, errorEmptyTypeRequest)
@@ -38,9 +38,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				"typeRequest": "GET",
 			}
 			a := &requestSwagg{
-				swaggParams: swaggParams,
-				parameters:  nil,
-				responses:   nil,
+				configs:    swaggParams,
+				parameters: nil,
+				responses:  nil,
 			}
 			expected := errorEmptyResponses
 			_, actual := a.ToString()
@@ -54,9 +54,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 			swagP1 := parameters.NewObjectSwaggerParameter(nil, nil, false)
 			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			a := &requestSwagg{
-				swaggParams: swaggParams,
-				parameters:  []parameters.SwaggParameter{swagP1},
-				responses:   []ResponseSwagg{responseSwagg1},
+				configs:    swaggParams,
+				parameters: []parameters.SwaggParameter{swagP1},
+				responses:  []ResponseSwagg{responseSwagg1},
 			}
 			_, err := a.ToString()
 			assert.Equal(t, errors.New("NIL_OBJECT_NAME"), err)
@@ -68,9 +68,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 			}
 			responseSwagg1 := NewResponseSwagg(-1, "", "")
 			a := &requestSwagg{
-				swaggParams: swaggParams,
-				parameters:  nil,
-				responses:   []ResponseSwagg{responseSwagg1},
+				configs:    swaggParams,
+				parameters: nil,
+				responses:  []ResponseSwagg{responseSwagg1},
 			}
 			_, err := a.ToString()
 			assert.Equal(t, errors.New("WRONG_HTTP_CODE"), err)
@@ -90,9 +90,9 @@ func TestRequestSwagg_ToString(t *testing.T) {
 			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			responseSwagg2 := NewResponseSwagg(300, "descr", "")
 			a := &requestSwagg{
-				swaggParams: swaggParams,
-				parameters:  []parameters.SwaggParameter{swagP1, swagP2},
-				responses:   []ResponseSwagg{responseSwagg1, responseSwagg2},
+				configs:    swaggParams,
+				parameters: []parameters.SwaggParameter{swagP1, swagP2},
+				responses:  []ResponseSwagg{responseSwagg1, responseSwagg2},
 			}
 			expected := "\nGET:" +
 				descriptionString + "description" +
@@ -131,9 +131,9 @@ func TestNewRequestSwagg(t *testing.T) {
 		responseSwagg1 := NewResponseSwagg(200, "descr", "")
 		responseSwagg2 := NewResponseSwagg(300, "descr", "")
 		expected := &requestSwagg{
-			swaggParams: swaggParams,
-			parameters:  []parameters.SwaggParameter{swagP1, swagP2},
-			responses:   []ResponseSwagg{responseSwagg1, responseSwagg2},
+			configs:    swaggParams,
+			parameters: []parameters.SwaggParameter{swagP1, swagP2},
+			responses:  []ResponseSwagg{responseSwagg1, responseSwagg2},
 		}
 		actual := NewRequestSwagg(
 			swaggParams,

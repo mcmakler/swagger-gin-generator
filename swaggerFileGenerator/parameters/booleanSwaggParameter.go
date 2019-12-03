@@ -9,7 +9,7 @@ const (
 )
 
 type boolSwaggParameter struct {
-	params map[string]interface{}
+	configs map[string]interface{}
 }
 
 func (s *boolSwaggParameter) ToString(isDefinition bool) (string, error) {
@@ -19,26 +19,26 @@ func (s *boolSwaggParameter) ToString(isDefinition bool) (string, error) {
 	} else {
 		res = typeDeficeString + boolType
 	}
-	if s.params == nil {
+	if s.configs == nil {
 		return res, nil
 	}
-	if val, ok := s.params["in"]; ok {
+	if val, ok := s.configs["in"]; ok {
 		res += inString + val.(string)
 	} else if !isDefinition {
 		return "", errorEmptyIn
 	}
-	if val, ok := s.params["name"]; ok {
+	if val, ok := s.configs["name"]; ok {
 		res += nameString + val.(string)
 	} else if !isDefinition {
 		return "", errorEmptyName
 	}
-	if val, ok := s.params["required"]; ok {
+	if val, ok := s.configs["required"]; ok {
 		res += requiredString + strconv.FormatBool(val.(bool))
 	}
-	if val, ok := s.params["allowEmptyValue"]; ok {
+	if val, ok := s.configs["allowEmptyValue"]; ok {
 		res += allowEmptyValueString + strconv.FormatBool(val.(bool))
 	}
-	if val, ok := s.params["description"]; ok {
+	if val, ok := s.configs["description"]; ok {
 		res += descriptionString + val.(string)
 	}
 	return res, nil
@@ -46,6 +46,6 @@ func (s *boolSwaggParameter) ToString(isDefinition bool) (string, error) {
 
 func NewBoolSwagParameter(params map[string]interface{}) SwaggParameter {
 	return &boolSwaggParameter{
-		params: params,
+		configs: params,
 	}
 }

@@ -11,7 +11,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 	t.Run("Test: MainSwagg.ToString()", func(t *testing.T) {
 		t.Run("Should: return error "+errorEmptyPaths.Error(), func(t *testing.T) {
 			a := &mainSwagg{
-				params:      nil,
+				configs:     nil,
 				paths:       nil,
 				definitions: nil,
 			}
@@ -21,7 +21,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 
 		t.Run("Should: return error "+errorIncorrectPath.Error(), func(t *testing.T) {
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
@@ -48,7 +48,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				},
 			}
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
@@ -74,7 +74,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				},
 			}
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"version": "version",
 				},
 				paths: []PathSwagger{
@@ -98,7 +98,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				},
 			}
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"title": "title",
 				},
 				paths: []PathSwagger{
@@ -122,7 +122,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				},
 			}
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
@@ -152,7 +152,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				},
 			}
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"title":    "title",
 					"version":  "version",
 					"basePath": "basePath",
@@ -184,7 +184,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 			}
 			def := parameters.NewBoolSwagParameter(nil)
 			a := &mainSwagg{
-				params: map[string]interface{}{
+				configs: map[string]interface{}{
 					"description": "description",
 					"title":       "title",
 					"version":     "version",
@@ -223,7 +223,7 @@ func TestNewMainSwagg(t *testing.T) {
 			},
 		}
 		expected := &mainSwagg{
-			params: nil,
+			configs: nil,
 			paths: []PathSwagger{
 				path,
 			},

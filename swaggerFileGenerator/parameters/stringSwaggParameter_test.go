@@ -7,49 +7,49 @@ import (
 
 func TestStringSwaggParameter_ToString(t *testing.T) {
 	t.Run("Test: StringSwaggParameter.ToString()", func(t *testing.T) {
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			a := &stringSwaggParameter{
-				params: nil,
+				configs: nil,
 			}
 			expected := typeDeficeString + stringType
 			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			a := &stringSwaggParameter{
-				params: nil,
+				configs: nil,
 			}
 			expected := typeString + stringType
 			actual, _ := a.ToString(true)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
 			}
 			a := &stringSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := errorEmptyIn
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in": "in",
 			}
 			a := &stringSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := errorEmptyName
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with all params", func(t *testing.T) {
+		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":              "in",
 				"name":            "name",
@@ -63,7 +63,7 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 				"enum":            []string{"EIN", "ZWEI", "DREI"},
 			}
 			a := &stringSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := typeDeficeString + stringType +
 				inString + "in" +
@@ -84,7 +84,7 @@ func TestStringSwaggParameter_ToString(t *testing.T) {
 
 func TestNewStringSwagParameter(t *testing.T) {
 	t.Run("Test: NewStringSwagParameter", func(t *testing.T) {
-		expect := &stringSwaggParameter{params: nil}
+		expect := &stringSwaggParameter{configs: nil}
 		actual := NewStringSwagParameter(nil)
 		assert.Equal(t, expect, actual)
 	})

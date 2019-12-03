@@ -13,7 +13,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 		t.Run("Should: get path generate without errors", func(t *testing.T) {
 			g := gin.Default()
 			gr := g.Group("/")
-			spw := NewSwaggPathWrapper(
+			spw := newSwaggPathWrapper(
 				"path",
 				"tag",
 				gr)
@@ -51,7 +51,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 		t.Run("Should: post path generate without errors", func(t *testing.T) {
 			g := gin.Default()
 			gr := g.Group("/")
-			spw := NewSwaggPathWrapper(
+			spw := newSwaggPathWrapper(
 				"path",
 				"tag",
 				gr)

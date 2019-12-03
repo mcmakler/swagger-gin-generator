@@ -10,62 +10,62 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 	t.Run("Test: ObjectSwaggParameter.ToString()", func(t *testing.T) {
 		t.Run("Should: return error empty Object name", func(t *testing.T) {
 			a := &objectSwaggerParameter{
-				params:     nil,
+				configs:    nil,
 				properties: nil,
 			}
 			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
 			}
 			a := &objectSwaggerParameter{
-				params:     params,
+				configs:    params,
 				properties: nil,
 			}
 			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"name": "name",
 			}
 			properties := map[string]SwaggParameter{
 				"objectParam": &objectSwaggerParameter{
-					params:     nil,
+					configs:    nil,
 					properties: nil,
 				},
 			}
 			a := &objectSwaggerParameter{
-				params:     params,
+				configs:    params,
 				properties: properties,
 			}
 			_, expectedError := a.ToString(false)
 			assert.Equal(t, expectedError, errorNilObjectName)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"name": "name",
 			}
 			a := &objectSwaggerParameter{
-				params:     params,
+				configs:    params,
 				properties: nil,
 			}
 			expected := "\nname:" + typeDeficeString + objectType
 			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
-		t.Run("Should: return string with all params", func(t *testing.T) {
+		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"name":     "name",
 				"required": []string{"req1", "req2"},
 			}
 			a := &objectSwaggerParameter{
-				params:     params,
+				configs:    params,
 				properties: nil,
 			}
 			expected := "\nname:" + typeString + objectType +
@@ -74,7 +74,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with all params", func(t *testing.T) {
+		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"name": "name",
 				"in":   "in",
@@ -85,21 +85,21 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				"required": []string{"req1", "req2"},
 			}
 			properties := map[string]SwaggParameter{
-				"boolParam":    &boolSwaggParameter{params: params},
-				"stringParam":  &stringSwaggParameter{params: params},
-				"integerParam": &integerSwaggParameter{params: params},
-				"numberParam":  &numberSwaggParameter{params: params},
+				"boolParam":    &boolSwaggParameter{configs: params},
+				"stringParam":  &stringSwaggParameter{configs: params},
+				"integerParam": &integerSwaggParameter{configs: params},
+				"numberParam":  &numberSwaggParameter{configs: params},
 				"arrayParam": &arraySwaggParameter{
-					params: params,
-					items:  &boolSwaggParameter{params: nil},
+					configs: params,
+					items:   &boolSwaggParameter{configs: nil},
 				},
 				"objectParam": &objectSwaggerParameter{
-					params:     objParams,
+					configs:    objParams,
 					properties: nil,
 				},
 			}
 			a := &objectSwaggerParameter{
-				params:     objParams,
+				configs:    objParams,
 				properties: properties,
 			}
 			expected := "\nname:" + typeDeficeString + objectType +
@@ -135,7 +135,7 @@ func TestNewObjectSwagParameter(t *testing.T) {
 			"name": "name",
 		}
 		expect := &objectSwaggerParameter{
-			params:     params,
+			configs:    params,
 			properties: nil,
 		}
 		actual := NewObjectSwaggerParameter(params, nil, false)

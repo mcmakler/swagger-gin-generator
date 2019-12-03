@@ -7,52 +7,52 @@ import (
 
 func TestNumberSwaggParameter_ToString(t *testing.T) {
 	t.Run("Test: NumberSwaggParameter.ToString()", func(t *testing.T) {
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			a := &numberSwaggParameter{
-				params: nil,
+				configs: nil,
 			}
 			expected := typeDeficeString + numberType
 			actual, _ := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
 			}
 			a := &numberSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := typeString + numberType
 			actual, _ := a.ToString(true)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"test": 1,
 			}
 			a := &numberSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := errorEmptyIn
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with empty params", func(t *testing.T) {
+		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in": "in",
 			}
 			a := &numberSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := errorEmptyName
 			_, actual := a.ToString(false)
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return string with all params", func(t *testing.T) {
+		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
 				"in":                    "in",
 				"name":                  "name",
@@ -67,7 +67,7 @@ func TestNumberSwaggParameter_ToString(t *testing.T) {
 				"description":           "description",
 			}
 			a := &numberSwaggParameter{
-				params: params,
+				configs: params,
 			}
 			expected := typeDeficeString + numberType +
 				inString + "in" +
@@ -89,7 +89,7 @@ func TestNumberSwaggParameter_ToString(t *testing.T) {
 
 func TestNewNumberSwagParameter(t *testing.T) {
 	t.Run("Test: NewNumberSwagParameter", func(t *testing.T) {
-		expect := &numberSwaggParameter{params: nil}
+		expect := &numberSwaggParameter{configs: nil}
 		actual := NewNumberSwagParameter(nil)
 		assert.Equal(t, expect, actual)
 	})

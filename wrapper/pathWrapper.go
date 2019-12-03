@@ -39,7 +39,7 @@ type Request struct {
 	object      interface{}
 }
 
-func NewSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrapper {
+func newSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrapper {
 	return &swaggPathWrapper{
 		path:        path,
 		tag:         tag,
@@ -81,7 +81,7 @@ func (s *swaggPathWrapper) getDefinitions() []parameters.SwaggParameter {
 }
 
 func (s *swaggPathWrapper) addRequest(
-	swaggerParameters map[string]interface{},
+	configs map[string]interface{},
 	parametersP []utils.Parameter,
 	requests map[int]Request,
 	reqType string,
@@ -109,20 +109,20 @@ func (s *swaggPathWrapper) addRequest(
 		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
 	}
 
-	if swaggerParameters == nil {
-		swaggerParameters = map[string]interface{}{}
+	if configs == nil {
+		configs = map[string]interface{}{}
 	}
 
 	if s.tag != "" {
-		if _, ok := swaggerParameters["tagsP"]; !ok {
-			swaggerParameters["tagsP"] = []string{}
+		if _, ok := configs["tagsP"]; !ok {
+			configs["tagsP"] = []string{}
 		}
-		swaggerParameters["tagsP"] = append(swaggerParameters["tagsP"].([]string), s.tag)
+		configs["tagsP"] = append(configs["tagsP"].([]string), s.tag)
 	}
 
-	swaggerParameters["typeRequest"] = reqType
+	configs["typeRequest"] = reqType
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
-		swaggerParameters,
+		configs,
 		paramsSwagg,
 		responses,
 	))

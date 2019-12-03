@@ -29,8 +29,7 @@ type MainSwagg interface {
 }
 
 type mainSwagg struct {
-	params map[string]interface{}
-
+	configs     map[string]interface{}
 	paths       []PathSwagger
 	definitions []parameters.SwaggParameter
 	//TODO: security
@@ -43,20 +42,20 @@ func (m *mainSwagg) ToString() (string, error) {
 		return "", errorEmptyPaths
 	}
 	res := swaggerString + infoString
-	if val, ok := m.params["title"]; ok {
+	if val, ok := m.configs["title"]; ok {
 		res += infoTitleString + val.(string)
 	} else {
 		return "", errorEmptyTitle
 	}
-	if val, ok := m.params["version"]; ok {
+	if val, ok := m.configs["version"]; ok {
 		res += infoVersionString + val.(string)
 	} else {
 		return "", errorEmptyVersion
 	}
-	if val, ok := m.params["description"]; ok {
+	if val, ok := m.configs["description"]; ok {
 		res += infoDescriptionString + val.(string)
 	}
-	if val, ok := m.params["basePath"]; !ok {
+	if val, ok := m.configs["basePath"]; !ok {
 		res += basePathString + "/"
 	} else {
 		res += basePathString + val.(string)
@@ -84,7 +83,7 @@ func (m *mainSwagg) ToString() (string, error) {
 
 func NewMainSwagg(params map[string]interface{}, paths []PathSwagger, def []parameters.SwaggParameter) MainSwagg {
 	return &mainSwagg{
-		params:      params,
+		configs:     params,
 		paths:       paths,
 		definitions: def,
 	}

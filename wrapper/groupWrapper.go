@@ -27,7 +27,7 @@ func (s *swaggGroupWrapper) Use(middlware ...gin.HandlerFunc) {
 }
 
 func (s *swaggGroupWrapper) Path(path string) SwaggPathWrapper {
-	res := NewSwaggPathWrapper(s.path+path, s.tag, s.group)
+	res := newSwaggPathWrapper(s.path+path, s.tag, s.group)
 	s.swaggWrappers = append(s.swaggWrappers, res)
 	return res
 }

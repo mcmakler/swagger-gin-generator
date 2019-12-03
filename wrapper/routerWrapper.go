@@ -15,7 +15,7 @@ type SwaggRouterWrapper interface {
 }
 
 type swaggWrapper struct {
-	params      map[string]interface{}
+	configs     map[string]interface{}
 	paths       []swaggerFileGenerator.PathSwagger
 	definitions []parameters.SwaggParameter
 
@@ -26,7 +26,7 @@ type swaggWrapper struct {
 
 func NewSwaggerRouterWrapper(params map[string]interface{}, r *gin.Engine) SwaggRouterWrapper {
 	return &swaggWrapper{
-		params:      params,
+		configs:     params,
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
 		groups:      []SwaggGroupWrapper{},
@@ -52,7 +52,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 	}
 	s.definitions = sliceUniqMap(s.definitions)
 	mainSwagg := swaggerFileGenerator.NewMainSwagg(
-		s.params,
+		s.configs,
 		s.paths,
 		s.definitions)
 	str, err := mainSwagg.ToString()

@@ -26,9 +26,9 @@ type RequestSwagg interface {
 }
 
 type requestSwagg struct {
-	swaggParams map[string]interface{}
-	parameters  []parameters.SwaggParameter
-	responses   []ResponseSwagg
+	configs    map[string]interface{}
+	parameters []parameters.SwaggParameter
+	responses  []ResponseSwagg
 }
 
 var (
@@ -38,38 +38,38 @@ var (
 
 //TODO: some checks it need not be empty
 func (r *requestSwagg) ToString() (string, error) {
-	if r.swaggParams == nil {
+	if r.configs == nil {
 		return "", errorEmptyTypeRequest
 	}
-	if _, ok := r.swaggParams["typeRequest"]; !ok {
+	if _, ok := r.configs["typeRequest"]; !ok {
 		return "", errorEmptyTypeRequest
 	}
 	if r.responses == nil || len(r.responses) == 0 {
 		return "", errorEmptyResponses
 	}
-	res := "\n" + r.swaggParams["typeRequest"].(string) + ":"
-	if val, ok := r.swaggParams["description"]; ok {
+	res := "\n" + r.configs["typeRequest"].(string) + ":"
+	if val, ok := r.configs["description"]; ok {
 		res += descriptionString + val.(string)
 	}
-	if val, ok := r.swaggParams["consumes"]; ok {
+	if val, ok := r.configs["consumes"]; ok {
 		res += consumesString
 		for _, cons := range val.([]string) {
 			res += consumesIndentString + cons
 		}
 	}
-	if val, ok := r.swaggParams["produces"]; ok {
+	if val, ok := r.configs["produces"]; ok {
 		res += producesString
 		for _, prod := range val.([]string) {
 			res += producesIndentString + prod
 		}
 	}
-	if val, ok := r.swaggParams["tags"]; ok {
+	if val, ok := r.configs["tags"]; ok {
 		res += tagsString
 		for _, tag := range val.([]string) {
 			res += tagsIndentString + tag
 		}
 	}
-	if val, ok := r.swaggParams["summary"]; ok {
+	if val, ok := r.configs["summary"]; ok {
 		res += summaryString + val.(string)
 	}
 	if r.parameters != nil {
@@ -97,8 +97,8 @@ func (r *requestSwagg) ToString() (string, error) {
 
 func NewRequestSwagg(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagg) RequestSwagg {
 	return &requestSwagg{
-		swaggParams: params,
-		parameters:  parameters,
-		responses:   resp,
+		configs:    params,
+		parameters: parameters,
+		responses:  resp,
 	}
 }
