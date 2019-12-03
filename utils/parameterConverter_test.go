@@ -77,7 +77,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 				}, true),
 			}, false)
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, testStructSubstr{
-				Substr: testStructBool{B:false},
+				Substr: testStructBool{B: false},
 			}, false))
 		})
 

@@ -10,7 +10,7 @@ const (
 )
 
 var (
-	errorWrongCode = errors.New("WRONG_HTTP_CODE")
+	errorWrongCode        = errors.New("WRONG_HTTP_CODE")
 	errorEmptyDescription = errors.New("DESCRIPTION_IS_EMPTY")
 )
 

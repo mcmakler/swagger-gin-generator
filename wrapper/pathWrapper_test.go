@@ -20,15 +20,15 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 			spw.Get(
 				map[string]interface{}{
 					"description": "getDescription",
-					"consumes": []string{"getConsume"},
-					"produces": []string{"getProduce"},
-					"tags": []string{"tagget"},
-					"summary": "getSummary",
+					"consumes":    []string{"getConsume"},
+					"produces":    []string{"getProduce"},
+					"tags":        []string{"tagget"},
+					"summary":     "getSummary",
 				},
 				[]utils.Parameter{
 					utils.NewParameter(map[string]interface{}{
-						"name": "name",
-						"in": "in",
+						"name":        "name",
+						"in":          "in",
 						"description": "boolGetParameter",
 					}, true),
 				},
@@ -38,7 +38,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 						object:      true,
 					},
 				},
-				func(c *gin.Context){})
+				func(c *gin.Context) {})
 			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
@@ -47,7 +47,6 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 			}
 			assert.Equal(t, expectedDefinitions, spw.getDefinitions())
 		})
-
 
 		t.Run("Should: post path generate without errors", func(t *testing.T) {
 			g := gin.Default()
@@ -59,15 +58,15 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 			spw.Post(
 				map[string]interface{}{
 					"description": "getDescription",
-					"consumes": []string{"getConsume"},
-					"produces": []string{"getProduce"},
-					"tags": []string{"tagget"},
-					"summary": "getSummary",
+					"consumes":    []string{"getConsume"},
+					"produces":    []string{"getProduce"},
+					"tags":        []string{"tagget"},
+					"summary":     "getSummary",
 				},
 				[]utils.Parameter{
 					utils.NewParameter(map[string]interface{}{
-						"name": "name",
-						"in": "in",
+						"name":        "name",
+						"in":          "in",
 						"description": "boolGetParameter",
 					}, true),
 				},
@@ -77,7 +76,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 						object:      true,
 					},
 				},
-				func(c *gin.Context){})
+				func(c *gin.Context) {})
 			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)

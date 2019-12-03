@@ -89,9 +89,8 @@ func TestNumberSwaggParameter_ToString(t *testing.T) {
 
 func TestNewNumberSwagParameter(t *testing.T) {
 	t.Run("Test: NewNumberSwagParameter", func(t *testing.T) {
-		expect := &numberSwaggParameter{params:nil}
+		expect := &numberSwaggParameter{params: nil}
 		actual := NewNumberSwagParameter(nil)
 		assert.Equal(t, expect, actual)
 	})
 }
-

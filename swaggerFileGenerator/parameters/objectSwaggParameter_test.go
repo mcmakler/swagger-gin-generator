@@ -77,11 +77,11 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 		t.Run("Should: return string with all params", func(t *testing.T) {
 			params := map[string]interface{}{
 				"name": "name",
-				"in": "in",
+				"in":   "in",
 			}
 			objParams := map[string]interface{}{
-				"name": "name",
-				"in": "in",
+				"name":     "name",
+				"in":       "in",
 				"required": []string{"req1", "req2"},
 			}
 			properties := map[string]SwaggParameter{

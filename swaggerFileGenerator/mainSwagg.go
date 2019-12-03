@@ -20,7 +20,7 @@ const (
 )
 
 var (
-	errorEmptyTitle = errors.New("ERROR_EMPTY_TITLE")
+	errorEmptyTitle   = errors.New("ERROR_EMPTY_TITLE")
 	errorEmptyVersion = errors.New("ERROR_EMPTY_VERSION")
 )
 

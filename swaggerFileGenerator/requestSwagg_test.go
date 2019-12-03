@@ -1,10 +1,10 @@
 package swaggerFileGenerator
 
 import (
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"strings"
+	"swagger-gin-generator/swaggerFileGenerator/parameters"
 	"testing"
 )
 
@@ -138,7 +138,7 @@ func TestNewRequestSwagg(t *testing.T) {
 			swaggParams,
 			[]parameters.SwaggParameter{swagP1, swagP2},
 			[]ResponseSwagg{responseSwagg1, responseSwagg2},
-			)
+		)
 		assert.Equal(t, expected, actual)
 	})
 }

@@ -52,7 +52,7 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 
 		t.Run("Should: return string with empty params", func(t *testing.T) {
 			params := map[string]interface{}{
-				"in": "in",
+				"in":   "in",
 				"name": "name",
 			}
 			a := &arraySwaggParameter{

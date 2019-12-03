@@ -65,7 +65,7 @@ func TestBoolSwaggParameter_ToString(t *testing.T) {
 
 func TestNewBoolSwagParameter(t *testing.T) {
 	t.Run("Test: NewBoolSwagParameter", func(t *testing.T) {
-		expect := &boolSwaggParameter{params:nil}
+		expect := &boolSwaggParameter{params: nil}
 		actual := NewBoolSwagParameter(nil)
 		assert.Equal(t, expect, actual)
 	})

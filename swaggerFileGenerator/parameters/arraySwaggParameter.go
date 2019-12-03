@@ -41,7 +41,7 @@ func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
 	}
 	if val, ok := a.params["name"]; ok {
 		res += nameString + val.(string)
-	}else if !isDefinition {
+	} else if !isDefinition {
 		return "", errorEmptyName
 	}
 	if val, ok := a.params["required"]; ok {

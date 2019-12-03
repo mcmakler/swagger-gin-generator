@@ -39,10 +39,10 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		path1.Get(
 			map[string]interface{}{
 				"description": "getDescription",
-				"consumes": []string{"getConsume"},
-				"produces": []string{"getProduce"},
-				"tags": []string{"tagget"},
-				"summary": "getSummary",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
 			},
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
@@ -65,17 +65,17 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 				400: {
 					description: "description",
-					object: nil,
+					object:      nil,
 				},
 			},
 			func(c *gin.Context) {})
 		path1.Post(
 			map[string]interface{}{
 				"description": "getDescription",
-				"consumes": []string{"getConsume"},
-				"produces": []string{"getProduce"},
-				"tags": []string{"tagget"},
-				"summary": "getSummary",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
 			},
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
@@ -129,14 +129,14 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		paht22.Get(
 			map[string]interface{}{
 				"description": "getDescription",
-				"consumes": []string{"getConsume"},
-				"produces": []string{"getProduce"},
-				"tags": []string{"tagget"},
-				"summary": "getSummary",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
 			},
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
-					"name": "name",
+					"name":        "name",
 					"description": "boolGetParameter",
 					"in":          "header",
 				}, true),

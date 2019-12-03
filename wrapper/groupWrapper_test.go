@@ -18,15 +18,15 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 		spw.Get(
 			map[string]interface{}{
 				"description": "getDescription",
-				"consumes": []string{"getConsume"},
-				"produces": []string{"getProduce"},
-				"tags": []string{"tagget"},
-				"summary": "getSummary",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
 			},
 			[]utils.Parameter{
 				utils.NewParameter(map[string]interface{}{
-					"name": "name",
-					"in": "in",
+					"name":        "name",
+					"in":          "in",
 					"description": "boolGetParameter",
 				}, true),
 			},
@@ -36,7 +36,7 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 					object:      true,
 				},
 			},
-			func(c *gin.Context){})
+			func(c *gin.Context) {})
 		a := sgw.Generate()
 		var err error
 		for _, val := range a {
