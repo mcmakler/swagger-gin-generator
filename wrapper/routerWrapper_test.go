@@ -51,7 +51,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			map[int]Request{
 				200: {
-					definition: "getReqDef",
+					description: "getReqDef",
 					object: testStructFull{
 						B:      false,
 						S:      "",
@@ -60,6 +60,10 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 						A:      nil,
 						Substr: testStructBool{B: false},
 					},
+				},
+				400: {
+					description: "description",
+					object: nil,
 				},
 			},
 			func(c *gin.Context) {})
@@ -78,8 +82,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			map[int]Request{
 				200: {
-					definition: "getReqDef",
-					object:     testResponse{"sdsd"},
+					description: "getReqDef",
+					object:      testResponse{"sdsd"},
 				},
 			},
 			func(c *gin.Context) {})
@@ -100,8 +104,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			map[int]Request{
 				200: {
-					definition: "getReqDef",
-					object:     testResponse{"sdsd"},
+					description: "getReqDef",
+					object:      testResponse{"sdsd"},
 				},
 			},
 			func(c *gin.Context) {})
@@ -119,8 +123,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			map[int]Request{
 				200: {
-					definition: "getReqDef",
-					object:     testResponse{"sdsd"},
+					description: "getReqDef",
+					object:      testResponse{"sdsd"},
 				},
 			},
 			func(c *gin.Context) {})
@@ -141,7 +145,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			map[int]Request{
 				200: {
-					definition: "getReqDef",
+					description: "getReqDef",
 					object: testStructFull{
 						B:      false,
 						S:      "",

@@ -43,8 +43,8 @@ type swaggPathWrapper struct {
 }
 
 type Request struct {
-	definition string
-	object     interface{}
+	description string
+	object      interface{}
 }
 
 func NewSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrapper {
@@ -72,9 +72,14 @@ func (s *swaggPathWrapper) Get(
 	var responses []swaggerFileGenerator.ResponseSwagg
 
 	for key, val := range requests {
-		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, reflect.TypeOf(val.object).Name())
-		responses = append(responses, respSwag)
-		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
+		if val.object != nil {
+			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.TypeOf(val.object).Name())
+			responses = append(responses, respSwag)
+			s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
+		} else {
+			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, "")
+			responses = append(responses, respSwag)
+		}
 	}
 
 	var paramsSwagg []parameters.SwaggParameter
@@ -118,9 +123,14 @@ func (s *swaggPathWrapper) Post(
 	var responses []swaggerFileGenerator.ResponseSwagg
 
 	for key, val := range requests {
-		respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.definition, reflect.TypeOf(val.object).Name())
-		responses = append(responses, respSwag)
-		s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
+		if val.object != nil {
+			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.TypeOf(val.object).Name())
+			responses = append(responses, respSwag)
+			s.definitions = append(s.definitions, utils.ConvertObjectToSwaggParameter(nil, val.object, false))
+		} else {
+			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, "")
+			responses = append(responses, respSwag)
+		}
 	}
 
 	var paramsSwagg []parameters.SwaggParameter

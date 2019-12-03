@@ -28,8 +28,8 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 			},
 			map[int]Request{
 				200: {
-					definition: "getReqDef",
-					object:     true,
+					description: "getReqDef",
+					object:      true,
 				},
 			},
 			func(c *gin.Context){})
