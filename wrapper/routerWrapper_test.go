@@ -41,7 +41,6 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"description": "getDescription",
 				"consumes":    []string{"getConsume"},
 				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
 			[]utils.Parameter{

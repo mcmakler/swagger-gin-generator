@@ -114,10 +114,10 @@ func (s *swaggPathWrapper) addRequest(
 	}
 
 	if s.tag != "" {
-		if _, ok := configs["tagsP"]; !ok {
-			configs["tagsP"] = []string{}
+		if _, ok := configs["tags"]; !ok {
+			configs["tags"] = []string{}
 		}
-		configs["tagsP"] = append(configs["tagsP"].([]string), s.tag)
+		configs["tags"] = append(configs["tags"].([]string), s.tag)
 	}
 
 	configs["typeRequest"] = reqType
