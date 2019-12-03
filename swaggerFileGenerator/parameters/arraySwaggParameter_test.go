@@ -43,8 +43,8 @@ func TestArraySwaggParameter_ToString(t *testing.T) {
 				items:  NewBoolSwagParameter(nil),
 			}
 			str, _ := a.items.ToString(true)
-			expected := typeDeficeString + arrayType + itemsString + strings.Replace(str, "\n", "\n  ", -1)
-			actual, _ := a.ToString(false)
+			expected := typeString + arrayType + itemsString + strings.Replace(str, "\n", "\n  ", -1)
+			actual, _ := a.ToString(true)
 			assert.Equal(t, expected, actual)
 		})
 		t.Run("Should: return string with all params", func(t *testing.T) {

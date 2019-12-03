@@ -68,9 +68,9 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				params:     params,
 				properties: nil,
 			}
-			expected := "\nname:" + typeDeficeString + objectType +
+			expected := "\nname:" + typeString + objectType +
 				requiredIndentStr + "req1" + requiredIndentStr + "req2"
-			actual, _ := a.ToString(false)
+			actual, _ := a.ToString(true)
 			assert.Equal(t, expected, actual)
 		})
 
