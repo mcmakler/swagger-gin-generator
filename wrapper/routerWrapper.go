@@ -36,7 +36,7 @@ func NewSwaggerRouterWrapper(params map[string]interface{}, r *gin.Engine) Swagg
 
 func (s *swaggWrapper) Group(path, tag string) SwaggGroupWrapper {
 	group := s.router.Group(path)
-	res := NewSwaggGroupWrapper(path, tag, group)
+	res := newSwaggGroupWrapper(path, tag, group)
 	s.groups = append(s.groups, res)
 	return res
 }
@@ -46,7 +46,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 		for _, path := range val.Generate() {
 			s.paths = append(s.paths, path)
 		}
-		for _, def := range val.Definitions() {
+		for _, def := range val.getDefinitions() {
 			s.definitions = append(s.definitions, def)
 		}
 	}

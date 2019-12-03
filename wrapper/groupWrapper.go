@@ -10,7 +10,7 @@ type SwaggGroupWrapper interface {
 	Use(middleware ...gin.HandlerFunc)
 	Path(string) SwaggPathWrapper
 	Generate() []swaggerFileGenerator.PathSwagger
-	Definitions() []parameters.SwaggParameter
+	getDefinitions() []parameters.SwaggParameter
 }
 
 type swaggGroupWrapper struct {
@@ -20,16 +20,6 @@ type swaggGroupWrapper struct {
 	definitions   []parameters.SwaggParameter
 
 	group *gin.RouterGroup
-}
-
-func NewSwaggGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggGroupWrapper {
-	return &swaggGroupWrapper{
-		path:          path,
-		tag:           tag,
-		swaggWrappers: []SwaggPathWrapper{},
-		definitions:   []parameters.SwaggParameter{},
-		group:         group,
-	}
 }
 
 func (s *swaggGroupWrapper) Use(middlware ...gin.HandlerFunc) {
@@ -53,6 +43,16 @@ func (s *swaggGroupWrapper) Generate() []swaggerFileGenerator.PathSwagger {
 	return res
 }
 
-func (s *swaggGroupWrapper) Definitions() []parameters.SwaggParameter {
+func newSwaggGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggGroupWrapper {
+	return &swaggGroupWrapper{
+		path:          path,
+		tag:           tag,
+		swaggWrappers: []SwaggPathWrapper{},
+		definitions:   []parameters.SwaggParameter{},
+		group:         group,
+	}
+}
+
+func (s *swaggGroupWrapper) getDefinitions() []parameters.SwaggParameter {
 	return s.definitions
 }

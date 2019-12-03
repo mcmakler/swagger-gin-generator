@@ -9,10 +9,10 @@ import (
 )
 
 func TestNewSwaggGroupWrapper(t *testing.T) {
-	t.Run("Test: NewSwaggGroupWrapper", func(t *testing.T) {
+	t.Run("Test: newSwaggGroupWrapper", func(t *testing.T) {
 		g := gin.Default()
 		group := g.Group("path")
-		sgw := NewSwaggGroupWrapper("path", "tag", group)
+		sgw := newSwaggGroupWrapper("path", "tag", group)
 		sgw.Use(func(c *gin.Context) {})
 		spw := sgw.Path("path")
 		spw.Get(
@@ -49,6 +49,6 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 		expectedDefinitions := []parameters.SwaggParameter{
 			utils.ConvertObjectToSwaggParameter(nil, true, false),
 		}
-		assert.Equal(t, expectedDefinitions, sgw.Definitions())
+		assert.Equal(t, expectedDefinitions, sgw.getDefinitions())
 	})
 }
