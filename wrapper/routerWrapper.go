@@ -43,7 +43,7 @@ func (s *swaggWrapper) Group(path, tag string) SwaggGroupWrapper {
 
 func (s *swaggWrapper) Generate(filepath string) error {
 	for _, val := range s.groups {
-		for _, path := range val.Generate() {
+		for _, path := range val.generate() {
 			s.paths = append(s.paths, path)
 		}
 		for _, def := range val.getDefinitions() {

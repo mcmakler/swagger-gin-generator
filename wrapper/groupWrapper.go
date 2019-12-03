@@ -9,7 +9,7 @@ import (
 type SwaggGroupWrapper interface {
 	Use(middleware ...gin.HandlerFunc)
 	Path(string) SwaggPathWrapper
-	Generate() []swaggerFileGenerator.PathSwagger
+	generate() []swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
 }
 
@@ -32,17 +32,6 @@ func (s *swaggGroupWrapper) Path(path string) SwaggPathWrapper {
 	return res
 }
 
-func (s *swaggGroupWrapper) Generate() []swaggerFileGenerator.PathSwagger {
-	var res []swaggerFileGenerator.PathSwagger
-	for _, val := range s.swaggWrappers {
-		for _, def := range val.getDefinitions() {
-			s.definitions = append(s.definitions, def)
-		}
-		res = append(res, val.generate())
-	}
-	return res
-}
-
 func newSwaggGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggGroupWrapper {
 	return &swaggGroupWrapper{
 		path:          path,
@@ -51,6 +40,17 @@ func newSwaggGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggGroupWr
 		definitions:   []parameters.SwaggParameter{},
 		group:         group,
 	}
+}
+
+func (s *swaggGroupWrapper) generate() []swaggerFileGenerator.PathSwagger {
+	var res []swaggerFileGenerator.PathSwagger
+	for _, val := range s.swaggWrappers {
+		for _, def := range val.getDefinitions() {
+			s.definitions = append(s.definitions, def)
+		}
+		res = append(res, val.generate())
+	}
+	return res
 }
 
 func (s *swaggGroupWrapper) getDefinitions() []parameters.SwaggParameter {

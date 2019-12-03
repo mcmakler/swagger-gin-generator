@@ -37,7 +37,7 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		a := sgw.Generate()
+		a := sgw.generate()
 		var err error
 		for _, val := range a {
 			_, err = val.ToString()
