@@ -11,6 +11,7 @@ const (
 
 var (
 	errorWrongCode = errors.New("WRONG_HTTP_CODE")
+	errorEmptyDescription = errors.New("DESCRIPTION_IS_EMPTY")
 )
 
 type ResponseSwagg interface {
@@ -30,6 +31,8 @@ func (r *responseSwagg) ToString() (string, error) {
 	res := "\n'" + strconv.FormatInt(int64(r.code), 10) + "':"
 	if r.description != "" {
 		res += descriptionString + r.description
+	} else {
+		return "", errorEmptyDescription
 	}
 	if r.linkOnSchema != "" {
 		res += linkOnSchemaString + r.linkOnSchema + "'"

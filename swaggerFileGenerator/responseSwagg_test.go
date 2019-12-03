@@ -10,7 +10,7 @@ func TestResponseSwagg_ToString(t *testing.T) {
 		t.Run("Should: return wrong http code error", func(t *testing.T) {
 			a := &responseSwagg{
 				code:         -1,
-				description:  "",
+				description:  "de",
 				linkOnSchema: "",
 			}
 			_, error := a.ToString()
@@ -23,8 +23,8 @@ func TestResponseSwagg_ToString(t *testing.T) {
 				description:  "",
 				linkOnSchema: "",
 			}
-			expected := "\n'200':"
-			actual, _ := a.ToString()
+			expected := errorEmptyDescription
+			_, actual := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
 
