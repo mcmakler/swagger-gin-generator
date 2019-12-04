@@ -9,118 +9,81 @@ import (
 
 func TestMainSwagg_ToString(t *testing.T) {
 	t.Run("Test: MainSwagg.ToString()", func(t *testing.T) {
+		responseSwagger := NewResponseSwagg(200, "descr", "")
+		requestSwagger := NewRequestSwagg(
+			map[string]interface{}{"typeRequest": "GET"},
+			nil,
+			[]ResponseSwagg{responseSwagger},
+		)
+		pathSwagger := NewPathSwagger(
+			"path",
+			[]RequestSwagg{requestSwagger},
+		)
+
 		t.Run("Should: return error "+errorEmptyPaths.Error(), func(t *testing.T) {
-			a := &mainSwagg{
-				configs:     nil,
-				paths:       nil,
-				definitions: nil,
-			}
-			_, error := a.ToString()
-			assert.Equal(t, error, errorEmptyPaths)
+			a := NewMainSwagg(nil, nil, nil, nil)
+			expected := errorEmptyPaths
+			_, actual := a.ToString()
+			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return error "+errorIncorrectPath.Error(), func(t *testing.T) {
-			a := &mainSwagg{
-				configs: map[string]interface{}{
+			a := NewMainSwagg(
+				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
-				paths: []PathSwagger{
-					&pathSwagger{
-						path:     "",
-						requests: nil,
-					},
-				},
-				definitions: nil,
-			}
-			_, error := a.ToString()
-			assert.Equal(t, error, errorIncorrectPath)
+				nil,
+				[]PathSwagger{NewPathSwagger("", nil)},
+				nil,
+			)
+			expected := errorIncorrectPath
+			_, actual := a.ToString()
+			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return error "+parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
-			a := &mainSwagg{
-				configs: map[string]interface{}{
+			a := NewMainSwagg(
+				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
-				paths: []PathSwagger{
-					path,
-				},
-				definitions: []parameters.SwaggParameter{
+				nil,
+				[]PathSwagger{pathSwagger},
+				[]parameters.SwaggParameter{
 					parameters.NewArraySwaggParameter(nil, nil),
 				},
-			}
-			_, error := a.ToString()
-			assert.Equal(t, error, parameters.ErrorNillItemsParameter)
+			)
+			_, actual := a.ToString()
+			expected := parameters.ErrorNillItemsParameter
+			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return empty title", func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
-			a := &mainSwagg{
-				configs: map[string]interface{}{
-					"version": "version",
-				},
-				paths: []PathSwagger{
-					path,
-				},
-				definitions: nil,
-			}
+			a := NewMainSwagg(
+				map[string]interface{}{"version": "version"},
+				nil,
+				[]PathSwagger{pathSwagger},
+				nil,
+			)
+			_, actual := a.ToString()
 			expected := errorEmptyTitle
-			_, actual := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return empty version", func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
-			a := &mainSwagg{
-				configs: map[string]interface{}{
-					"title": "title",
-				},
-				paths: []PathSwagger{
-					path,
-				},
-				definitions: nil,
-			}
+			a := NewMainSwagg(
+				map[string]interface{}{"title": "title"},
+				nil,
+				[]PathSwagger{pathSwagger},
+				nil,
+			)
+			_, actual := a.ToString()
 			expected := errorEmptyVersion
-			_, actual := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return empty version", func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
 			a := NewMainSwagg(
 				map[string]interface{}{
 					"title":   "title",
@@ -129,142 +92,103 @@ func TestMainSwagg_ToString(t *testing.T) {
 				[]SecurityDefinitionSwagg{
 					NewOauth2AccessCodeSecurityDefinition("", "", ""),
 				},
-				[]PathSwagger{
-					path,
-				},
+				[]PathSwagger{pathSwagger},
 				nil,
 			)
-			expected := errorEmptySecurityTitle
 			_, actual := a.ToString()
+			expected := errorEmptySecurityTitle
 			assert.Equal(t, expected, actual)
 		})
 
-
-
 		t.Run("Should: return empty version", func(t *testing.T) {
 			basicSD := NewBasicSecurityDefinition("title")
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
 			a := NewMainSwagg(
 				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
-				[]SecurityDefinitionSwagg{
-					basicSD,
-				},
-				[]PathSwagger{
-					path,
-				},
+				[]SecurityDefinitionSwagg{basicSD},
+				[]PathSwagger{pathSwagger},
 				nil,
 			)
+			actual, error := a.ToString()
+
 			strSecurity, _ := basicSD.ToString()
-			strPath, _ := path.ToString()
+			strPath, _ := pathSwagger.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
 				infoVersionString + "version" +
 				securityDefinitionString + strings.Replace(strSecurity, "\n", mainIndentString, -1) +
 				basePathString + "/" +
 				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1)
-			actual, error := a.ToString()
+
 			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
-			a := &mainSwagg{
-				configs: map[string]interface{}{
+			a := NewMainSwagg(
+				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
 				},
-				paths: []PathSwagger{
-					path,
-				},
-				definitions: nil,
-			}
-			str, _ := path.ToString()
+				nil,
+				[]PathSwagger{pathSwagger},
+				nil,
+			)
+			actual, error := a.ToString()
+
+			str, _ := pathSwagger.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
 				infoVersionString + "version" +
 				basePathString + "/" +
 				pathsString + strings.Replace(str, "\n", mainIndentString, -1)
-			actual, _ := a.ToString()
+
+			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
-			a := &mainSwagg{
-				configs: map[string]interface{}{
+			a := NewMainSwagg(
+				map[string]interface{}{
 					"title":    "title",
 					"version":  "version",
 					"basePath": "basePath",
 				},
-				paths: []PathSwagger{
-					path,
-				},
-				definitions: nil,
-			}
-			str, _ := path.ToString()
+				nil,
+				[]PathSwagger{pathSwagger},
+				nil,
+			)
+			actual, error := a.ToString()
+
+			str, _ := pathSwagger.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
 				infoVersionString + "version" +
 				basePathString + "basePath" +
 				pathsString + strings.Replace(str, "\n", mainIndentString, -1)
-			actual, _ := a.ToString()
+
+			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			path := &pathSwagger{
-				path: "path",
-				requests: []RequestSwagg{
-					NewRequestSwagg(map[string]interface{}{
-						"typeRequest": "GET",
-					}, nil, []ResponseSwagg{responseSwagg1}),
-				},
-			}
 			def := parameters.NewBoolSwagParameter(nil)
-			a := &mainSwagg{
-				configs: map[string]interface{}{
+			a := NewMainSwagg(
+				map[string]interface{}{
 					"description": "description",
 					"title":       "title",
 					"version":     "version",
 					"basePath":    "basePath",
 				},
-				paths: []PathSwagger{
-					path,
-				},
-				definitions: []parameters.SwaggParameter{
-					def,
-				},
-			}
-			strPath, _ := path.ToString()
+				nil,
+				[]PathSwagger{pathSwagger},
+				[]parameters.SwaggParameter{def},
+			)
+			actual, error := a.ToString()
+
+			strPath, _ := pathSwagger.ToString()
 			strDef, _ := def.ToString(true)
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
@@ -273,32 +197,9 @@ func TestMainSwagg_ToString(t *testing.T) {
 				basePathString + "basePath" +
 				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1) +
 				definitionsString + strings.Replace(strDef, "\n", mainIndentString, -1)
-			actual, _ := a.ToString()
+
+			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
-	})
-}
-
-func TestNewMainSwagg(t *testing.T) {
-	t.Run("Test: NewMainSwag", func(t *testing.T) {
-		path := &pathSwagger{
-			path: "path",
-			requests: []RequestSwagg{
-				NewRequestSwagg(map[string]interface{}{
-					"typeRequest": "GET",
-				}, nil, nil),
-			},
-		}
-		expected := &mainSwagg{
-			configs: nil,
-			paths: []PathSwagger{
-				path,
-			},
-			definitions: nil,
-		}
-		actual := NewMainSwagg(nil, nil, []PathSwagger{
-			path,
-		}, nil)
-		assert.Equal(t, expected, actual)
 	})
 }
