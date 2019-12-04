@@ -15,7 +15,6 @@ type parameter struct {
 	object           interface{}
 }
 
-//Obj -- EXEMPLAR of an object
 func NewParameter(params map[string]interface{}, obj interface{}) Parameter {
 	return &parameter{
 		listOfparameters: params,

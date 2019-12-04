@@ -2,7 +2,6 @@ package parameters
 
 import (
 	"errors"
-	"strconv"
 	"strings"
 )
 
@@ -42,7 +41,9 @@ func (o *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 		res += typeDeficeString + objectType
 	}
 	if val, ok := o.configs["required"]; ok {
-		res += requiredString + strconv.FormatBool(val.(bool))
+		for _, val := range val.([]string) {
+			res += requiredIndentStr + val
+		}
 	}
 	if o.properties != nil {
 		res += propertiesStr

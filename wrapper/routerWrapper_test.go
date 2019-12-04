@@ -76,7 +76,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			map[int]Request{
 				200: {
 					description: "getReqDef",
-					object:      &testStructFull{},
+					object:      "",
 				},
 				400: {
 					description: "description",
