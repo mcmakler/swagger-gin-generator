@@ -1,9 +1,9 @@
 package wrapper
 
 import (
-	"fmt"
-	"reflect"
 	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"reflect"
+	"time"
 )
 
 type Parameter interface {
@@ -33,7 +33,6 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 	var typ reflect.Type
 	var val reflect.Value
 	if reflect.ValueOf(object).Kind() == reflect.Ptr {
-		fmt.Println("Value type is:", reflect.ValueOf(object).Elem())
 		typ = reflect.ValueOf(object).Elem().Type()
 		val = reflect.ValueOf(object).Elem()
 		object = reflect.ValueOf(object).Elem()
@@ -74,6 +73,11 @@ func setValueByType(params map[string]interface{}, object interface{}, subObj bo
 		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface(), false))
 	//TODO: map?
 	default:
+		//some unusuall cases
+		if reflect.TypeOf(time.Time{}).String() == reflect.TypeOf(object).String() {
+			return parameters.NewStringSwagParameter(params)
+		}
+
 		return ConvertObjectToSwaggParameter(params, object, subObj)
 	}
 }

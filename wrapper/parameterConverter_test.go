@@ -4,9 +4,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"testing"
+	"time"
 )
 
 type TestStructEmpty struct {
+}
+
+type TestStructTime struct {
+	T time.Time
 }
 
 type TestStructBool struct {
@@ -62,6 +67,17 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructArr{
 				A: []bool{true},
 			}, false))
+		})
+
+		t.Run("Should: return time object", func(t *testing.T) {
+			params := map[string]interface{}{
+				"name": "TestStructTime",
+			}
+			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
+				"T": parameters.NewStringSwagParameter(nil),
+			}, false)
+
+			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructTime{}, false))
 		})
 
 		t.Run("Should: return swag object with arr param", func(t *testing.T) {
