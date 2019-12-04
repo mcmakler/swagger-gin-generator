@@ -53,6 +53,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 	s.definitions = sliceUniqMap(s.definitions)
 	mainSwagg := swaggerFileGenerator.NewMainSwagg(
 		s.configs,
+		nil, //TODO
 		s.paths,
 		s.definitions)
 	str, err := mainSwagg.ToString()

@@ -12,9 +12,13 @@ const (
 	infoTitleString       = "\n  title: "
 	infoDescriptionString = "\n  description: "
 	infoVersionString     = "\n  version: "
-	basePathString        = "\nbasePath: "
-	pathsString           = "\npaths:"
-	definitionsString     = "\ndefinitions:"
+
+	securityDefinitionString = "\nsecurityDefinitions:"
+
+	basePathString = "\nbasePath: "
+	pathsString    = "\npaths:"
+
+	definitionsString = "\ndefinitions:"
 
 	mainIndentString = "\n  "
 )
@@ -29,9 +33,10 @@ type MainSwagg interface {
 }
 
 type mainSwagg struct {
-	configs     map[string]interface{}
-	paths       []PathSwagger
-	definitions []parameters.SwaggParameter
+	configs             map[string]interface{}
+	securityDefinitions []SecurityDefinitionSwagg
+	paths               []PathSwagger
+	definitions         []parameters.SwaggParameter
 	//TODO: security
 }
 
@@ -55,6 +60,18 @@ func (m *mainSwagg) ToString() (string, error) {
 	if val, ok := m.configs["description"]; ok {
 		res += infoDescriptionString + val.(string)
 	}
+
+	if m.securityDefinitions != nil && len(m.securityDefinitions) > 0 {
+		res += securityDefinitionString
+		for _, val := range m.securityDefinitions {
+			str, err := val.ToString()
+			if err != nil {
+				return "", err
+			}
+			res += strings.Replace(str, "\n", mainIndentString, -1)
+		}
+	}
+
 	if val, ok := m.configs["basePath"]; !ok {
 		res += basePathString + "/"
 	} else {
@@ -68,6 +85,7 @@ func (m *mainSwagg) ToString() (string, error) {
 		}
 		res += strings.Replace(str, "\n", mainIndentString, -1)
 	}
+
 	if m.definitions != nil {
 		res += definitionsString
 		for _, def := range m.definitions {
@@ -81,10 +99,11 @@ func (m *mainSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-func NewMainSwagg(params map[string]interface{}, paths []PathSwagger, def []parameters.SwaggParameter) MainSwagg {
+func NewMainSwagg(params map[string]interface{}, securityDefs []SecurityDefinitionSwagg, paths []PathSwagger, def []parameters.SwaggParameter) MainSwagg {
 	return &mainSwagg{
-		configs:     params,
-		paths:       paths,
-		definitions: def,
+		configs:             params,
+		securityDefinitions: securityDefs,
+		paths:               paths,
+		definitions:         def,
 	}
 }

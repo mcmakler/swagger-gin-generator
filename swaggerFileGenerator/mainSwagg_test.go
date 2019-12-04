@@ -111,6 +111,73 @@ func TestMainSwagg_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
+		t.Run("Should: return empty version", func(t *testing.T) {
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
+			path := &pathSwagger{
+				path: "path",
+				requests: []RequestSwagg{
+					NewRequestSwagg(map[string]interface{}{
+						"typeRequest": "GET",
+					}, nil, []ResponseSwagg{responseSwagg1}),
+				},
+			}
+			a := NewMainSwagg(
+				map[string]interface{}{
+					"title":   "title",
+					"version": "version",
+				},
+				[]SecurityDefinitionSwagg{
+					NewOauth2AccessCodeSecurityDefinition("", "", ""),
+				},
+				[]PathSwagger{
+					path,
+				},
+				nil,
+			)
+			expected := errorEmptySecurityTitle
+			_, actual := a.ToString()
+			assert.Equal(t, expected, actual)
+		})
+
+
+
+		t.Run("Should: return empty version", func(t *testing.T) {
+			basicSD := NewBasicSecurityDefinition("title")
+			responseSwagg1 := NewResponseSwagg(200, "descr", "")
+			path := &pathSwagger{
+				path: "path",
+				requests: []RequestSwagg{
+					NewRequestSwagg(map[string]interface{}{
+						"typeRequest": "GET",
+					}, nil, []ResponseSwagg{responseSwagg1}),
+				},
+			}
+			a := NewMainSwagg(
+				map[string]interface{}{
+					"title":   "title",
+					"version": "version",
+				},
+				[]SecurityDefinitionSwagg{
+					basicSD,
+				},
+				[]PathSwagger{
+					path,
+				},
+				nil,
+			)
+			strSecurity, _ := basicSD.ToString()
+			strPath, _ := path.ToString()
+			expected := swaggerString + infoString +
+				infoTitleString + "title" +
+				infoVersionString + "version" +
+				securityDefinitionString + strings.Replace(strSecurity, "\n", mainIndentString, -1) +
+				basePathString + "/" +
+				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1)
+			actual, error := a.ToString()
+			assert.NoError(t, error)
+			assert.Equal(t, expected, actual)
+		})
+
 		t.Run("Should: return ok", func(t *testing.T) {
 			responseSwagg1 := NewResponseSwagg(200, "descr", "")
 			path := &pathSwagger{
@@ -229,7 +296,7 @@ func TestNewMainSwagg(t *testing.T) {
 			},
 			definitions: nil,
 		}
-		actual := NewMainSwagg(nil, []PathSwagger{
+		actual := NewMainSwagg(nil, nil, []PathSwagger{
 			path,
 		}, nil)
 		assert.Equal(t, expected, actual)
