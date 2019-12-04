@@ -12,6 +12,7 @@ import (
 //TODO: caps-free params
 //TODO: group subgroups
 //TODO: group get, post, ...
+//TODO: params: check case when []string is only one element/ []string{"el"} = "el"
 
 const (
 	filenameString = "swagger.yaml"
