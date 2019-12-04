@@ -5,8 +5,8 @@ import (
 	"io"
 	"os"
 	"strings"
-	"swagger-gin-generator/wrapper/swaggerFileGenerator"
-	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 //TODO: caps-free params

@@ -3,7 +3,7 @@ package swaggerFileGenerator
 import (
 	"errors"
 	"strings"
-	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 //TODO: accept

@@ -2,7 +2,7 @@ package wrapper
 
 import (
 	"github.com/stretchr/testify/assert"
-	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"testing"
 )
 
