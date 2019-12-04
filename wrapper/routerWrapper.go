@@ -9,6 +9,10 @@ import (
 	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
+const (
+	filenameString = "swagger.yaml"
+)
+
 type SwaggRouterWrapper interface {
 	Group(path, tag string) SwaggGroupWrapper
 	Generate(filepath string) error
@@ -69,7 +73,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 	if err != nil {
 		return err
 	}
-	err = writeStringToFile(filepath, str)
+	err = writeStringToFile(filepath+filenameString, str)
 	if err != nil {
 		return err
 	}

@@ -242,7 +242,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		err := srw.Generate("rez.txt")
+		err := srw.Generate("")
 		assert.NoError(t, err)
 	})
 }
