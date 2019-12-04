@@ -2,8 +2,8 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/stretchr/testify/assert"
 	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 

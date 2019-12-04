@@ -2,9 +2,9 @@ package swaggerFileGenerator
 
 import (
 	"errors"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"github.com/stretchr/testify/assert"
 	"strings"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"testing"
 )
 

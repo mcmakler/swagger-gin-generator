@@ -69,7 +69,6 @@ func setValueByType(params map[string]interface{}, object interface{}, subObj bo
 	case reflect.Float32, reflect.Float64:
 		return parameters.NewNumberSwagParameter(params)
 	case reflect.Array, reflect.Slice:
-		//TODO: check is it work
 		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface(), false))
 	//TODO: map?
 	default:

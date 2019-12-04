@@ -2,9 +2,9 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
-	"reflect"
 	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"reflect"
 )
 
 type SwaggPathWrapper interface {

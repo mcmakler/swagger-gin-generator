@@ -2,8 +2,8 @@ package swaggerFileGenerator
 
 import (
 	"errors"
-	"strings"
 	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"strings"
 )
 
 const (

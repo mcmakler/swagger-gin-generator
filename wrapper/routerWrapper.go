@@ -2,11 +2,11 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"io"
 	"os"
 	"strings"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 //TODO: caps-free params
