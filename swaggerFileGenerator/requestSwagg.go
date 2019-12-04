@@ -8,6 +8,8 @@ import (
 
 const (
 	descriptionString      = "\n  description: "
+	securityString         = "\n  consumes:"
+	securityIndentString   = "\n  - "
 	consumesString         = "\n  consumes:"
 	consumesIndentString   = "\n  - "
 	producesString         = "\n  produces: "
@@ -48,6 +50,12 @@ func (r *requestSwagg) ToString() (string, error) {
 		return "", errorEmptyResponses
 	}
 	res := "\n" + r.configs["typeRequest"].(string) + ":"
+	if val, ok := r.configs["security"]; ok {
+		res += securityString
+		for _, cons := range val.([]string) {
+			res += securityIndentString + cons + ": []"
+		}
+	}
 	if val, ok := r.configs["description"]; ok {
 		res += descriptionString + val.(string)
 	}
