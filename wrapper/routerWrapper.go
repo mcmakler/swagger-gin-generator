@@ -17,6 +17,7 @@ const (
 
 type SwaggRouterWrapper interface {
 	Group(path, tag string) SwaggGroupWrapper
+	Use(middleware ...gin.HandlerFunc)
 	Generate(filepath string) error
 	NewBasicSecurityDefinition(title string)
 	NewApiKeySecurityDefinition(title, name string, inHeader bool)
