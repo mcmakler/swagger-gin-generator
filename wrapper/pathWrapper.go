@@ -69,6 +69,13 @@ type Request struct {
 	object      interface{}
 }
 
+func NewRequest(description string, object interface{}) Request {
+	return Request{
+		description: description,
+		object:      object,
+	}
+}
+
 func newSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrapper {
 	return &swaggPathWrapper{
 		path:        path,
