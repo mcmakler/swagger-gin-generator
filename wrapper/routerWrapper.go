@@ -9,6 +9,8 @@ import (
 	"swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
+//TODO: caps-free params
+
 const (
 	filenameString = "swagger.yaml"
 )
@@ -45,6 +47,10 @@ func NewSwaggerRouterWrapper(configs map[string]interface{}, r *gin.Engine) Swag
 		groups:      []SwaggGroupWrapper{},
 		router:      r,
 	}
+}
+
+func (s *swaggWrapper) Use(middlware ...gin.HandlerFunc) {
+	s.router.Use(middlware...)
 }
 
 func (s *swaggWrapper) Group(path, tag string) SwaggGroupWrapper {
