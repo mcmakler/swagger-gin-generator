@@ -35,6 +35,7 @@ func NewBasicSecurityDefinition(title string) SecurityDefinitionSwagg {
 		title: title,
 	}
 }
+
 func (b *basicSecurityDefinitionSwagg) ToString() (string, error) {
 	if b.title == "" {
 		return "", errorEmptySecurityTitle

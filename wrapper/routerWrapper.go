@@ -15,7 +15,9 @@ type SwaggRouterWrapper interface {
 }
 
 type swaggWrapper struct {
-	configs     map[string]interface{}
+	configs map[string]interface{}
+
+	security    []swaggerFileGenerator.SecurityDefinitionSwagg
 	paths       []swaggerFileGenerator.PathSwagger
 	definitions []parameters.SwaggParameter
 
@@ -24,9 +26,10 @@ type swaggWrapper struct {
 	router *gin.Engine
 }
 
-func NewSwaggerRouterWrapper(params map[string]interface{}, r *gin.Engine) SwaggRouterWrapper {
+func NewSwaggerRouterWrapper(configs map[string]interface{}, r *gin.Engine) SwaggRouterWrapper {
 	return &swaggWrapper{
-		configs:     params,
+		configs:     configs,
+		security:    []swaggerFileGenerator.SecurityDefinitionSwagg{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
 		groups:      []SwaggGroupWrapper{},
@@ -53,7 +56,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 	s.definitions = sliceUniqMap(s.definitions)
 	mainSwagg := swaggerFileGenerator.NewMainSwagg(
 		s.configs,
-		nil, //TODO
+		s.security, //TODO
 		s.paths,
 		s.definitions)
 	str, err := mainSwagg.ToString()
@@ -65,6 +68,30 @@ func (s *swaggWrapper) Generate(filepath string) error {
 		return err
 	}
 	return nil
+}
+
+func (s *swaggWrapper) NewBasicSecurityDefinition(title string) {
+	s.security = append(s.security, swaggerFileGenerator.NewBasicSecurityDefinition(title))
+}
+
+func (s *swaggWrapper) NewApiKeySecurityDefinition(title, name string, inHeader bool) {
+	s.security = append(s.security, swaggerFileGenerator.NewApiKeySecurityDefinition(title, name, inHeader))
+}
+
+func (s *swaggWrapper) NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2ImplicitSecurityDefinition(title, authorizationUrl))
+}
+
+func (s *swaggWrapper) NewOauth2PasswordSecurityDefinition(title, tokenURL string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2PasswordSecurityDefinition(title, tokenURL))
+}
+
+func (s *swaggWrapper) NewOauth2ApplicationSecurityDefinition(title, tokenURL string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2ApplicationSecurityDefinition(title, tokenURL))
+}
+
+func (s *swaggWrapper) NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL))
 }
 
 func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
