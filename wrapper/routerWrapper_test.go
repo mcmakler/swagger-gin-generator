@@ -33,6 +33,18 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"version":     "version",
 			},
 			g)
+		basicSecurity := "Basic"
+		srw.NewBasicSecurityDefinition(basicSecurity)
+		apiSecurity := "ApiKey"
+		srw.NewApiKeySecurityDefinition(apiSecurity, "Bearer", true)
+		oauth2AccessCodeSecurity := "Oauth2Access"
+		srw.NewOauth2AccessCodeSecurityDefinition(oauth2AccessCodeSecurity, "http://auth.com", "http://token.com")
+		oauth2ImplicitSecurity := "Oauth2Implicit"
+		srw.NewOauth2ImplicitSecurityDefinition(oauth2ImplicitSecurity, "http://auth.com")
+		oauth2PasswordSecurity := "Oauth2Password"
+		srw.NewOauth2PasswordSecurityDefinition(oauth2PasswordSecurity, "http://token.com")
+		oauth2AppSecurity := "Oauth2App"
+		srw.NewOauth2ApplicationSecurityDefinition(oauth2AppSecurity, "http://token.com")
 		emptyGroup := srw.Group("", "health")
 		emptyPath := emptyGroup.Path("/health")
 		emptyPath.GET(
@@ -49,6 +61,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		path1.GET(
 			map[string]interface{}{
 				"description": "getDescription",
+				"security":    []string{basicSecurity, apiSecurity, oauth2AccessCodeSecurity},
 				"consumes":    []string{"getConsume"},
 				"produces":    []string{"getProduce"},
 				"summary":     "getSummary",
@@ -74,6 +87,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		path1.POST(
 			map[string]interface{}{
 				"description": "getDescription",
+				"security":    []string{oauth2ImplicitSecurity},
 				"consumes":    []string{"getConsume"},
 				"produces":    []string{"getProduce"},
 				"tags":        []string{"tagget"},
@@ -117,7 +131,96 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			func(c *gin.Context) {})
 		secondGroup := srw.Group("/group2", "secondGroup")
 		paht22 := secondGroup.Path("/path2")
-		paht22.GET(
+		paht22.DELETE(
+			map[string]interface{}{
+				"description": "getDescription",
+				"security":    []string{oauth2PasswordSecurity, oauth2AppSecurity},
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
+			},
+			[]Parameter{
+				NewParameter(map[string]interface{}{
+					"name":        "name",
+					"description": "boolGetParameter",
+					"in":          "header",
+				}, true),
+			},
+			map[int]Request{
+				200: {
+					description: "getReqDef",
+					object:      &testStructFull{},
+				},
+			},
+			func(c *gin.Context) {})
+		paht22.PATCH(
+			map[string]interface{}{
+				"description": "getDescription",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
+			},
+			[]Parameter{
+				NewParameter(map[string]interface{}{
+					"name":        "name",
+					"description": "boolGetParameter",
+					"in":          "header",
+				}, true),
+			},
+			map[int]Request{
+				200: {
+					description: "getReqDef",
+					object:      &testStructFull{},
+				},
+			},
+			func(c *gin.Context) {})
+		paht22.OPTIONS(
+			map[string]interface{}{
+				"description": "getDescription",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
+			},
+			[]Parameter{
+				NewParameter(map[string]interface{}{
+					"name":        "name",
+					"description": "boolGetParameter",
+					"in":          "header",
+				}, true),
+			},
+			map[int]Request{
+				200: {
+					description: "getReqDef",
+					object:      &testStructFull{},
+				},
+			},
+			func(c *gin.Context) {})
+		paht22.HEAD(
+			map[string]interface{}{
+				"description": "getDescription",
+				"consumes":    []string{"getConsume"},
+				"produces":    []string{"getProduce"},
+				"tags":        []string{"tagget"},
+				"summary":     "getSummary",
+			},
+			[]Parameter{
+				NewParameter(map[string]interface{}{
+					"name":        "name",
+					"description": "boolGetParameter",
+					"in":          "header",
+				}, true),
+			},
+			map[int]Request{
+				200: {
+					description: "getReqDef",
+					object:      &testStructFull{},
+				},
+			},
+			func(c *gin.Context) {})
+		paht22.PUT(
 			map[string]interface{}{
 				"description": "getDescription",
 				"consumes":    []string{"getConsume"},

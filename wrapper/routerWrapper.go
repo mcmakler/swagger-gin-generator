@@ -12,6 +12,12 @@ import (
 type SwaggRouterWrapper interface {
 	Group(path, tag string) SwaggGroupWrapper
 	Generate(filepath string) error
+	NewBasicSecurityDefinition(title string)
+	NewApiKeySecurityDefinition(title, name string, inHeader bool)
+	NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string)
+	NewOauth2PasswordSecurityDefinition(title, tokenURL string)
+	NewOauth2ApplicationSecurityDefinition(title, tokenURL string)
+	NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string)
 }
 
 type swaggWrapper struct {

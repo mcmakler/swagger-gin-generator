@@ -8,7 +8,7 @@ import (
 
 const (
 	descriptionString      = "\n  description: "
-	securityString         = "\n  consumes:"
+	securityString         = "\n  security:"
 	securityIndentString   = "\n  - "
 	consumesString         = "\n  consumes:"
 	consumesIndentString   = "\n  - "
