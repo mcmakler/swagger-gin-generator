@@ -3,7 +3,7 @@ package swaggerFileGenerator
 import (
 	"github.com/stretchr/testify/assert"
 	"strings"
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"testing"
 )
 

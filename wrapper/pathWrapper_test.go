@@ -3,7 +3,7 @@ package wrapper
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"testing"
 )
 

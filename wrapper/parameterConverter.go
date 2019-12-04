@@ -3,7 +3,7 @@ package wrapper
 import (
 	"fmt"
 	"reflect"
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 type Parameter interface {

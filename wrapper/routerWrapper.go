@@ -5,11 +5,13 @@ import (
 	"io"
 	"os"
 	"strings"
-	"swagger-gin-generator/swaggerFileGenerator"
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 //TODO: caps-free params
+//TODO: group subgroups
+//TODO: group get, post, ...
 
 const (
 	filenameString = "swagger.yaml"

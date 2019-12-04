@@ -3,7 +3,7 @@ package swaggerFileGenerator
 import (
 	"errors"
 	"strings"
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 const (

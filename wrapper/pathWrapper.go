@@ -3,8 +3,8 @@ package wrapper
 import (
 	"github.com/gin-gonic/gin"
 	"reflect"
-	"swagger-gin-generator/swaggerFileGenerator"
-	"swagger-gin-generator/swaggerFileGenerator/parameters"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator"
+	"swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 )
 
 type SwaggPathWrapper interface {
