@@ -25,6 +25,12 @@ type testStructFull struct {
 
 func TestNewSwaggerRouterWrapper(t *testing.T) {
 	t.Run("Test: NewSwaggerRouterWrapper", func(t *testing.T) {
+		parameters := []Parameter{
+			NewParameter(
+				NewBasicParameterConfig("body", "name", "boolGetParameter", true, false),
+				true),
+		}
+
 		g := gin.Default()
 		srw := NewSwaggerRouterWrapper(
 			NewMainConfig("version", "title", "description"),
@@ -62,11 +68,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"produces":    []string{"getProduce"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -87,11 +89,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -132,11 +130,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -152,11 +146,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -172,11 +162,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -192,11 +178,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -212,11 +194,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"tags":        []string{"tagget"},
 				"summary":     "getSummary",
 			},
-			[]Parameter{
-				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
-					true),
-			},
+			parameters,
 			map[int]Request{
 				200: {
 					description: "getReqDef",
