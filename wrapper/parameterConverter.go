@@ -1,6 +1,7 @@
 package wrapper
 
 import (
+	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"reflect"
 	"time"
@@ -15,9 +16,15 @@ type parameter struct {
 	object           interface{}
 }
 
-func NewParameter(params map[string]interface{}, obj interface{}) Parameter {
+func NewParameter(params structures.ParameterConfig, obj interface{}) Parameter {
+	if params != nil {
+		return &parameter{
+			listOfparameters: params.ToMap(),
+			object:           obj,
+		}
+	}
 	return &parameter{
-		listOfparameters: params,
+		listOfparameters: nil,
 		object:           obj,
 	}
 }

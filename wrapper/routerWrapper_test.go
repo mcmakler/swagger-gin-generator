@@ -67,11 +67,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {
@@ -94,11 +92,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {
@@ -141,11 +137,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {
@@ -163,11 +157,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {
@@ -185,11 +177,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {
@@ -207,11 +197,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {
@@ -229,11 +217,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				"summary":     "getSummary",
 			},
 			[]Parameter{
-				NewParameter(map[string]interface{}{
-					"name":        "name",
-					"description": "boolGetParameter",
-					"in":          "header",
-				}, true),
+				NewParameter(
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					true),
 			},
 			map[int]Request{
 				200: {

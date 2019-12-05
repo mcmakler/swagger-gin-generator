@@ -24,11 +24,9 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 					"summary":     "getSummary",
 				},
 				[]Parameter{
-					NewParameter(map[string]interface{}{
-						"name":        "name",
-						"in":          "in",
-						"description": "boolGetParameter",
-					}, true),
+					NewParameter(
+						NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+						true),
 				},
 				map[int]Request{
 					200: {
@@ -58,11 +56,9 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 					"summary":     "getSummary",
 				},
 				[]Parameter{
-					NewParameter(map[string]interface{}{
-						"name":        "name",
-						"in":          "in",
-						"description": "boolGetParameter",
-					}, true),
+					NewParameter(
+						NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+						true),
 				},
 				map[int]Request{
 					200: {
