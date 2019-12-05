@@ -2,6 +2,7 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"io"
@@ -47,9 +48,9 @@ type swaggWrapper struct {
 	router *gin.Engine
 }
 
-func NewSwaggerRouterWrapper(configs map[string]interface{}, r *gin.Engine) SwaggRouterWrapper {
+func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggRouterWrapper {
 	return &swaggWrapper{
-		configs:     configs,
+		configs:     config.ToMap(),
 		security:    []swaggerFileGenerator.SecurityDefinitionSwagg{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},

@@ -26,7 +26,7 @@ func (c *integerParameterConfig) ToMap() map[string]interface{} {
 	}
 }
 
-func NewIntegerParameterConfig(in, name, description string, required, allowEmptyValue bool, defaultValue, min, max, multipleOf int, exclusiveMin, exclusiveMax bool) ParameterConfig {
+func NewIntegerParameterConfig(in, name, description string, required, allowEmptyValue bool, defaultValue, min, max, multipleOf int, exclusiveMin, exclusiveMax bool) Config {
 	return &integerParameterConfig{
 		basicParameterConfig: basicParameterConfig{
 			requiredParameterConfig: requiredParameterConfig{

@@ -27,11 +27,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 	t.Run("Test: NewSwaggerRouterWrapper", func(t *testing.T) {
 		g := gin.Default()
 		srw := NewSwaggerRouterWrapper(
-			map[string]interface{}{
-				"title":       "title",
-				"description": "description",
-				"version":     "version",
-			},
+			NewMainConfig("version", "title", "description"),
 			g)
 		basicSecurity := "Basic"
 		srw.NewBasicSecurityDefinition(basicSecurity)

@@ -24,7 +24,7 @@ func (c *stringParameterConfig) ToMap() map[string]interface{} {
 	}
 }
 
-func NewStringParameterConfig(in, name, description string, required, allowEmptyValue bool, format string, minLength, maxLength int, pattern string, enum []string) ParameterConfig {
+func NewStringParameterConfig(in, name, description string, required, allowEmptyValue bool, format string, minLength, maxLength int, pattern string, enum []string) Config {
 	return &stringParameterConfig{
 		basicParameterConfig: basicParameterConfig{
 			requiredParameterConfig: requiredParameterConfig{

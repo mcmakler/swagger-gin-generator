@@ -16,7 +16,7 @@ type parameter struct {
 	object           interface{}
 }
 
-func NewParameter(params structures.ParameterConfig, obj interface{}) Parameter {
+func NewParameter(params structures.Config, obj interface{}) Parameter {
 	if params != nil {
 		return &parameter{
 			listOfparameters: params.ToMap(),

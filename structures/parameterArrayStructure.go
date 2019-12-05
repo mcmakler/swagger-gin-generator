@@ -20,7 +20,7 @@ func (c *arrayParameterConfig) ToMap() map[string]interface{} {
 	}
 }
 
-func NewArrayParameterConfig(in, name, description string, required, allowEmptyValue bool, minItems, maxItems int, uniqueItems bool) ParameterConfig {
+func NewArrayParameterConfig(in, name, description string, required, allowEmptyValue bool, minItems, maxItems int, uniqueItems bool) Config {
 	return &arrayParameterConfig{
 		basicParameterConfig: basicParameterConfig{
 			requiredParameterConfig: requiredParameterConfig{

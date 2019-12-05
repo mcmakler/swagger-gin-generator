@@ -17,7 +17,7 @@ func (c *basicParameterConfig) ToMap() map[string]interface{} {
 	}
 }
 
-func NewBasicParameterConfig(in, name, description string, required, allowEmptyValue bool) ParameterConfig {
+func NewBasicParameterConfig(in, name, description string, required, allowEmptyValue bool) Config {
 	return &basicParameterConfig{
 		requiredParameterConfig: requiredParameterConfig{
 			In:   in,
