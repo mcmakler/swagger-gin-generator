@@ -51,7 +51,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 				nil,
 				[]PathSwagger{pathSwagger},
 				[]parameters.SwaggParameter{
-					parameters.NewArraySwaggParameter(nil, nil),
+					parameters.NewArraySwaggerParameter(nil, nil),
 				},
 			)
 			_, actual := a.ToString()
@@ -174,7 +174,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
-			def := parameters.NewBoolSwagParameter(nil)
+			def := parameters.NewBoolSwaggerParameter(nil)
 			a := NewMainSwagg(
 				map[string]interface{}{
 					"description": "description",

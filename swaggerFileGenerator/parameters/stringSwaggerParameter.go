@@ -15,29 +15,29 @@ const (
 	enumNewString   = "\n- "
 )
 
-type stringSwaggParameter struct {
-	configs map[string]interface{}
+type stringSwaggerParameter struct {
+	config map[string]interface{}
 }
 
-func (a *stringSwaggParameter) ToString() (string, error) {
+func (a *stringSwaggerParameter) ToString() (string, error) {
 	var res string
 	res = typeString + stringType
-	if a.configs == nil {
+	if a.config == nil {
 		return res, nil
 	}
-	if val, ok := a.configs["format"]; ok { //TODO: make checking of format
+	if val, ok := a.config["format"]; ok { //TODO: make checking of format
 		res += formatString + val.(string)
 	}
-	if val, ok := a.configs["minLength"]; ok { //TODO: make check?
+	if val, ok := a.config["minLength"]; ok {
 		res += minLengthString + strconv.FormatInt(int64(val.(int)), 10)
 	}
-	if val, ok := a.configs["maxLength"]; ok {
+	if val, ok := a.config["maxLength"]; ok {
 		res += maxLengthString + strconv.FormatInt(int64(val.(int)), 10)
 	}
-	if val, ok := a.configs["pattern"]; ok {
+	if val, ok := a.config["pattern"]; ok {
 		res += patternString + val.(string)
 	}
-	if val, ok := a.configs["enum"]; ok && val.([]string) != nil {
+	if val, ok := a.config["enum"]; ok && val.([]string) != nil {
 		res += enumString
 		for _, enum := range val.([]string) {
 			res += enumNewString + enum
@@ -46,16 +46,16 @@ func (a *stringSwaggParameter) ToString() (string, error) {
 	return res, nil
 }
 
-func (a *stringSwaggParameter) IsObject() bool {
+func (a *stringSwaggerParameter) IsObject() bool {
 	return false
 }
 
-func (a *stringSwaggParameter) getConfigs() map[string]interface{} {
-	return a.configs
+func (a *stringSwaggerParameter) getConfigs() map[string]interface{} {
+	return a.config
 }
 
-func NewStringSwagParameter(params map[string]interface{}) SwaggParameter {
-	return &stringSwaggParameter{
-		configs: params,
+func NewStringSwaggerParameter(params map[string]interface{}) SwaggParameter {
+	return &stringSwaggerParameter{
+		config: params,
 	}
 }

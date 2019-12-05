@@ -85,8 +85,8 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				"tags":        []string{"t1", "t2"},
 				"summary":     "summary",
 			}
-			swagP1 := parameters.NewBoolSwagParameter(nil)
-			swagP2 := parameters.NewStringSwagParameter(nil)
+			swagP1 := parameters.NewBoolSwaggerParameter(nil)
+			swagP2 := parameters.NewStringSwaggerParameter(nil)
 			responseSwagg1 := NewResponseSwagg(200, "descr", "", nil)
 			responseSwagg2 := NewResponseSwagg(300, "descr", "", nil)
 			a := &requestSwagg{
@@ -126,8 +126,8 @@ func TestNewRequestSwagg(t *testing.T) {
 			"tags":        []string{"t1", "t2"},
 			"summary":     "summary",
 		}
-		swagP1 := parameters.NewBoolSwagParameter(nil)
-		swagP2 := parameters.NewStringSwagParameter(nil)
+		swagP1 := parameters.NewBoolSwaggerParameter(nil)
+		swagP2 := parameters.NewStringSwaggerParameter(nil)
 		responseSwagg1 := NewResponseSwagg(200, "descr", "", nil)
 		responseSwagg2 := NewResponseSwagg(300, "descr", "", nil)
 		expected := &requestSwagg{

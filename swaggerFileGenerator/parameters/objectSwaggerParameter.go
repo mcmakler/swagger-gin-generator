@@ -14,28 +14,28 @@ const (
 )
 
 type objectSwaggerParameter struct {
-	configs    map[string]interface{}
+	config     map[string]interface{}
 	properties map[string]SwaggParameter
 	subObject  bool
 }
 
 var (
-	errorNilObjectName = errors.New("NIL_OBJECT_NAME")
+	errorNilObjectVariableName = errors.New("NIL_OBJECT_VARIABLE_NAME")
 )
 
 func (a *objectSwaggerParameter) ToString() (string, error) {
-	if a.configs == nil {
-		return "", errorNilObjectName
+	if a.config == nil {
+		return "", errorNilObjectVariableName
 	}
-	if _, ok := a.configs["nameOfVariable"]; !ok {
-		return "", errorNilObjectName
+	if _, ok := a.config["nameOfVariable"]; !ok {
+		return "", errorNilObjectVariableName
 	}
 	res := ""
 	if !a.subObject {
-		res = "\n" + a.configs["nameOfVariable"].(string) + ":"
+		res = "\n" + a.config["nameOfVariable"].(string) + ":"
 	}
 	res += typeString + objectType
-	if val, ok := a.configs["required"]; ok && val != nil {
+	if val, ok := a.config["required"]; ok && val != nil {
 		for _, val := range val.([]string) {
 			res += requiredIndentStr + val
 		}
@@ -59,13 +59,13 @@ func (a *objectSwaggerParameter) IsObject() bool {
 }
 
 func (a *objectSwaggerParameter) getConfigs() map[string]interface{} {
-	return a.configs
+	return a.config
 }
 
-func NewObjectSwaggerParameter(params map[string]interface{}, prop map[string]SwaggParameter, subObj bool) SwaggParameter {
+func NewObjectSwaggerParameter(config map[string]interface{}, properties map[string]SwaggParameter, subObject bool) SwaggParameter {
 	return &objectSwaggerParameter{
-		configs:    params,
-		properties: prop,
-		subObject:  subObj,
+		config:     config,
+		properties: properties,
+		subObject:  subObject,
 	}
 }

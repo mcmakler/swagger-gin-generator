@@ -7,7 +7,12 @@ import (
 )
 
 const (
-	refString = "\n    $ref: '#/definitions/"
+	inDeficeString     = "\n- in: "
+	nameString         = "\n  name: "
+	requiredString     = "\n  required: "
+	descriptionString  = "\n  description: "
+	linkOnSchemaString = "\n  schema:"
+	refString          = "\n    $ref: '#/definitions/"
 )
 
 type schemaSwaggParameter struct {
@@ -16,11 +21,16 @@ type schemaSwaggParameter struct {
 }
 
 var (
+	errorEmptyIn     = errors.New("ERROR_IN_IS_MANDATORY")
+	errorEmptyName   = errors.New("ERROR_NAME_IS_MANDATORY")
 	errorEmptySchema = errors.New("EMPTY_SCHEMA_LINK")
 )
 
 func (a *schemaSwaggParameter) ToString() (string, error) {
 	var res string
+	if a.configs == nil {
+		return "", errorEmptyIn
+	}
 	if val, ok := a.configs["in"]; ok && val.(string) != "" {
 		res += inDeficeString + val.(string)
 	} else {
@@ -51,11 +61,7 @@ func (a *schemaSwaggParameter) ToString() (string, error) {
 		res += str
 		return res, nil
 	}
-	if val, ok := a.configs["schema"]; ok {
-		res += linkOnSchemaString + refString + val.(string) + "'"
-	} else {
-		return "", errorEmptySchema
-	}
+	res += linkOnSchemaString + refString + a.configs["schema"].(string) + "'"
 	return res, nil
 }
 
@@ -70,8 +76,8 @@ func (a *schemaSwaggParameter) getConfigs() map[string]interface{} {
 	return a.configs
 }
 
-func NewSchemaSwaggParameter(params SwaggParameter) SwaggParameter {
-	configs := params.getConfigs()
+func NewSchemaSwaggParameter(parameter SwaggParameter) SwaggParameter {
+	configs := parameter.getConfigs()
 	if val, ok := configs["nameOfVariable"]; ok {
 		configs["schema"] = val
 		return &schemaSwaggParameter{
@@ -81,6 +87,6 @@ func NewSchemaSwaggParameter(params SwaggParameter) SwaggParameter {
 	}
 	return &schemaSwaggParameter{
 		configs: configs,
-		obj:     params,
+		obj:     parameter,
 	}
 }

@@ -52,7 +52,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 				"required": nil,
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
-				"B": parameters.NewBoolSwagParameter(nil),
+				"B": parameters.NewBoolSwaggerParameter(nil),
 			}, false)
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructBool{
 				B: true,
@@ -65,7 +65,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 				"required": nil,
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
-				"A": parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil)),
+				"A": parameters.NewArraySwaggerParameter(nil, parameters.NewBoolSwaggerParameter(nil)),
 			}, false)
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructArr{
 				A: []bool{true},
@@ -78,7 +78,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 				"required": nil,
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
-				"T": parameters.NewStringSwagParameter(nil),
+				"T": parameters.NewStringSwaggerParameter(nil),
 			}, false)
 
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructTime{}, false))
@@ -95,7 +95,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"Substr": parameters.NewObjectSwaggerParameter(paramsBool, map[string]parameters.SwaggParameter{
-					"B": parameters.NewBoolSwagParameter(nil),
+					"B": parameters.NewBoolSwaggerParameter(nil),
 				}, true),
 			}, false)
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructSubstr{
@@ -113,13 +113,13 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 				"required": nil,
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
-				"B": parameters.NewBoolSwagParameter(nil),
-				"S": parameters.NewStringSwagParameter(nil),
-				"I": parameters.NewIntegerSwagParameter(nil),
-				"F": parameters.NewNumberSwagParameter(nil),
-				"A": parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil)),
+				"B": parameters.NewBoolSwaggerParameter(nil),
+				"S": parameters.NewStringSwaggerParameter(nil),
+				"I": parameters.NewIntegerSwaggerParameter(nil),
+				"F": parameters.NewNumberSwaggerParameter(nil),
+				"A": parameters.NewArraySwaggerParameter(nil, parameters.NewBoolSwaggerParameter(nil)),
 				"Substr": parameters.NewObjectSwaggerParameter(paramsBool, map[string]parameters.SwaggParameter{
-					"B": parameters.NewBoolSwagParameter(nil),
+					"B": parameters.NewBoolSwaggerParameter(nil),
 				}, true),
 			}, false)
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructFull{
@@ -141,7 +141,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           true,
 			}
-			expected := parameters.NewBoolSwagParameter(nil)
+			expected := parameters.NewBoolSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -151,7 +151,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           "String",
 			}
-			expected := parameters.NewStringSwagParameter(nil)
+			expected := parameters.NewStringSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -161,7 +161,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           10,
 			}
-			expected := parameters.NewIntegerSwagParameter(nil)
+			expected := parameters.NewIntegerSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -171,7 +171,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           int64(10),
 			}
-			expected := parameters.NewIntegerSwagParameter(nil)
+			expected := parameters.NewIntegerSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -181,7 +181,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           10.10,
 			}
-			expected := parameters.NewNumberSwagParameter(nil)
+			expected := parameters.NewNumberSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -191,7 +191,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           float64(10),
 			}
-			expected := parameters.NewNumberSwagParameter(nil)
+			expected := parameters.NewNumberSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -201,7 +201,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           float64(10),
 			}
-			expected := parameters.NewNumberSwagParameter(nil)
+			expected := parameters.NewNumberSwaggerParameter(nil)
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
@@ -211,7 +211,7 @@ func TestParameter_GetSwagParameter(t *testing.T) {
 				listOfparameters: nil,
 				object:           []bool{},
 			}
-			expected := parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil))
+			expected := parameters.NewArraySwaggerParameter(nil, parameters.NewBoolSwaggerParameter(nil))
 			actual := p.GetSwagParameter()
 			assert.Equal(t, expected, actual)
 		})
