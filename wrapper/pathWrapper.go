@@ -2,6 +2,7 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"reflect"
@@ -9,43 +10,43 @@ import (
 
 type SwaggPathWrapper interface {
 	GET(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	POST(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	DELETE(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	HEAD(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	OPTIONS(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	PATCH(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
 	)
 	PUT(
-		swaggerParameters map[string]interface{},
+		swaggerParameters structures.Config,
 		parameters []Parameter,
 		requests map[int]Request,
 		handlerFunc ...gin.HandlerFunc,
@@ -88,7 +89,7 @@ func newSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrap
 }
 
 func (s *swaggPathWrapper) GET(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -99,7 +100,7 @@ func (s *swaggPathWrapper) GET(
 }
 
 func (s *swaggPathWrapper) POST(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -110,7 +111,7 @@ func (s *swaggPathWrapper) POST(
 }
 
 func (s *swaggPathWrapper) DELETE(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -121,7 +122,7 @@ func (s *swaggPathWrapper) DELETE(
 }
 
 func (s *swaggPathWrapper) HEAD(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -132,7 +133,7 @@ func (s *swaggPathWrapper) HEAD(
 }
 
 func (s *swaggPathWrapper) OPTIONS(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -143,7 +144,7 @@ func (s *swaggPathWrapper) OPTIONS(
 }
 
 func (s *swaggPathWrapper) PATCH(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -154,7 +155,7 @@ func (s *swaggPathWrapper) PATCH(
 }
 
 func (s *swaggPathWrapper) PUT(
-	swaggerParameters map[string]interface{},
+	swaggerParameters structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
@@ -174,7 +175,7 @@ func (s *swaggPathWrapper) getDefinitions() []parameters.SwaggParameter {
 }
 
 func (s *swaggPathWrapper) addRequest(
-	configs map[string]interface{},
+	strConfigs structures.Config,
 	parametersP []Parameter,
 	requests map[int]Request,
 	reqType string,
@@ -189,8 +190,11 @@ func (s *swaggPathWrapper) addRequest(
 		}
 	}
 
-	if configs == nil {
-		configs = map[string]interface{}{}
+	var configs map[string]interface{}
+	if strConfigs != nil {
+		configs = strConfigs.ToMap()
+	} else {
+		configs = make(map[string]interface{})
 	}
 
 	if s.tag != "" {

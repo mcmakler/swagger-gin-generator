@@ -14,13 +14,7 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 		sgw.Use(func(c *gin.Context) {})
 		spw := sgw.Path("path")
 		spw.GET(
-			map[string]interface{}{
-				"description": "getDescription",
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			[]Parameter{
 				NewParameter(
 					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),

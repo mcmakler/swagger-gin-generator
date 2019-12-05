@@ -33,3 +33,7 @@ func NewRequiredMainConfig(version, title string) structures.Config {
 func NewMainConfig(version, title, description string) structures.Config {
 	return structures.NewMainConfig(version, title, description)
 }
+
+func NewRequestConfig(description, operationId, summary string, security, consumes, produces, tags []string) structures.Config {
+	return structures.NewRequestConfig(description, operationId, summary, security, consumes, produces, tags)
+}

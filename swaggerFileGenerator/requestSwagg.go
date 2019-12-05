@@ -18,6 +18,7 @@ const (
 	producesIndentString   = "\n  - "
 	tagsString             = "\n  tags: "
 	tagsIndentString       = "\n    - "
+	operationIdString      = "\n  operationId: "
 	summaryString          = "\n  summary: "
 	parametersString       = "\n  parameters:"
 	parametersIndentString = "\n    "
@@ -78,6 +79,9 @@ func (r *requestSwagg) ToString() (string, error) {
 		for _, tag := range val.([]string) {
 			res += tagsIndentString + tag
 		}
+	}
+	if val, ok := r.configs["operationId"]; ok {
+		res += operationIdString + val.(string)
 	}
 	if val, ok := r.configs["summary"]; ok {
 		res += summaryString + val.(string)

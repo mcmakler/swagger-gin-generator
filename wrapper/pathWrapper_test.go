@@ -16,13 +16,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 				"tag",
 				gr)
 			spw.GET(
-				map[string]interface{}{
-					"description": "getDescription",
-					"consumes":    []string{"getConsume"},
-					"produces":    []string{"getProduce"},
-					"tags":        []string{"tagget"},
-					"summary":     "getSummary",
-				},
+				NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 				[]Parameter{
 					NewParameter(
 						NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
@@ -48,13 +42,7 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 				"tag",
 				gr)
 			spw.POST(
-				map[string]interface{}{
-					"description": "getDescription",
-					"consumes":    []string{"getConsume"},
-					"produces":    []string{"getProduce"},
-					"tags":        []string{"tagget"},
-					"summary":     "getSummary",
-				},
+				NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 				[]Parameter{
 					NewParameter(
 						NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),

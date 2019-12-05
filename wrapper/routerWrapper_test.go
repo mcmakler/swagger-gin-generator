@@ -61,13 +61,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		firstGroup := srw.Group("/group1", "firstGroup")
 		path1 := firstGroup.Path("/path1")
 		path1.GET(
-			map[string]interface{}{
-				"description": "getDescription",
-				"security":    []string{basicSecurity, apiSecurity, oauth2AccessCodeSecurity},
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", []string{basicSecurity, apiSecurity, oauth2AccessCodeSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -81,14 +75,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		path1.POST(
-			map[string]interface{}{
-				"description": "getDescription",
-				"security":    []string{oauth2ImplicitSecurity},
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", []string{oauth2ImplicitSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -122,14 +109,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		secondGroup := srw.Group("/group2", "secondGroup")
 		paht22 := secondGroup.Path("/path2")
 		paht22.DELETE(
-			map[string]interface{}{
-				"description": "getDescription",
-				"security":    []string{oauth2PasswordSecurity, oauth2AppSecurity},
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", []string{oauth2PasswordSecurity, oauth2AppSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -139,13 +119,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.PATCH(
-			map[string]interface{}{
-				"description": "getDescription",
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -155,13 +129,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.OPTIONS(
-			map[string]interface{}{
-				"description": "getDescription",
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -171,13 +139,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.HEAD(
-			map[string]interface{}{
-				"description": "getDescription",
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -187,13 +149,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.PUT(
-			map[string]interface{}{
-				"description": "getDescription",
-				"consumes":    []string{"getConsume"},
-				"produces":    []string{"getProduce"},
-				"tags":        []string{"tagget"},
-				"summary":     "getSummary",
-			},
+			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
