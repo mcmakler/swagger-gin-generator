@@ -30,7 +30,7 @@ func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 		res += descriptionString + val.(string)
 	}
 	if val, ok := a.configs["schema"]; ok {
-		res += linkOnSchemaString + val.(string)
+		res += linkOnSchemaString + val.(string) + "'"
 	} else {
 		return "", errorEmptySchema
 	}
