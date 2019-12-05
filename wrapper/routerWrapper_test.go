@@ -122,7 +122,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			NewRequestConfig("description", "operationid2", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			[]Parameter{
 				NewParameter(
-					NewIntegerParameterConfig("body", "name", "descr", true, 1, 0, 10, 2, true, true),
+					NewIntegerParameterConfig(InBody, "name", "descr", true, 1, 0, 10, 2, true, true),
 					10),
 			},
 			map[int]Request{
@@ -136,7 +136,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			NewRequestConfig("description", "operationid1", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			[]Parameter{
 				NewParameter(
-					NewNumberParameterConfig("body", "name", "descr", true, 1.0, 0.0, 10.0, 2.0, true, true),
+					NewNumberParameterConfig(InHeader, "name", "descr", true, 1.0, 0.0, 10.0, 2.0, true, true),
 					10.0),
 			},
 			map[int]Request{
@@ -150,7 +150,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			NewRequestConfig("description", "", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			[]Parameter{
 				NewParameter(
-					NewStringParameterConfig("body", "name", "descr", true, "format", 0, 10, "dfdf", nil),
+					NewStringParameterConfig(InBody, "name", "descr", true, "format", 0, 10, "dfdf", nil),
 					""),
 			},
 			map[int]Request{

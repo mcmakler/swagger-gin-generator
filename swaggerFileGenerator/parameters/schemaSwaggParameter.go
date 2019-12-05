@@ -44,7 +44,11 @@ func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		res += linkOnSchemaString + strings.Replace(str, "\n", "\n  ", -1)
+		if a.configs["in"] == "body" {
+			res += linkOnSchemaString + strings.Replace(str, "\n", "\n  ", -1)
+			return res, nil
+		}
+		res += str
 		return res, nil
 	}
 	if val, ok := a.configs["schema"]; ok {

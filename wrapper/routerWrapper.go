@@ -22,6 +22,12 @@ import (
 //TODO: required in object
 
 const (
+	InBody     = "body"
+	InPath     = "path"
+	InQuery    = "query"
+	InHeader   = "header"
+	InFromData = "fromData"
+
 	filenameString = "swagger.yaml"
 )
 
