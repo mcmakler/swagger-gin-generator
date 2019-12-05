@@ -35,11 +35,7 @@ func (a *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 	if !a.subObject {
 		res = "\n" + a.configs["nameOfVariable"].(string) + ":"
 	}
-	if isDefinition {
-		res += typeString + objectType
-	} else {
-		res += typeDeficeString + objectType
-	}
+	res += typeString + objectType
 	if val, ok := a.configs["required"]; ok && val != nil {
 		for _, val := range val.([]string) {
 			res += requiredIndentStr + val

@@ -21,26 +21,9 @@ type stringSwaggParameter struct {
 
 func (a *stringSwaggParameter) ToString(isDefinition bool) (string, error) {
 	var res string
-	if isDefinition {
-		res = typeString + stringType
-	} else {
-		res = typeDeficeString + stringType
-	}
+	res = typeString + stringType
 	if a.configs == nil {
 		return res, nil
-	}
-	if val, ok := a.configs["in"]; ok {
-		res += inString + val.(string)
-	} else if !isDefinition {
-		return "", errorEmptyIn
-	}
-	if val, ok := a.configs["name"]; ok {
-		res += nameString + val.(string)
-	} else if !isDefinition {
-		return "", errorEmptyName
-	}
-	if val, ok := a.configs["required"]; ok {
-		res += requiredString + strconv.FormatBool(val.(bool))
 	}
 	if val, ok := a.configs["format"]; ok { //TODO: make checking of format
 		res += formatString + val.(string)
@@ -54,13 +37,7 @@ func (a *stringSwaggParameter) ToString(isDefinition bool) (string, error) {
 	if val, ok := a.configs["pattern"]; ok {
 		res += patternString + val.(string)
 	}
-	if val, ok := a.configs["allowEmptyValue"]; ok {
-		res += allowEmptyValueString + strconv.FormatBool(val.(bool))
-	}
-	if val, ok := a.configs["description"]; ok {
-		res += descriptionString + val.(string)
-	}
-	if val, ok := a.configs["enum"]; ok {
+	if val, ok := a.configs["enum"]; ok && val.([]string) != nil {
 		res += enumString
 		for _, enum := range val.([]string) {
 			res += enumNewString + enum

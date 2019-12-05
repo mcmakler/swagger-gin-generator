@@ -53,37 +53,37 @@ func (r *requestSwagg) ToString() (string, error) {
 		return "", errorEmptyResponses
 	}
 	res := "\n" + r.configs["typeRequest"].(string) + ":"
-	if val, ok := r.configs["security"]; ok {
+	if val, ok := r.configs["security"]; ok && val.([]string) != nil {
 		res += securityString
 		for _, cons := range val.([]string) {
 			res += securityIndentString + cons + ": []"
 		}
 	}
-	if val, ok := r.configs["description"]; ok {
+	if val, ok := r.configs["description"]; ok && val != "" {
 		res += descriptionString + val.(string)
 	}
-	if val, ok := r.configs["consumes"]; ok {
+	if val, ok := r.configs["consumes"]; ok && val.([]string) != nil {
 		res += consumesString
 		for _, cons := range val.([]string) {
 			res += consumesIndentString + cons
 		}
 	}
-	if val, ok := r.configs["produces"]; ok {
+	if val, ok := r.configs["produces"]; ok && val.([]string) != nil {
 		res += producesString
 		for _, prod := range val.([]string) {
 			res += producesIndentString + prod
 		}
 	}
-	if val, ok := r.configs["tags"]; ok {
+	if val, ok := r.configs["tags"]; ok && val.([]string) != nil {
 		res += tagsString
 		for _, tag := range val.([]string) {
 			res += tagsIndentString + tag
 		}
 	}
-	if val, ok := r.configs["operationId"]; ok {
+	if val, ok := r.configs["operationId"]; ok && val != "" {
 		res += operationIdString + val.(string)
 	}
-	if val, ok := r.configs["summary"]; ok {
+	if val, ok := r.configs["summary"]; ok && val != "" {
 		res += summaryString + val.(string)
 	}
 	if r.parameters != nil {

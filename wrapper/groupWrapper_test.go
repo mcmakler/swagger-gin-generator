@@ -17,7 +17,7 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			[]Parameter{
 				NewParameter(
-					NewBasicParameterConfig("in", "name", "boolGetParameter", true, false),
+					NewBasicParameterConfig("in", "name", "boolGetParameter", true),
 					true),
 			},
 			map[int]Request{

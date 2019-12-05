@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+//TODO: remove isDefinition
 //TODO: bearer in consts;  json, bson
 //TODO: consts for all parameters
 //TODO: caps-free params

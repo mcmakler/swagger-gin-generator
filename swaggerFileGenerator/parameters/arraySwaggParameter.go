@@ -29,24 +29,7 @@ func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
 		return "", ErrorNillItemsParameter
 	}
 	var res string
-	if isDefinition {
-		res = typeString + arrayType
-	} else {
-		res = typeDeficeString + arrayType
-	}
-	if val, ok := a.configs["in"]; ok {
-		res += inString + val.(string)
-	} else if !isDefinition {
-		return "", errorEmptyIn
-	}
-	if val, ok := a.configs["name"]; ok {
-		res += nameString + val.(string)
-	} else if !isDefinition {
-		return "", errorEmptyName
-	}
-	if val, ok := a.configs["required"]; ok {
-		res += requiredString + strconv.FormatBool(val.(bool))
-	}
+	res = typeString + arrayType
 	if val, ok := a.configs["minItems"]; ok {
 		res += minItemsString + strconv.FormatInt(int64(val.(int)), 10)
 	}
@@ -55,12 +38,6 @@ func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
 	}
 	if val, ok := a.configs["uniqueItems"]; ok {
 		res += uniqueItemsString + strconv.FormatBool(val.(bool))
-	}
-	if val, ok := a.configs["allowEmptyValue"]; ok {
-		res += allowEmptyValueString + strconv.FormatBool(val.(bool))
-	}
-	if val, ok := a.configs["description"]; ok {
-		res += descriptionString + val.(string)
 	}
 	items, err := a.items.ToString(true)
 	if err != nil {
@@ -77,7 +54,6 @@ func (a *arraySwaggParameter) IsObject() bool {
 func (a *arraySwaggParameter) getConfigs() map[string]interface{} {
 	return a.configs
 }
-
 
 func NewArraySwaggParameter(params map[string]interface{}, items SwaggParameter) SwaggParameter {
 	return &arraySwaggParameter{

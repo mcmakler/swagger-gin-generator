@@ -12,7 +12,6 @@ func (c *arrayParameterConfig) ToMap() map[string]interface{} {
 		"in":              c.In,
 		"name":            c.Name,
 		"required":        c.Required,
-		"allowEmptyValue": c.AllowEmptyValue,
 		"description":     c.Description,
 		"minItems":        c.MinItems,
 		"maxItems":        c.MaxItems,
@@ -20,7 +19,7 @@ func (c *arrayParameterConfig) ToMap() map[string]interface{} {
 	}
 }
 
-func NewArrayParameterConfig(in, name, description string, required, allowEmptyValue bool, minItems, maxItems int, uniqueItems bool) Config {
+func NewArrayParameterConfig(in, name, description string, required bool, minItems, maxItems int, uniqueItems bool) Config {
 	return &arrayParameterConfig{
 		basicParameterConfig: basicParameterConfig{
 			requiredParameterConfig: requiredParameterConfig{
@@ -28,7 +27,6 @@ func NewArrayParameterConfig(in, name, description string, required, allowEmptyV
 				Name: name,
 			},
 			Required:        required,
-			AllowEmptyValue: allowEmptyValue,
 			Description:     description,
 		},
 		MinItems:    minItems,

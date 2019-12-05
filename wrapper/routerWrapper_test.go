@@ -27,7 +27,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 	t.Run("Test: NewSwaggerRouterWrapper", func(t *testing.T) {
 		parameters := []Parameter{
 			NewParameter(
-				NewBasicParameterConfig("body", "name", "boolGetParameter", true, false),
+				NewBasicParameterConfig("body", "name", "boolGetParameter", true),
 				true),
 		}
 
@@ -61,7 +61,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		firstGroup := srw.Group("/group1", "firstGroup")
 		path1 := firstGroup.Path("/path1")
 		path1.GET(
-			NewRequestConfig("description", "operationid", "summary", []string{basicSecurity, apiSecurity, oauth2AccessCodeSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			NewRequestConfig("description", "", "summary", []string{basicSecurity, apiSecurity, oauth2AccessCodeSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -75,7 +75,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		path1.POST(
-			NewRequestConfig("description", "operationid", "summary", []string{oauth2ImplicitSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			NewRequestConfig("description", "", "summary", []string{oauth2ImplicitSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -109,7 +109,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		secondGroup := srw.Group("/group2", "secondGroup")
 		paht22 := secondGroup.Path("/path2")
 		paht22.DELETE(
-			NewRequestConfig("description", "operationid", "summary", []string{oauth2PasswordSecurity, oauth2AppSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			NewRequestConfig("description", "operationid3", "summary", []string{oauth2PasswordSecurity, oauth2AppSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
 			map[int]Request{
 				200: {
@@ -119,8 +119,12 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.PATCH(
-			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
-			parameters,
+			NewRequestConfig("description", "operationid2", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			[]Parameter{
+				NewParameter(
+					NewIntegerParameterConfig("body", "name", "descr", true, 1, 0, 10, 2, true, true),
+					10),
+			},
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -129,8 +133,12 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.OPTIONS(
-			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
-			parameters,
+			NewRequestConfig("description", "operationid1", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			[]Parameter{
+				NewParameter(
+					NewNumberParameterConfig("body", "name", "descr", true, 1.0, 0.0, 10.0, 2.0, true, true),
+					10.0),
+			},
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -139,8 +147,12 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.HEAD(
-			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
-			parameters,
+			NewRequestConfig("description", "", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			[]Parameter{
+				NewParameter(
+					NewStringParameterConfig("body", "name", "descr", true, "format", 0, 10, "dfdf", nil),
+					""),
+			},
 			map[int]Request{
 				200: {
 					description: "getReqDef",
@@ -149,8 +161,12 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 		paht22.PUT(
-			NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
-			parameters,
+			NewRequestConfig("description", "", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			[]Parameter{
+				NewParameter(
+					NewArrayParameterConfig("body", "name", "descr", true, 0, 10, true),
+					[]string{}),
+			},
 			map[int]Request{
 				200: {
 					description: "getReqDef",

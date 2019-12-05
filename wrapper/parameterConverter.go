@@ -30,7 +30,8 @@ func NewParameter(params structures.Config, obj interface{}) Parameter {
 }
 
 func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
-	return setValueByType(p.listOfparameters, p.object, false, false)
+	obj := setValueByType(p.listOfparameters, p.object, false, false)
+	return parameters.NewSchemaSwaggParameter(obj)
 }
 
 //TODO: required

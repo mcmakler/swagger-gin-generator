@@ -15,7 +15,6 @@ func (c *numberParameterConfig) ToMap() map[string]interface{} {
 		"in":               c.In,
 		"name":             c.Name,
 		"required":         c.Required,
-		"allowEmptyValue":  c.AllowEmptyValue,
 		"description":      c.Description,
 		"exclusiveMinimum": c.ExclusiveMinimum,
 		"exclusiveMaximum": c.ExclusiveMaximum,
@@ -26,7 +25,7 @@ func (c *numberParameterConfig) ToMap() map[string]interface{} {
 	}
 }
 
-func NewNumberParameterConfig(in, name, description string, required, allowEmptyValue bool, defaultValue, min, max, multipleOf float64, exclusiveMin, exclusiveMax bool) Config {
+func NewNumberParameterConfig(in, name, description string, required bool, defaultValue, min, max, multipleOf float64, exclusiveMin, exclusiveMax bool) Config {
 	return &numberParameterConfig{
 		basicParameterConfig: basicParameterConfig{
 			requiredParameterConfig: requiredParameterConfig{
@@ -34,7 +33,6 @@ func NewNumberParameterConfig(in, name, description string, required, allowEmpty
 				Name: name,
 			},
 			Required:        required,
-			AllowEmptyValue: allowEmptyValue,
 			Description:     description,
 		},
 		Default:          defaultValue,
