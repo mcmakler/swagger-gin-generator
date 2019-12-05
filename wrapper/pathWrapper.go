@@ -60,7 +60,7 @@ type SwaggPathWrapper interface {
 type swaggPathWrapper struct {
 	path        string
 	tag         string
-	requests    []swaggerFileGenerator.RequestSwagg
+	requests    []swaggerFileGenerator.RequestSwagger
 	definitions []parameters.SwaggParameter
 
 	group *gin.RouterGroup
@@ -82,7 +82,7 @@ func newSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrap
 	return &swaggPathWrapper{
 		path:        path,
 		tag:         tag,
-		requests:    []swaggerFileGenerator.RequestSwagg{},
+		requests:    []swaggerFileGenerator.RequestSwagger{},
 		definitions: []parameters.SwaggParameter{},
 		group:       group,
 	}

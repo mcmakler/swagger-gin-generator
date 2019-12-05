@@ -9,9 +9,9 @@ import (
 const (
 	swaggerString         = "swagger: '2.0'"
 	infoString            = "\ninfo:"
-	infoTitleString       = "\n  title: '"
+	infoTitleString       = "\n  title: "
 	infoDescriptionString = "\n  description: "
-	infoVersionString     = "\n  version: "
+	infoVersionString     = "\n  version: '"
 
 	securityDefinitionString = "\nsecurityDefinitions:"
 
@@ -28,36 +28,35 @@ var (
 	errorEmptyVersion = errors.New("ERROR_EMPTY_VERSION")
 )
 
-type MainSwagg interface {
+type MainSwagger interface {
 	ToString() (string, error)
 }
 
-type mainSwagg struct {
-	configs             map[string]interface{}
+type mainSwagger struct {
+	config              map[string]interface{}
 	securityDefinitions []SecurityDefinitionSwagg
 	paths               []PathSwagger
 	definitions         []parameters.SwaggParameter
-	//TODO: security
 }
 
 var errorEmptyPaths = errors.New("EMPTY_PATHS")
 
-func (m *mainSwagg) ToString() (string, error) {
+func (m *mainSwagger) ToString() (string, error) {
 	if m.paths == nil {
 		return "", errorEmptyPaths
 	}
 	res := swaggerString + infoString
-	if val, ok := m.configs["title"]; ok {
+	if val, ok := m.config["title"]; ok {
 		res += infoTitleString + val.(string)
 	} else {
 		return "", errorEmptyTitle
 	}
-	if val, ok := m.configs["version"]; ok {
+	if val, ok := m.config["version"]; ok {
 		res += infoVersionString + val.(string) + "'"
 	} else {
 		return "", errorEmptyVersion
 	}
-	if val, ok := m.configs["description"]; ok {
+	if val, ok := m.config["description"]; ok {
 		res += infoDescriptionString + val.(string)
 	}
 
@@ -72,7 +71,7 @@ func (m *mainSwagg) ToString() (string, error) {
 		}
 	}
 
-	if val, ok := m.configs["basePath"]; !ok {
+	if val, ok := m.config["basePath"]; !ok {
 		res += basePathString + "/"
 	} else {
 		res += basePathString + val.(string)
@@ -88,8 +87,8 @@ func (m *mainSwagg) ToString() (string, error) {
 
 	if m.definitions != nil {
 		res += definitionsString
-		for _, def := range m.definitions {
-			str, err := def.ToString()
+		for _, definition := range m.definitions {
+			str, err := definition.ToString()
 			if err != nil {
 				return "", err
 			}
@@ -99,11 +98,11 @@ func (m *mainSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-func NewMainSwagg(params map[string]interface{}, securityDefs []SecurityDefinitionSwagg, paths []PathSwagger, def []parameters.SwaggParameter) MainSwagg {
-	return &mainSwagg{
-		configs:             params,
-		securityDefinitions: securityDefs,
+func NewMainSwagger(config map[string]interface{}, securityDefinitions []SecurityDefinitionSwagg, paths []PathSwagger, definitions []parameters.SwaggParameter) MainSwagger {
+	return &mainSwagger{
+		config:              config,
+		securityDefinitions: securityDefinitions,
 		paths:               paths,
-		definitions:         def,
+		definitions:         definitions,
 	}
 }

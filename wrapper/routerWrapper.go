@@ -85,7 +85,7 @@ func (s *swaggWrapper) Generate(filepath string) error {
 		}
 	}
 	s.definitions = sliceUniqMap(s.definitions)
-	mainSwagg := swaggerFileGenerator.NewMainSwagg(
+	mainSwagg := swaggerFileGenerator.NewMainSwagger(
 		s.configs,
 		s.security, //TODO
 		s.paths,

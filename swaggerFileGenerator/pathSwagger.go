@@ -10,8 +10,8 @@ const (
 )
 
 var (
-	errorIncorrectPath = errors.New("INCORRECT_PATH")
-	errorNullRequests  = errors.New("EMPTY_REQUESTS_ARRAY")
+	errorIncorrectPath = errors.New("ERROR_INCORRECT_PATH")
+	errorNullRequests  = errors.New("ERROR_EMPTY_REQUESTS_ARRAY")
 )
 
 type PathSwagger interface {
@@ -20,7 +20,7 @@ type PathSwagger interface {
 
 type pathSwagger struct {
 	path     string
-	requests []RequestSwagg
+	requests []RequestSwagger
 }
 
 func (p *pathSwagger) ToString() (string, error) {
@@ -41,9 +41,9 @@ func (p *pathSwagger) ToString() (string, error) {
 	return res, nil
 }
 
-func NewPathSwagger(path string, req []RequestSwagg) PathSwagger {
+func NewPathSwagger(path string, requests []RequestSwagger) PathSwagger {
 	return &pathSwagger{
 		path:     path,
-		requests: req,
+		requests: requests,
 	}
 }

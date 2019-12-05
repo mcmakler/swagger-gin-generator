@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-func TestMainSwagg_ToString(t *testing.T) {
-	t.Run("Test: MainSwagg.ToString()", func(t *testing.T) {
+func TestMainSwagger_ToString(t *testing.T) {
+	t.Run("Test: MainSwagger.ToString()", func(t *testing.T) {
 		responseSwagger := NewResponseSwagg(200, "descr", "", nil)
 		requestSwagger := NewRequestSwagg(
 			map[string]interface{}{"typeRequest": "GET"},
@@ -17,18 +17,18 @@ func TestMainSwagg_ToString(t *testing.T) {
 		)
 		pathSwagger := NewPathSwagger(
 			"path",
-			[]RequestSwagg{requestSwagger},
+			[]RequestSwagger{requestSwagger},
 		)
 
 		t.Run("Should: return error "+errorEmptyPaths.Error(), func(t *testing.T) {
-			a := NewMainSwagg(nil, nil, nil, nil)
+			a := NewMainSwagger(nil, nil, nil, nil)
 			expected := errorEmptyPaths
 			_, actual := a.ToString()
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return error "+errorIncorrectPath.Error(), func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
@@ -43,7 +43,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return error "+parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
@@ -60,7 +60,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return empty title", func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{"version": "version"},
 				nil,
 				[]PathSwagger{pathSwagger},
@@ -72,7 +72,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return empty version", func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{"title": "title"},
 				nil,
 				[]PathSwagger{pathSwagger},
@@ -84,7 +84,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return empty version", func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
@@ -102,7 +102,7 @@ func TestMainSwagg_ToString(t *testing.T) {
 
 		t.Run("Should: return empty version", func(t *testing.T) {
 			basicSD := NewBasicSecurityDefinition("title")
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
@@ -112,22 +112,21 @@ func TestMainSwagg_ToString(t *testing.T) {
 				nil,
 			)
 			actual, error := a.ToString()
+			assert.NoError(t, error)
 
 			strSecurity, _ := basicSD.ToString()
 			strPath, _ := pathSwagger.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
-				infoVersionString + "version" +
+				infoVersionString + "version'" +
 				securityDefinitionString + strings.Replace(strSecurity, "\n", mainIndentString, -1) +
 				basePathString + "/" +
 				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1)
-
-			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"title":   "title",
 					"version": "version",
@@ -137,20 +136,19 @@ func TestMainSwagg_ToString(t *testing.T) {
 				nil,
 			)
 			actual, error := a.ToString()
+			assert.NoError(t, error)
 
 			str, _ := pathSwagger.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
-				infoVersionString + "version" +
+				infoVersionString + "version'" +
 				basePathString + "/" +
 				pathsString + strings.Replace(str, "\n", mainIndentString, -1)
-
-			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"title":    "title",
 					"version":  "version",
@@ -161,21 +159,20 @@ func TestMainSwagg_ToString(t *testing.T) {
 				nil,
 			)
 			actual, error := a.ToString()
+			assert.NoError(t, error)
 
 			str, _ := pathSwagger.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
-				infoVersionString + "version" +
+				infoVersionString + "version'" +
 				basePathString + "basePath" +
 				pathsString + strings.Replace(str, "\n", mainIndentString, -1)
-
-			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 
 		t.Run("Should: return ok", func(t *testing.T) {
 			def := parameters.NewBoolSwaggerParameter(nil)
-			a := NewMainSwagg(
+			a := NewMainSwagger(
 				map[string]interface{}{
 					"description": "description",
 					"title":       "title",
@@ -187,18 +184,17 @@ func TestMainSwagg_ToString(t *testing.T) {
 				[]parameters.SwaggParameter{def},
 			)
 			actual, error := a.ToString()
+			assert.NoError(t, error)
 
 			strPath, _ := pathSwagger.ToString()
-			strDef, _ := def.ToString(true)
+			strDef, _ := def.ToString()
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
-				infoVersionString + "version" +
+				infoVersionString + "version'" +
 				infoDescriptionString + "description" +
 				basePathString + "basePath" +
 				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1) +
 				definitionsString + strings.Replace(strDef, "\n", mainIndentString, -1)
-
-			assert.NoError(t, error)
 			assert.Equal(t, expected, actual)
 		})
 	})

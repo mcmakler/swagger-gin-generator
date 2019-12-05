@@ -26,12 +26,12 @@ const (
 	responsesIndentString  = "\n    "
 )
 
-type RequestSwagg interface {
+type RequestSwagger interface {
 	ToString() (string, error)
 }
 
-type requestSwagg struct {
-	configs    map[string]interface{}
+type requestSwagger struct {
+	config     map[string]interface{}
 	parameters []parameters.SwaggParameter
 	responses  []ResponseSwagg
 }
@@ -42,54 +42,54 @@ var (
 )
 
 //TODO: some checks it need not be empty
-func (r *requestSwagg) ToString() (string, error) {
-	if r.configs == nil {
+func (r *requestSwagger) ToString() (string, error) {
+	if r.config == nil {
 		return "", errorEmptyTypeRequest
 	}
-	if _, ok := r.configs["typeRequest"]; !ok {
+	if _, ok := r.config["typeRequest"]; !ok {
 		return "", errorEmptyTypeRequest
 	}
 	if r.responses == nil || len(r.responses) == 0 {
 		return "", errorEmptyResponses
 	}
-	res := "\n" + r.configs["typeRequest"].(string) + ":"
-	if val, ok := r.configs["security"]; ok && val.([]string) != nil {
+	res := "\n" + r.config["typeRequest"].(string) + ":"
+	if val, ok := r.config["security"]; ok && val.([]string) != nil {
 		res += securityString
-		for _, cons := range val.([]string) {
-			res += securityIndentString + cons + ": []"
+		for _, security := range val.([]string) {
+			res += securityIndentString + security + ": []"
 		}
 	}
-	if val, ok := r.configs["description"]; ok && val != "" {
+	if val, ok := r.config["description"]; ok && val != "" {
 		res += descriptionString + val.(string)
 	}
-	if val, ok := r.configs["consumes"]; ok && val.([]string) != nil {
+	if val, ok := r.config["consumes"]; ok && val.([]string) != nil {
 		res += consumesString
-		for _, cons := range val.([]string) {
-			res += consumesIndentString + cons
+		for _, consumes := range val.([]string) {
+			res += consumesIndentString + consumes
 		}
 	}
-	if val, ok := r.configs["produces"]; ok && val.([]string) != nil {
+	if val, ok := r.config["produces"]; ok && val.([]string) != nil {
 		res += producesString
-		for _, prod := range val.([]string) {
-			res += producesIndentString + prod
+		for _, produce := range val.([]string) {
+			res += producesIndentString + produce
 		}
 	}
-	if val, ok := r.configs["tags"]; ok && val.([]string) != nil {
+	if val, ok := r.config["tags"]; ok && val.([]string) != nil {
 		res += tagsString
 		for _, tag := range val.([]string) {
 			res += tagsIndentString + tag
 		}
 	}
-	if val, ok := r.configs["operationId"]; ok && val != "" {
+	if val, ok := r.config["operationId"]; ok && val != "" {
 		res += operationIdString + val.(string)
 	}
-	if val, ok := r.configs["summary"]; ok && val != "" {
+	if val, ok := r.config["summary"]; ok && val != "" {
 		res += summaryString + val.(string)
 	}
 	if r.parameters != nil {
 		res += parametersString
-		for _, param := range r.parameters {
-			str, err := param.ToString()
+		for _, parameter := range r.parameters {
+			str, err := parameter.ToString()
 			if err != nil {
 				return "", err
 			}
@@ -109,9 +109,9 @@ func (r *requestSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-func NewRequestSwagg(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagg) RequestSwagg {
-	return &requestSwagg{
-		configs:    params,
+func NewRequestSwagg(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagg) RequestSwagger {
+	return &requestSwagger{
+		config:     params,
 		parameters: parameters,
 		responses:  resp,
 	}
