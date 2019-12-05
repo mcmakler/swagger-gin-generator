@@ -40,7 +40,7 @@ func (a *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 	} else {
 		res += typeDeficeString + objectType
 	}
-	if val, ok := a.configs["required"]; ok {
+	if val, ok := a.configs["required"]; ok && val != nil {
 		for _, val := range val.([]string) {
 			res += requiredIndentStr + val
 		}

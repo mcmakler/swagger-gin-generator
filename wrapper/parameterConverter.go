@@ -59,6 +59,7 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 		params = make(map[string]interface{})
 	}
 	params["nameOfVariable"] = typ.Name()
+	params["required"] = nil //TODO: add required params
 	res := parameters.NewObjectSwaggerParameter(params, properties, subObj)
 
 	return res
