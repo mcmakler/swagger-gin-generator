@@ -54,6 +54,9 @@ func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 }
 
 func (a *schemaSwaggParameter) IsObject() bool {
+	if a.obj == nil {
+		return false
+	}
 	return a.obj.IsObject()
 }
 
