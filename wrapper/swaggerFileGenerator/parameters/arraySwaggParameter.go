@@ -70,6 +70,15 @@ func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
 	return res, nil
 }
 
+func (a *arraySwaggParameter) IsObject() bool {
+	return false
+}
+
+func (a *arraySwaggParameter) getConfigs() map[string]interface{} {
+	return a.configs
+}
+
+
 func NewArraySwaggParameter(params map[string]interface{}, items SwaggParameter) SwaggParameter {
 	return &arraySwaggParameter{
 		configs: params,

@@ -2,7 +2,6 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -41,10 +40,6 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
-			expectedDefinitions := []parameters.SwaggParameter{
-				ConvertObjectToSwaggParameter(nil, true, false),
-			}
-			assert.Equal(t, expectedDefinitions, spw.getDefinitions())
 		})
 
 		t.Run("Should: post path generate without errors", func(t *testing.T) {

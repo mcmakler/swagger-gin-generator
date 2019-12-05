@@ -2,11 +2,14 @@ package swaggerFileGenerator
 
 import (
 	"errors"
+	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"strconv"
+	"strings"
 )
 
 const (
-	linkOnSchemaString = "\n  schema:\n    $ref: '#/definitions/"
+	linkOnSchemaString = "\n  schema:"
+	refString = "\n    $ref: '#/definitions/"
 )
 
 var (
@@ -22,6 +25,7 @@ type responseSwagg struct {
 	code         int
 	description  string
 	linkOnSchema string
+	parameter    parameters.SwaggParameter
 }
 
 func (r *responseSwagg) ToString() (string, error) {
@@ -34,16 +38,24 @@ func (r *responseSwagg) ToString() (string, error) {
 	} else {
 		return "", errorEmptyDescription
 	}
-	if r.linkOnSchema != "" {
-		res += linkOnSchemaString + r.linkOnSchema + "'"
+	if r.parameter != nil {
+		res += linkOnSchemaString
+		str, err := r.parameter.ToString(true)
+		if err != nil {
+			return "", err
+		}
+		res += strings.Replace(str, "\n", parametersIndentString, -1)
+	} else if r.linkOnSchema != "" {
+		res += linkOnSchemaString + refString +  r.linkOnSchema + "'"
 	}
 	return res, nil
 }
 
-func NewResponseSwagg(code int, descr, schema string) ResponseSwagg {
+func NewResponseSwagg(code int, descr, schema string, parameter parameters.SwaggParameter) ResponseSwagg {
 	return &responseSwagg{
 		code:         code,
 		description:  descr,
 		linkOnSchema: schema,
+		parameter:    parameter,
 	}
 }

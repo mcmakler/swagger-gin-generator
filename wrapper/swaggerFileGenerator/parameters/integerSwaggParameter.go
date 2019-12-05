@@ -12,55 +12,63 @@ type integerSwaggParameter struct {
 	configs map[string]interface{}
 }
 
-func (i *integerSwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *integerSwaggParameter) ToString(isDefinition bool) (string, error) {
 	var res string
 	if isDefinition {
 		res = typeString + integerType
 	} else {
 		res = typeDeficeString + integerType
 	}
-	if i.configs == nil {
+	if a.configs == nil {
 		return res, nil
 	}
-	if val, ok := i.configs["in"]; ok {
+	if val, ok := a.configs["in"]; ok {
 		res += inString + val.(string)
 	} else if !isDefinition {
 		return "", errorEmptyIn
 	}
-	if val, ok := i.configs["name"]; ok {
+	if val, ok := a.configs["name"]; ok {
 		res += nameString + val.(string)
 	} else if !isDefinition {
 		return "", errorEmptyName
 	}
-	if val, ok := i.configs["required"]; ok {
+	if val, ok := a.configs["required"]; ok {
 		res += requiredString + strconv.FormatBool(val.(bool))
 	}
-	if val, ok := i.configs["defaultValue"]; ok {
+	if val, ok := a.configs["defaultValue"]; ok {
 		res += defaultValueString + strconv.FormatInt(int64(val.(int)), 10)
 	}
-	if val, ok := i.configs["minimumValue"]; ok {
+	if val, ok := a.configs["minimumValue"]; ok {
 		res += minimumValueString + strconv.FormatInt(int64(val.(int)), 10)
 	}
-	if val, ok := i.configs["exclusiveMinimumValue"]; ok {
+	if val, ok := a.configs["exclusiveMinimumValue"]; ok {
 		res += exclusiveMinimumValueString + strconv.FormatBool(val.(bool))
 	}
-	if val, ok := i.configs["maximumValue"]; ok {
+	if val, ok := a.configs["maximumValue"]; ok {
 		res += maximumValueString + strconv.FormatInt(int64(val.(int)), 10)
 	}
-	if val, ok := i.configs["exclusiveMaximumValue"]; ok {
+	if val, ok := a.configs["exclusiveMaximumValue"]; ok {
 		res += exclusiveMaximumValueString + strconv.FormatBool(val.(bool))
 	}
-	if val, ok := i.configs["multipleOf"]; ok {
+	if val, ok := a.configs["multipleOf"]; ok {
 		res += multipleOfString + strconv.FormatInt(int64(val.(int)), 10)
 	}
-	if val, ok := i.configs["allowEmptyValue"]; ok {
+	if val, ok := a.configs["allowEmptyValue"]; ok {
 		res += allowEmptyValueString + strconv.FormatBool(val.(bool))
 	}
-	if val, ok := i.configs["description"]; ok {
+	if val, ok := a.configs["description"]; ok {
 		res += descriptionString + val.(string)
 	}
 
 	return res, nil
+}
+
+func (a *integerSwaggParameter) IsObject() bool {
+	return false
+}
+
+func (a *integerSwaggParameter) getConfigs() map[string]interface{} {
+	return a.configs
 }
 
 func NewIntegerSwagParameter(params map[string]interface{}) SwaggParameter {

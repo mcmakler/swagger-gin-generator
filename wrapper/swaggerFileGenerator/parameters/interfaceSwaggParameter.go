@@ -25,5 +25,7 @@ var (
 )
 
 type SwaggParameter interface {
-	ToString(isDefinition bool) (string, error)
+	ToString(hyphenNotRequired bool) (string, error)
+	IsObject() bool
+	getConfigs() map[string]interface{}
 }

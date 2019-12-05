@@ -53,6 +53,7 @@ type SwaggPathWrapper interface {
 
 	generate() swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
+	readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagg
 }
 
 type swaggPathWrapper struct {
@@ -178,27 +179,14 @@ func (s *swaggPathWrapper) addRequest(
 	requests map[int]Request,
 	reqType string,
 ) {
-	var responses []swaggerFileGenerator.ResponseSwagg
-
-	for key, val := range requests {
-		if val.object != nil {
-			var respSwag swaggerFileGenerator.ResponseSwagg
-			if reflect.ValueOf(val.object).Kind() == reflect.Ptr {
-				respSwag = swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.ValueOf(val.object).Elem().Type().Name())
-			} else {
-				respSwag = swaggerFileGenerator.NewResponseSwagg(key, val.description, reflect.TypeOf(val.object).Name())
-			}
-			responses = append(responses, respSwag)
-			s.definitions = append(s.definitions, ConvertObjectToSwaggParameter(nil, val.object, false))
-		} else {
-			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, "")
-			responses = append(responses, respSwag)
-		}
-	}
-
 	var paramsSwagg []parameters.SwaggParameter
 	for _, val := range parametersP {
-		paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
+		if val.GetSwagParameter().IsObject() {
+			paramsSwagg = append(paramsSwagg, parameters.NewSchemaSwaggParameter(val.GetSwagParameter()))
+			s.definitions = append(s.definitions, val.GetSwagParameter())
+		} else {
+			paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
+		}
 	}
 
 	if configs == nil {
@@ -216,6 +204,31 @@ func (s *swaggPathWrapper) addRequest(
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
 		configs,
 		paramsSwagg,
-		responses,
+		s.readRequests(requests),
 	))
+}
+
+func (s *swaggPathWrapper) readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagg {
+	var responses []swaggerFileGenerator.ResponseSwagg
+	//TODO: CHECK USUAL PARAMETER (STRING, BOOL, ...)
+
+	for key, val := range requests {
+		if val.object != nil {
+			elemTypeName := reflect.TypeOf(val.object).Name()
+			if reflect.ValueOf(val.object).Kind() == reflect.Ptr {
+				elemTypeName = reflect.ValueOf(val.object).Elem().Type().Name()
+			}
+			element := ReturnNonStructureObject(nil, val.object)
+			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, elemTypeName, element)
+			responses = append(responses, respSwag)
+			if element == nil {
+				s.definitions = append(s.definitions, ConvertObjectToSwaggParameter(nil, val.object, false))
+			}
+		} else {
+			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, "", nil)
+			responses = append(responses, respSwag)
+		}
+	}
+
+	return responses
 }

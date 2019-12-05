@@ -52,7 +52,7 @@ func TestRequestSwagg_ToString(t *testing.T) {
 				"typeRequest": "GET",
 			}
 			swagP1 := parameters.NewObjectSwaggerParameter(nil, nil, false)
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
+			responseSwagg1 := NewResponseSwagg(200, "descr", "", nil)
 			a := &requestSwagg{
 				configs:    swaggParams,
 				parameters: []parameters.SwaggParameter{swagP1},
@@ -66,7 +66,7 @@ func TestRequestSwagg_ToString(t *testing.T) {
 			swaggParams := map[string]interface{}{
 				"typeRequest": "GET",
 			}
-			responseSwagg1 := NewResponseSwagg(-1, "", "")
+			responseSwagg1 := NewResponseSwagg(-1, "", "", nil)
 			a := &requestSwagg{
 				configs:    swaggParams,
 				parameters: nil,
@@ -87,8 +87,8 @@ func TestRequestSwagg_ToString(t *testing.T) {
 			}
 			swagP1 := parameters.NewBoolSwagParameter(nil)
 			swagP2 := parameters.NewStringSwagParameter(nil)
-			responseSwagg1 := NewResponseSwagg(200, "descr", "")
-			responseSwagg2 := NewResponseSwagg(300, "descr", "")
+			responseSwagg1 := NewResponseSwagg(200, "descr", "", nil)
+			responseSwagg2 := NewResponseSwagg(300, "descr", "", nil)
 			a := &requestSwagg{
 				configs:    swaggParams,
 				parameters: []parameters.SwaggParameter{swagP1, swagP2},
@@ -128,8 +128,8 @@ func TestNewRequestSwagg(t *testing.T) {
 		}
 		swagP1 := parameters.NewBoolSwagParameter(nil)
 		swagP2 := parameters.NewStringSwagParameter(nil)
-		responseSwagg1 := NewResponseSwagg(200, "descr", "")
-		responseSwagg2 := NewResponseSwagg(300, "descr", "")
+		responseSwagg1 := NewResponseSwagg(200, "descr", "", nil)
+		responseSwagg2 := NewResponseSwagg(300, "descr", "", nil)
 		expected := &requestSwagg{
 			configs:    swaggParams,
 			parameters: []parameters.SwaggParameter{swagP1, swagP2},

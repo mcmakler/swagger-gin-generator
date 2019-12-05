@@ -9,7 +9,7 @@ import (
 
 func TestMainSwagg_ToString(t *testing.T) {
 	t.Run("Test: MainSwagg.ToString()", func(t *testing.T) {
-		responseSwagger := NewResponseSwagg(200, "descr", "")
+		responseSwagger := NewResponseSwagg(200, "descr", "", nil)
 		requestSwagger := NewRequestSwagg(
 			map[string]interface{}{"typeRequest": "GET"},
 			nil,

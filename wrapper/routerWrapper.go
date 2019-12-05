@@ -9,10 +9,14 @@ import (
 	"strings"
 )
 
+//TODO: consts for all parameters
 //TODO: caps-free params
 //TODO: group subgroups
 //TODO: group get, post, ...
 //TODO: params: check case when []string is only one element/ []string{"el"} = "el"
+
+//TODO: params in comments
+//TODO: required in object
 
 const (
 	filenameString = "swagger.yaml"

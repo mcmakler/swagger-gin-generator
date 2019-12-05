@@ -31,7 +31,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 
 		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "name",
+				"nameOfVariable": "name",
 			}
 			properties := map[string]SwaggParameter{
 				"objectParam": &objectSwaggerParameter{
@@ -49,7 +49,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 
 		t.Run("Should: return string with empty configs", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "name",
+				"nameOfVariable": "name",
 			}
 			a := &objectSwaggerParameter{
 				configs:    params,
@@ -61,7 +61,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 		})
 		t.Run("Should: return string with all configs", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name":     "name",
+				"nameOfVariable":     "name",
 				"required": []string{"req1", "req2"},
 			}
 			a := &objectSwaggerParameter{
@@ -80,7 +80,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				"in":   "in",
 			}
 			objParams := map[string]interface{}{
-				"name":     "name",
+				"nameOfVariable":     "name",
 				"in":       "in",
 				"required": []string{"req1", "req2"},
 			}
@@ -132,7 +132,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 func TestNewObjectSwagParameter(t *testing.T) {
 	t.Run("Test: NewStringSwagParameter", func(t *testing.T) {
 		params := map[string]interface{}{
-			"name": "name",
+			"nameOfVariable": "name",
 		}
 		expect := &objectSwaggerParameter{
 			configs:    params,

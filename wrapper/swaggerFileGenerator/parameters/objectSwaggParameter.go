@@ -23,31 +23,31 @@ var (
 	errorNilObjectName = errors.New("NIL_OBJECT_NAME")
 )
 
-func (o *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
+func (a *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 	//TODO: other parameters (description, required ...)
-	if o.configs == nil {
+	if a.configs == nil {
 		return "", errorNilObjectName
 	}
-	if _, ok := o.configs["name"]; !ok {
+	if _, ok := a.configs["nameOfVariable"]; !ok {
 		return "", errorNilObjectName
 	}
 	res := ""
-	if !o.subObject {
-		res = "\n" + o.configs["name"].(string) + ":"
+	if !a.subObject {
+		res = "\n" + a.configs["nameOfVariable"].(string) + ":"
 	}
 	if isDefinition {
 		res += typeString + objectType
 	} else {
 		res += typeDeficeString + objectType
 	}
-	if val, ok := o.configs["required"]; ok {
+	if val, ok := a.configs["required"]; ok {
 		for _, val := range val.([]string) {
 			res += requiredIndentStr + val
 		}
 	}
-	if o.properties != nil {
+	if a.properties != nil {
 		res += propertiesStr
-		for index, val := range o.properties {
+		for index, val := range a.properties {
 			res += propertyIndentStr + index + ":"
 			str, err := val.ToString(isDefinition)
 			if err != nil {
@@ -57,6 +57,14 @@ func (o *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 		}
 	}
 	return res, nil
+}
+
+func (a *objectSwaggerParameter) IsObject() bool {
+	return true
+}
+
+func (a *objectSwaggerParameter) getConfigs() map[string]interface{} {
+	return a.configs
 }
 
 func NewObjectSwaggerParameter(params map[string]interface{}, prop map[string]SwaggParameter, subObj bool) SwaggParameter {

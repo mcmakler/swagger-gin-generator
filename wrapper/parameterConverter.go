@@ -23,7 +23,7 @@ func NewParameter(params map[string]interface{}, obj interface{}) Parameter {
 }
 
 func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
-	return setValueByType(p.listOfparameters, p.object, false)
+	return setValueByType(p.listOfparameters, p.object, false, false)
 }
 
 //TODO: required
@@ -44,20 +44,20 @@ func ConvertObjectToSwaggParameter(params map[string]interface{}, object interfa
 
 	if reflect.TypeOf(object).Kind() == reflect.Struct {
 		for i := 0; i < typ.NumField(); i++ {
-			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface(), true)
+			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface(), true, false)
 		}
 	}
 
 	if params == nil {
 		params = make(map[string]interface{})
 	}
-	params["name"] = typ.Name()
+	params["nameOfVariable"] = typ.Name()
 	res := parameters.NewObjectSwaggerParameter(params, properties, subObj)
 
 	return res
 }
 
-func setValueByType(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
+func setValueByType(params map[string]interface{}, object interface{}, subObj bool, isNotStruct bool) parameters.SwaggParameter {
 	switch reflect.TypeOf(object).Kind() {
 	case reflect.Bool:
 		return parameters.NewBoolSwagParameter(params)
@@ -68,7 +68,7 @@ func setValueByType(params map[string]interface{}, object interface{}, subObj bo
 	case reflect.Float32, reflect.Float64:
 		return parameters.NewNumberSwagParameter(params)
 	case reflect.Array, reflect.Slice:
-		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface(), false))
+		return parameters.NewArraySwaggParameter(params, setValueByType(params, reflect.Zero(reflect.TypeOf(object).Elem()).Interface(), false, isNotStruct))
 	//TODO: map?
 	default:
 		//some unusuall cases
@@ -76,6 +76,13 @@ func setValueByType(params map[string]interface{}, object interface{}, subObj bo
 			return parameters.NewStringSwagParameter(params)
 		}
 
+		if isNotStruct {
+			return nil
+		}
 		return ConvertObjectToSwaggParameter(params, object, subObj)
 	}
+}
+
+func ReturnNonStructureObject(params map[string]interface{}, object interface{}) parameters.SwaggParameter {
+	return setValueByType(params, object, false, true)
 }

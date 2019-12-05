@@ -2,7 +2,6 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -45,9 +44,5 @@ func TestNewSwaggGroupWrapper(t *testing.T) {
 			}
 		}
 		assert.NoError(t, err)
-		expectedDefinitions := []parameters.SwaggParameter{
-			ConvertObjectToSwaggParameter(nil, true, false),
-		}
-		assert.Equal(t, expectedDefinitions, sgw.getDefinitions())
 	})
 }

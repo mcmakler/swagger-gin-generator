@@ -39,7 +39,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 	t.Run("Test: utils.ConvertObjectToSwaggParameter", func(t *testing.T) {
 		t.Run("Should: return empty swag object", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "TestStructEmpty",
+				"nameOfVariable": "TestStructEmpty",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, make(map[string]parameters.SwaggParameter), false)
 			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructEmpty{}, false))
@@ -47,7 +47,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 
 		t.Run("Should: return swag object with bool param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "TestStructBool",
+				"nameOfVariable": "TestStructBool",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"B": parameters.NewBoolSwagParameter(nil),
@@ -59,7 +59,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 
 		t.Run("Should: return swag object with arr param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "TestStructArr",
+				"nameOfVariable": "TestStructArr",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"A": parameters.NewArraySwaggParameter(nil, parameters.NewBoolSwagParameter(nil)),
@@ -71,7 +71,7 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 
 		t.Run("Should: return time object", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "TestStructTime",
+				"nameOfVariable": "TestStructTime",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"T": parameters.NewStringSwagParameter(nil),
@@ -82,10 +82,10 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 
 		t.Run("Should: return swag object with arr param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "TestStructSubstr",
+				"nameOfVariable": "TestStructSubstr",
 			}
 			paramsBool := map[string]interface{}{
-				"name": "TestStructBool",
+				"nameOfVariable": "TestStructBool",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"Substr": parameters.NewObjectSwaggerParameter(paramsBool, map[string]parameters.SwaggParameter{
@@ -99,10 +99,10 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 
 		t.Run("Should: return swag object with bool param", func(t *testing.T) {
 			params := map[string]interface{}{
-				"name": "TestStructFull",
+				"nameOfVariable": "TestStructFull",
 			}
 			paramsBool := map[string]interface{}{
-				"name": "TestStructBool",
+				"nameOfVariable": "TestStructBool",
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"B": parameters.NewBoolSwagParameter(nil),
