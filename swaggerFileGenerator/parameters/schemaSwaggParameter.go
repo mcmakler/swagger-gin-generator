@@ -21,21 +21,23 @@ var (
 
 func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 	var res string
-	if val, ok := a.configs["in"]; ok && val != "" {
+	if val, ok := a.configs["in"]; ok && val.(string) != "" {
 		res += inDeficeString + val.(string)
 	} else {
 		return "", errorEmptyIn
 	}
-	if val, ok := a.configs["name"]; ok && val != "" {
+	if val, ok := a.configs["name"]; ok && val.(string) != "" {
 		res += nameString + val.(string)
 	} else {
 		return "", errorEmptyName
 	}
-	if val, ok := a.configs["description"]; ok && val != "" {
+	if val, ok := a.configs["description"]; ok && val.(string) != "" {
 		res += descriptionString + val.(string)
 	}
-	if val, ok := a.configs["required"]; ok && val != ""{
-		res += requiredString + strconv.FormatBool(val.(bool))
+	if a.obj != nil && !a.IsObject() {
+		if val, ok := a.configs["required"]; ok && val != "" {
+			res += requiredString + strconv.FormatBool(val.(bool))
+		}
 	}
 	if a.obj != nil {
 		str, err := a.obj.ToString(false)
