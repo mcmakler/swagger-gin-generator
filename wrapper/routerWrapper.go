@@ -130,7 +130,7 @@ func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
 	var list []parameters.SwaggParameter
 	for _, entry := range s {
 		//TODO: Maybe some better solution
-		str, _ := entry.ToString(true)
+		str, _ := entry.ToString()
 		str = strings.Split(str, ":")[0]
 		if _, value := keys[str]; !value {
 			keys[str] = true
