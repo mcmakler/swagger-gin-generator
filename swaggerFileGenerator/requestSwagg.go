@@ -89,7 +89,7 @@ func (r *requestSwagg) ToString() (string, error) {
 	if r.parameters != nil {
 		res += parametersString
 		for _, param := range r.parameters {
-			str, err := param.ToString(false)
+			str, err := param.ToString()
 			if err != nil {
 				return "", err
 			}

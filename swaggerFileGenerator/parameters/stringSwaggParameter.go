@@ -19,7 +19,7 @@ type stringSwaggParameter struct {
 	configs map[string]interface{}
 }
 
-func (a *stringSwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *stringSwaggParameter) ToString() (string, error) {
 	var res string
 	res = typeString + stringType
 	if a.configs == nil {

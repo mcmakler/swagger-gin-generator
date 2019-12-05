@@ -40,7 +40,7 @@ func (r *responseSwagg) ToString() (string, error) {
 	}
 	if r.parameter != nil {
 		res += linkOnSchemaString
-		str, err := r.parameter.ToString(true)
+		str, err := r.parameter.ToString()
 		if err != nil {
 			return "", err
 		}

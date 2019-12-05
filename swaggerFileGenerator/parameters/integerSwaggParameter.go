@@ -12,7 +12,7 @@ type integerSwaggParameter struct {
 	configs map[string]interface{}
 }
 
-func (a *integerSwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *integerSwaggParameter) ToString() (string, error) {
 	var res string
 	res = typeString + integerType
 	if a.configs == nil {

@@ -14,7 +14,7 @@ type numberSwaggParameter struct {
 	configs map[string]interface{}
 }
 
-func (a *numberSwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *numberSwaggParameter) ToString() (string, error) {
 	var res string
 	res = typeString + numberType
 	if a.configs == nil {

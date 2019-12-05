@@ -89,7 +89,7 @@ func (m *mainSwagg) ToString() (string, error) {
 	if m.definitions != nil {
 		res += definitionsString
 		for _, def := range m.definitions {
-			str, err := def.ToString(true)
+			str, err := def.ToString()
 			if err != nil {
 				return "", err
 			}

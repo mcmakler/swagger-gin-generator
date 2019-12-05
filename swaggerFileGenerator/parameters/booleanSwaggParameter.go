@@ -8,7 +8,7 @@ type boolSwaggParameter struct {
 	configs map[string]interface{}
 }
 
-func (a *boolSwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *boolSwaggParameter) ToString() (string, error) {
 	var res string
 	res = typeString + boolType
 	if a.configs == nil {

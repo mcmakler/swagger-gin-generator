@@ -24,7 +24,7 @@ var (
 	ErrorNillItemsParameter = errors.New("ERROR_EMPTY_ITEMS")
 )
 
-func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *arraySwaggParameter) ToString() (string, error) {
 	if a.items == nil {
 		return "", ErrorNillItemsParameter
 	}
@@ -39,7 +39,7 @@ func (a *arraySwaggParameter) ToString(isDefinition bool) (string, error) {
 	if val, ok := a.configs["uniqueItems"]; ok {
 		res += uniqueItemsString + strconv.FormatBool(val.(bool))
 	}
-	items, err := a.items.ToString(true)
+	items, err := a.items.ToString()
 	if err != nil {
 		return "", err
 	}

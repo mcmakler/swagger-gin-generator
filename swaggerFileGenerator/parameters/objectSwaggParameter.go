@@ -23,8 +23,7 @@ var (
 	errorNilObjectName = errors.New("NIL_OBJECT_NAME")
 )
 
-func (a *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
-	//TODO: other parameters (description, required ...)
+func (a *objectSwaggerParameter) ToString() (string, error) {
 	if a.configs == nil {
 		return "", errorNilObjectName
 	}
@@ -45,7 +44,7 @@ func (a *objectSwaggerParameter) ToString(isDefinition bool) (string, error) {
 		res += propertiesStr
 		for index, val := range a.properties {
 			res += propertyIndentStr + index + ":"
-			str, err := val.ToString(isDefinition)
+			str, err := val.ToString()
 			if err != nil {
 				return "", err
 			}

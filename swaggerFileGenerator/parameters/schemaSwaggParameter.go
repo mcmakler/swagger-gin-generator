@@ -19,7 +19,7 @@ var (
 	errorEmptySchema = errors.New("EMPTY_SCHEMA_LINK")
 )
 
-func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
+func (a *schemaSwaggParameter) ToString() (string, error) {
 	var res string
 	if val, ok := a.configs["in"]; ok && val.(string) != "" {
 		res += inDeficeString + val.(string)
@@ -40,7 +40,7 @@ func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 		}
 	}
 	if a.obj != nil {
-		str, err := a.obj.ToString(false)
+		str, err := a.obj.ToString()
 		if err != nil {
 			return "", err
 		}
