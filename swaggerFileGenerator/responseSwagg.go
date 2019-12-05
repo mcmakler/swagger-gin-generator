@@ -2,7 +2,7 @@ package swaggerFileGenerator
 
 import (
 	"errors"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"strconv"
 	"strings"
 )

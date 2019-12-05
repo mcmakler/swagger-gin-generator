@@ -1,7 +1,7 @@
 package wrapper
 
 import (
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"reflect"
 	"time"
 )

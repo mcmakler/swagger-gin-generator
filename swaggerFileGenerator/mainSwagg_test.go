@@ -1,7 +1,7 @@
 package swaggerFileGenerator
 
 import (
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"

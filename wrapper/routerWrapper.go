@@ -2,13 +2,14 @@ package wrapper
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator"
-	"github.com/mcmakler/swagger-gin-generator/wrapper/swaggerFileGenerator/parameters"
+	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
+	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"io"
 	"os"
 	"strings"
 )
 
+//TODO: bearer in consts;  json, bson
 //TODO: consts for all parameters
 //TODO: caps-free params
 //TODO: group subgroups
