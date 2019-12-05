@@ -17,7 +17,7 @@ var (
 func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 	var res string
 	if val, ok := a.configs["in"]; ok {
-		res += inString + val.(string)
+		res += inDeficeString + val.(string)
 	} else {
 		return "", errorEmptyIn
 	}
@@ -30,7 +30,7 @@ func (a *schemaSwaggParameter) ToString(isDefinition bool) (string, error) {
 		res += descriptionString + val.(string)
 	}
 	if val, ok := a.configs["schema"]; ok {
-		res += nameString + val.(string)
+		res += linkOnSchemaString + val.(string)
 	} else {
 		return "", errorEmptySchema
 	}

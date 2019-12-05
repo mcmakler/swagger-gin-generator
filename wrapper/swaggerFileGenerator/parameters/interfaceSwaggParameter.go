@@ -3,7 +3,8 @@ package parameters
 import "errors"
 
 const (
-	inString              = "\n  in: "
+	inString = "\n  in: "
+	inDeficeString        = "\n- in: "
 	typeString            = "\n  type: "
 	typeDeficeString      = "\n- type: "
 	nameString            = "\n  name: "
