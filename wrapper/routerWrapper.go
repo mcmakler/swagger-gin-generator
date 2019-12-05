@@ -13,7 +13,6 @@ import (
 //TODO: remove isDefinition
 //TODO: bearer in consts;  json, bson
 //TODO: consts for all parameters
-//TODO: caps-free params
 //TODO: group subgroups
 //TODO: group get, post, ...
 //TODO: params: check case when []string is only one element/ []string{"el"} = "el"

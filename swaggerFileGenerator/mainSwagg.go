@@ -9,7 +9,7 @@ import (
 const (
 	swaggerString         = "swagger: '2.0'"
 	infoString            = "\ninfo:"
-	infoTitleString       = "\n  title: "
+	infoTitleString       = "\n  title: '"
 	infoDescriptionString = "\n  description: "
 	infoVersionString     = "\n  version: "
 
@@ -53,7 +53,7 @@ func (m *mainSwagg) ToString() (string, error) {
 		return "", errorEmptyTitle
 	}
 	if val, ok := m.configs["version"]; ok {
-		res += infoVersionString + val.(string)
+		res += infoVersionString + val.(string) + "'"
 	} else {
 		return "", errorEmptyVersion
 	}
