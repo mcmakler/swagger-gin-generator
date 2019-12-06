@@ -9,7 +9,7 @@ import (
 
 const (
 	linkOnSchemaString = "\n  schema:"
-	refString = "\n    $ref: '#/definitions/"
+	refString          = "\n    $ref: '#/definitions/"
 )
 
 var (
@@ -46,7 +46,7 @@ func (r *responseSwagger) ToString() (string, error) {
 		}
 		res += strings.Replace(str, "\n", parametersIndentString, -1)
 	} else if r.linkOnSchema != "" {
-		res += linkOnSchemaString + refString +  r.linkOnSchema + "'"
+		res += linkOnSchemaString + refString + r.linkOnSchema + "'"
 	}
 	return res, nil
 }

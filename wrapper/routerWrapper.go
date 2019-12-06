@@ -11,8 +11,6 @@ import (
 )
 
 //TODO: consts for all parameters
-//TODO: group subgroups
-//TODO: group get, post, ...
 
 //TODO: params in comments
 //TODO: required in object
@@ -70,7 +68,7 @@ func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRou
 		security:    []swaggerFileGenerator.SecurityDefinitionSwagger{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
-		mainGroup:      newSwaggerGroupWrapper("", "", r.Group("")),
+		mainGroup:   newSwaggerGroupWrapper("", "", r.Group("")),
 		//router:      r,
 	}
 }
@@ -80,21 +78,10 @@ func (s *swaggerWrapper) Use(middlware ...gin.HandlerFunc) {
 }
 
 func (s *swaggerWrapper) Group(path, tag string) SwaggerGroupWrapper {
-	/*group := s.router.Group(path)
-	res := newSwaggerGroupWrapper(path, tag, group)
-	s.groups = append(s.groups, res)*/
 	return s.mainGroup.Group(path, tag)
 }
 
 func (s *swaggerWrapper) Generate(filepath string) error {
-	/*for _, val := range s.groups {
-		for _, path := range val.generate() {
-			s.paths = append(s.paths, path)
-		}
-		for _, def := range val.getDefinitions() {
-			s.definitions = append(s.definitions, def)
-		}
-	}*/
 	for _, path := range s.mainGroup.generate() {
 		s.paths = append(s.paths, path)
 	}

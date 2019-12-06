@@ -9,13 +9,13 @@ type arrayParameterConfig struct {
 
 func (c *arrayParameterConfig) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"in":              c.In,
-		"name":            c.Name,
-		"required":        c.Required,
-		"description":     c.Description,
-		"minItems":        c.MinItems,
-		"maxItems":        c.MaxItems,
-		"uniqueItems":     c.UniqueItems,
+		"in":          c.In,
+		"name":        c.Name,
+		"required":    c.Required,
+		"description": c.Description,
+		"minItems":    c.MinItems,
+		"maxItems":    c.MaxItems,
+		"uniqueItems": c.UniqueItems,
 	}
 }
 
@@ -26,8 +26,8 @@ func NewArrayParameterConfig(in, name, description string, required bool, minIte
 				In:   in,
 				Name: name,
 			},
-			Required:        required,
-			Description:     description,
+			Required:    required,
+			Description: description,
 		},
 		MinItems:    minItems,
 		MaxItems:    maxItems,

@@ -9,21 +9,21 @@ import (
 
 func TestResponseSwagg_ToString(t *testing.T) {
 	t.Run("Test: ResponseSwagger.ToString()", func(t *testing.T) {
-		t.Run("Should: return error" + errorWrongCode.Error(), func(t *testing.T) {
+		t.Run("Should: return error"+errorWrongCode.Error(), func(t *testing.T) {
 			a := NewResponseSwagger(-1, "", "", nil)
 			_, actual := a.ToString()
 			expected := errorWrongCode
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return error" + errorEmptyDescription.Error(), func(t *testing.T) {
+		t.Run("Should: return error"+errorEmptyDescription.Error(), func(t *testing.T) {
 			a := NewResponseSwagger(200, "", "", nil)
 			_, actual := a.ToString()
 			expected := errorEmptyDescription
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return error" + parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
+		t.Run("Should: return error"+parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
 			parameter := parameters.NewArraySwaggerParameter(nil, nil)
 			a := NewResponseSwagger(200, "description", "", parameter)
 			_, actual := a.ToString()

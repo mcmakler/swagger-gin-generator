@@ -36,7 +36,7 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return error " + parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
+		t.Run("Should: return error "+parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
 			config := map[string]interface{}{
 				"typeRequest": "GET",
 			}
@@ -48,7 +48,7 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return error " + errorWrongCode.Error(), func(t *testing.T) {
+		t.Run("Should: return error "+errorWrongCode.Error(), func(t *testing.T) {
 			config := map[string]interface{}{
 				"typeRequest": "GET",
 			}

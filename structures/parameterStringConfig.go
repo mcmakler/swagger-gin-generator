@@ -11,15 +11,15 @@ type stringParameterConfig struct {
 
 func (c *stringParameterConfig) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"in":              c.In,
-		"name":            c.Name,
-		"required":        c.Required,
-		"description":     c.Description,
-		"format":          c.Format,
-		"minLength":       c.MinLength,
-		"maxLength":       c.MaxLength,
-		"pattern":         c.Pattern,
-		"enum":            c.Enum,
+		"in":          c.In,
+		"name":        c.Name,
+		"required":    c.Required,
+		"description": c.Description,
+		"format":      c.Format,
+		"minLength":   c.MinLength,
+		"maxLength":   c.MaxLength,
+		"pattern":     c.Pattern,
+		"enum":        c.Enum,
 	}
 }
 
@@ -30,8 +30,8 @@ func NewStringParameterConfig(in, name, description string, required bool, forma
 				In:   in,
 				Name: name,
 			},
-			Required:        required,
-			Description:     description,
+			Required:    required,
+			Description: description,
 		},
 		Format:    format,
 		MinLength: minLength,
