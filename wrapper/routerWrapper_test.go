@@ -65,7 +65,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		emptyPath.GET(
 			nil,
 			nil,
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 				},
@@ -76,7 +76,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		path1.GET(
 			NewRequestConfig("description", "", "summary", []string{basicSecurity, apiSecurity, oauth2AccessCodeSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      "",
@@ -90,7 +90,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		path1.POST(
 			NewRequestConfig("description", "", "summary", []string{oauth2ImplicitSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testResponse{},
@@ -102,7 +102,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			"/path2",
 			nil,
 			nil,
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testResponse{},
@@ -113,7 +113,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			"/path2",
 			nil,
 			nil,
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testResponse{},
@@ -127,7 +127,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		paht22.DELETE(
 			NewRequestConfig("description", "operationid3", "summary", []string{oauth2PasswordSecurity, oauth2AppSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
 			parameters,
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testStructFull{},
@@ -141,7 +141,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 					NewIntegerParameterConfig(InBody, "name", "descr", true, 1, 0, 10, 2, true, true),
 					10),
 			},
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testStructFull{},
@@ -155,7 +155,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 					NewNumberParameterConfig(InHeader, "name", "descr", true, 1.0, 0.0, 10.0, 2.0, true, true),
 					10.0),
 			},
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testStructFull{},
@@ -169,7 +169,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 					NewStringParameterConfig(InBody, "name", "descr", true, "format", 0, 10, "dfdf", nil),
 					""),
 			},
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testStructFull{},
@@ -183,7 +183,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 					NewArrayParameterConfig("body", "name", "descr", true, 0, 10, true),
 					[]string{}),
 			},
-			map[int]Request{
+			map[int]Response{
 				200: {
 					description: "getReqDef",
 					object:      &testStructFull{},
@@ -192,5 +192,60 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			func(c *gin.Context) {})
 		err := srw.Generate("")
 		assert.NoError(t, err)
+	})
+}
+
+func TestSwaggerRouterWrapper(t *testing.T) {
+	t.Run("Test of SwaggerRouterWrapper.GET, POST, ...", func(t *testing.T) {
+		emptyRequests := map[int]Response{
+			200: NewRequest("description", nil),
+		}
+		emptyFunc := func(c *gin.Context) {}
+		g := gin.Default()
+		sgw := NewSwaggerRouterWrapper(
+			NewMainConfig("version", "title", "description"),
+			g)
+		sgw.GET(
+			"get",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
+		sgw.POST(
+			"post",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
+		sgw.DELETE(
+			"delete",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
+		sgw.HEAD(
+			"head",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
+		sgw.OPTIONS(
+			"options",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
+		sgw.PATCH(
+			"patch",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
+		sgw.PUT(
+			"put",
+			NewRequestConfig("", "", "", nil, nil, nil, nil),
+			nil,
+			emptyRequests,
+			emptyFunc)
 	})
 }

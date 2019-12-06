@@ -42,13 +42,13 @@ type SwaggerRouterWrapper interface {
 	NewOauth2PasswordSecurityDefinition(title, tokenURL string)
 	NewOauth2ApplicationSecurityDefinition(title, tokenURL string)
 	NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string)
-	GET(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	POST(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	GET(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	POST(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 }
 
 type swaggerWrapper struct {
@@ -172,30 +172,30 @@ func (s *swaggerWrapper) NewOauth2AccessCodeSecurityDefinition(title, authorizat
 	s.security = append(s.security, swaggerFileGenerator.NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL))
 }
 
-func (s *swaggerWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.GET(path, config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerWrapper) POST(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) POST(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.POST(path, config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerWrapper) DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.DELETE(path, config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerWrapper) HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.HEAD(path, config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerWrapper) OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.OPTIONS(path, config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerWrapper) PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.PATCH(path, config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerWrapper) PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerWrapper) PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	s.mainGroup.PUT(path, config, parameters, requests, handlerFunc...)
 }

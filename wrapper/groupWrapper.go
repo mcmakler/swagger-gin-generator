@@ -1,7 +1,6 @@
 package wrapper
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -14,14 +13,13 @@ type SwaggerGroupWrapper interface {
 	Group(path, tag string) SwaggerGroupWrapper
 	generate() []swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
-	getSubgroups() []SwaggerGroupWrapper
-	GET(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	POST(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	GET(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	POST(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 }
 
 type swaggerGroupWrapper struct {
@@ -70,7 +68,6 @@ func (s *swaggerGroupWrapper) generate() []swaggerFileGenerator.PathSwagger {
 		}
 		res = append(res, val.generate())
 	}
-	fmt.Println(s.path)
 	for _, val := range s.subgroups {
 		for _, path := range val.generate() {
 			res = append(res, path)
@@ -86,53 +83,49 @@ func (s *swaggerGroupWrapper) getDefinitions() []parameters.SwaggParameter {
 	return s.definitions
 }
 
-func (s *swaggerGroupWrapper) getSubgroups() []SwaggerGroupWrapper {
-	return s.subgroups
-}
-
-func (s *swaggerGroupWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}
 	s.paths[path].GET(config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerGroupWrapper) POST(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) POST(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}
 	s.paths[path].POST(config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerGroupWrapper) DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}
 	s.paths[path].DELETE(config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerGroupWrapper) HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) HEAD(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}
 	s.paths[path].HEAD(config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerGroupWrapper) OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}
 	s.paths[path].OPTIONS(config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerGroupWrapper) PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}
 	s.paths[path].PATCH(config, parameters, requests, handlerFunc...)
 }
 
-func (s *swaggerGroupWrapper) PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}

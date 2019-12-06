@@ -20,10 +20,10 @@ func TestSwaggerPathWrapper_Generate(t *testing.T) {
 				NewBasicParameterConfig("body", "name", "boolGetParameter", true),
 				&testPathObject{}),
 		}
-		boolRequests := map[int]Request{
+		boolRequests := map[int]Response{
 			200: NewRequest("description", true),
 		}
-		emptyRequests := map[int]Request{
+		emptyRequests := map[int]Response{
 			200: NewRequest("description", nil),
 		}
 		emptyFunc := func(c *gin.Context) {}

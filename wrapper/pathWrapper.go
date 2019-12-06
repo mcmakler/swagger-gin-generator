@@ -9,17 +9,17 @@ import (
 )
 
 type SwaggerPathWrapper interface {
-	GET(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	POST(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	DELETE(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	HEAD(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	OPTIONS(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	PATCH(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
-	PUT(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	GET(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	POST(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	DELETE(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	HEAD(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	OPTIONS(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	PATCH(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	PUT(config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 
 	generate() swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
-	readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger
+	readRequests(requests map[int]Response) []swaggerFileGenerator.ResponseSwagger
 }
 
 type swaggerPathWrapper struct {
@@ -31,13 +31,13 @@ type swaggerPathWrapper struct {
 	group *gin.RouterGroup
 }
 
-type Request struct {
+type Response struct {
 	description string
 	object      interface{}
 }
 
-func NewRequest(description string, object interface{}) Request {
-	return Request{
+func NewRequest(description string, object interface{}) Response {
+	return Response{
 		description: description,
 		object:      object,
 	}
@@ -56,7 +56,7 @@ func newSwaggerPathWrapper(path, tag string, group *gin.RouterGroup) SwaggerPath
 func (s *swaggerPathWrapper) GET(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.GET(s.path, handlerFuncP...)
@@ -66,7 +66,7 @@ func (s *swaggerPathWrapper) GET(
 func (s *swaggerPathWrapper) POST(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.POST(s.path, handlerFuncP...)
@@ -76,7 +76,7 @@ func (s *swaggerPathWrapper) POST(
 func (s *swaggerPathWrapper) DELETE(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.DELETE(s.path, handlerFuncP...)
@@ -86,7 +86,7 @@ func (s *swaggerPathWrapper) DELETE(
 func (s *swaggerPathWrapper) HEAD(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.HEAD(s.path, handlerFuncP...)
@@ -96,7 +96,7 @@ func (s *swaggerPathWrapper) HEAD(
 func (s *swaggerPathWrapper) OPTIONS(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.OPTIONS(s.path, handlerFuncP...)
@@ -106,7 +106,7 @@ func (s *swaggerPathWrapper) OPTIONS(
 func (s *swaggerPathWrapper) PATCH(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.PATCH(s.path, handlerFuncP...)
@@ -116,7 +116,7 @@ func (s *swaggerPathWrapper) PATCH(
 func (s *swaggerPathWrapper) PUT(
 	config structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.PUT(s.path, handlerFuncP...)
@@ -135,7 +135,7 @@ func (s *swaggerPathWrapper) getDefinitions() []parameters.SwaggParameter {
 func (s *swaggerPathWrapper) addRequest(
 	structConfigs structures.Config,
 	inputParameters []Parameter,
-	requests map[int]Request,
+	requests map[int]Response,
 	reqType string,
 ) {
 	var swaggerParameters []parameters.SwaggParameter
@@ -170,7 +170,7 @@ func (s *swaggerPathWrapper) addRequest(
 	))
 }
 
-func (s *swaggerPathWrapper) readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger {
+func (s *swaggerPathWrapper) readRequests(requests map[int]Response) []swaggerFileGenerator.ResponseSwagger {
 	var responses []swaggerFileGenerator.ResponseSwagger
 	//TODO: CHECK USUAL PARAMETER (STRING, BOOL, ...)
 
