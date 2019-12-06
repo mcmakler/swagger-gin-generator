@@ -6,11 +6,11 @@ import (
 	"testing"
 )
 
-func TestNewSwaggGroupWrapper(t *testing.T) {
-	t.Run("Test: newSwaggGroupWrapper", func(t *testing.T) {
+func TestNewSwaggerGroupWrapper(t *testing.T) {
+	t.Run("Test: newSwaggerGroupWrapper", func(t *testing.T) {
 		g := gin.Default()
 		group := g.Group("path")
-		sgw := newSwaggGroupWrapper("path", "tag", group)
+		sgw := newSwaggerGroupWrapper("path", "tag", group)
 		sgw.Use(func(c *gin.Context) {})
 		spw := sgw.Path("path")
 		spw.GET(

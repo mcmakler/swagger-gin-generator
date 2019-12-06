@@ -8,35 +8,38 @@ import (
 )
 
 type Parameter interface {
-	GetSwagParameter() parameters.SwaggParameter
+	getSwaggerParameter(withSchema bool) parameters.SwaggParameter
 }
 
 type parameter struct {
-	listOfparameters map[string]interface{}
+	listOfParameters map[string]interface{}
 	object           interface{}
 }
 
 func NewParameter(params structures.Config, obj interface{}) Parameter {
 	if params != nil {
 		return &parameter{
-			listOfparameters: params.ToMap(),
+			listOfParameters: params.ToMap(),
 			object:           obj,
 		}
 	}
 	return &parameter{
-		listOfparameters: nil,
+		listOfParameters: nil,
 		object:           obj,
 	}
 }
 
-func (p *parameter) GetSwagParameter() parameters.SwaggParameter {
-	obj := setValueByType(p.listOfparameters, p.object, false, false)
-	return parameters.NewSchemaSwaggParameter(obj)
+func (p *parameter) getSwaggerParameter(withSchema bool) parameters.SwaggParameter {
+	obj := setValueByType(p.listOfParameters, p.object, false, false)
+	if withSchema {
+		return parameters.NewSchemaSwaggParameter(obj)
+	}
+	return obj
 }
 
 //TODO: required
 //TODO: watch the case, when object is a pointer
-func ConvertObjectToSwaggParameter(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
+func ConvertObjectToSwaggerParameter(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
 	var typ reflect.Type
 	var val reflect.Value
 	if reflect.ValueOf(object).Kind() == reflect.Ptr {
@@ -88,7 +91,7 @@ func setValueByType(params map[string]interface{}, object interface{}, subObj bo
 		if isNotStruct {
 			return nil
 		}
-		return ConvertObjectToSwaggParameter(params, object, subObj)
+		return ConvertObjectToSwaggerParameter(params, object, subObj)
 	}
 }
 

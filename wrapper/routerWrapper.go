@@ -29,8 +29,8 @@ const (
 	filenameString = "swagger.yaml"
 )
 
-type SwaggRouterWrapper interface {
-	Group(path, tag string) SwaggGroupWrapper
+type SwaggerRouterWrapper interface {
+	Group(path, tag string) SwaggerGroupWrapper
 	Use(middleware ...gin.HandlerFunc)
 	Generate(filepath string) error
 	NewBasicSecurityDefinition(title string)
@@ -41,41 +41,41 @@ type SwaggRouterWrapper interface {
 	NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string)
 }
 
-type swaggWrapper struct {
+type swaggerWrapper struct {
 	configs map[string]interface{}
 
 	security    []swaggerFileGenerator.SecurityDefinitionSwagger
 	paths       []swaggerFileGenerator.PathSwagger
 	definitions []parameters.SwaggParameter
 
-	groups []SwaggGroupWrapper
+	groups []SwaggerGroupWrapper
 
 	router *gin.Engine
 }
 
-func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggRouterWrapper {
-	return &swaggWrapper{
+func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRouterWrapper {
+	return &swaggerWrapper{
 		configs:     config.ToMap(),
 		security:    []swaggerFileGenerator.SecurityDefinitionSwagger{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
-		groups:      []SwaggGroupWrapper{},
+		groups:      []SwaggerGroupWrapper{},
 		router:      r,
 	}
 }
 
-func (s *swaggWrapper) Use(middlware ...gin.HandlerFunc) {
+func (s *swaggerWrapper) Use(middlware ...gin.HandlerFunc) {
 	s.router.Use(middlware...)
 }
 
-func (s *swaggWrapper) Group(path, tag string) SwaggGroupWrapper {
+func (s *swaggerWrapper) Group(path, tag string) SwaggerGroupWrapper {
 	group := s.router.Group(path)
-	res := newSwaggGroupWrapper(path, tag, group)
+	res := newSwaggerGroupWrapper(path, tag, group)
 	s.groups = append(s.groups, res)
 	return res
 }
 
-func (s *swaggWrapper) Generate(filepath string) error {
+func (s *swaggerWrapper) Generate(filepath string) error {
 	for _, val := range s.groups {
 		for _, path := range val.generate() {
 			s.paths = append(s.paths, path)
@@ -101,27 +101,27 @@ func (s *swaggWrapper) Generate(filepath string) error {
 	return nil
 }
 
-func (s *swaggWrapper) NewBasicSecurityDefinition(title string) {
+func (s *swaggerWrapper) NewBasicSecurityDefinition(title string) {
 	s.security = append(s.security, swaggerFileGenerator.NewBasicSecurityDefinition(title))
 }
 
-func (s *swaggWrapper) NewApiKeySecurityDefinition(title, name string, inHeader bool) {
+func (s *swaggerWrapper) NewApiKeySecurityDefinition(title, name string, inHeader bool) {
 	s.security = append(s.security, swaggerFileGenerator.NewApiKeySecurityDefinition(title, name, inHeader))
 }
 
-func (s *swaggWrapper) NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) {
+func (s *swaggerWrapper) NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) {
 	s.security = append(s.security, swaggerFileGenerator.NewOauth2ImplicitSecurityDefinition(title, authorizationUrl))
 }
 
-func (s *swaggWrapper) NewOauth2PasswordSecurityDefinition(title, tokenURL string) {
+func (s *swaggerWrapper) NewOauth2PasswordSecurityDefinition(title, tokenURL string) {
 	s.security = append(s.security, swaggerFileGenerator.NewOauth2PasswordSecurityDefinition(title, tokenURL))
 }
 
-func (s *swaggWrapper) NewOauth2ApplicationSecurityDefinition(title, tokenURL string) {
+func (s *swaggerWrapper) NewOauth2ApplicationSecurityDefinition(title, tokenURL string) {
 	s.security = append(s.security, swaggerFileGenerator.NewOauth2ApplicationSecurityDefinition(title, tokenURL))
 }
 
-func (s *swaggWrapper) NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) {
+func (s *swaggerWrapper) NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) {
 	s.security = append(s.security, swaggerFileGenerator.NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL))
 }
 

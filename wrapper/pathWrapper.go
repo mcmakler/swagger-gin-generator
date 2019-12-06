@@ -8,56 +8,21 @@ import (
 	"reflect"
 )
 
-type SwaggPathWrapper interface {
-	GET(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
-	POST(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
-	DELETE(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
-	HEAD(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
-	OPTIONS(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
-	PATCH(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
-	PUT(
-		swaggerParameters structures.Config,
-		parameters []Parameter,
-		requests map[int]Request,
-		handlerFunc ...gin.HandlerFunc,
-	)
+type SwaggerPathWrapper interface {
+	GET(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	POST(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	DELETE(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	HEAD(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	OPTIONS(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	PATCH(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
+	PUT(config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
 
 	generate() swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
 	readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger
 }
 
-type swaggPathWrapper struct {
+type swaggerPathWrapper struct {
 	path        string
 	tag         string
 	requests    []swaggerFileGenerator.RequestSwagger
@@ -78,8 +43,8 @@ func NewRequest(description string, object interface{}) Request {
 	}
 }
 
-func newSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrapper {
-	return &swaggPathWrapper{
+func newSwaggerPathWrapper(path, tag string, group *gin.RouterGroup) SwaggerPathWrapper {
+	return &swaggerPathWrapper{
 		path:        path,
 		tag:         tag,
 		requests:    []swaggerFileGenerator.RequestSwagger{},
@@ -88,111 +53,104 @@ func newSwaggPathWrapper(path, tag string, group *gin.RouterGroup) SwaggPathWrap
 	}
 }
 
-func (s *swaggPathWrapper) GET(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) GET(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.GET(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "get")
+	s.addRequest(config, inputParameters, requests, "get")
 }
 
-func (s *swaggPathWrapper) POST(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) POST(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.POST(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "post")
+	s.addRequest(config, inputParameters, requests, "post")
 }
 
-func (s *swaggPathWrapper) DELETE(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) DELETE(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.DELETE(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "delete")
+	s.addRequest(config, inputParameters, requests, "delete")
 }
 
-func (s *swaggPathWrapper) HEAD(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) HEAD(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.HEAD(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "head")
+	s.addRequest(config, inputParameters, requests, "head")
 }
 
-func (s *swaggPathWrapper) OPTIONS(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) OPTIONS(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.OPTIONS(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "options")
+	s.addRequest(config, inputParameters, requests, "options")
 }
 
-func (s *swaggPathWrapper) PATCH(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) PATCH(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.PATCH(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "patch")
+	s.addRequest(config, inputParameters, requests, "patch")
 }
 
-func (s *swaggPathWrapper) PUT(
-	swaggerParameters structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) PUT(
+	config structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.PUT(s.path, handlerFuncP...)
-
-	s.addRequest(swaggerParameters, parametersP, requests, "put")
+	s.addRequest(config, inputParameters, requests, "put")
 }
 
-func (s *swaggPathWrapper) generate() swaggerFileGenerator.PathSwagger {
+func (s *swaggerPathWrapper) generate() swaggerFileGenerator.PathSwagger {
 	res := swaggerFileGenerator.NewPathSwagger(s.path, s.requests)
 	return res
 }
 
-func (s *swaggPathWrapper) getDefinitions() []parameters.SwaggParameter {
+func (s *swaggerPathWrapper) getDefinitions() []parameters.SwaggParameter {
 	return s.definitions
 }
 
-func (s *swaggPathWrapper) addRequest(
-	strConfigs structures.Config,
-	parametersP []Parameter,
+func (s *swaggerPathWrapper) addRequest(
+	structConfigs structures.Config,
+	inputParameters []Parameter,
 	requests map[int]Request,
 	reqType string,
 ) {
-	var paramsSwagg []parameters.SwaggParameter
-	for _, val := range parametersP {
-		if val.GetSwagParameter().IsObject() {
-			paramsSwagg = append(paramsSwagg, parameters.NewSchemaSwaggParameter(val.GetSwagParameter()))
-			s.definitions = append(s.definitions, val.GetSwagParameter())
+	var swaggerParameters []parameters.SwaggParameter
+	for _, val := range inputParameters {
+		if val.getSwaggerParameter(false).IsObject() {
+			swaggerParameters = append(swaggerParameters, val.getSwaggerParameter(true))
+			s.definitions = append(s.definitions, val.getSwaggerParameter(false))
 		} else {
-			paramsSwagg = append(paramsSwagg, val.GetSwagParameter())
+			swaggerParameters = append(swaggerParameters, val.getSwaggerParameter(true))
 		}
 	}
 
 	var configs map[string]interface{}
-	if strConfigs != nil {
-		configs = strConfigs.ToMap()
+	if structConfigs != nil {
+		configs = structConfigs.ToMap()
 	} else {
 		configs = make(map[string]interface{})
 	}
@@ -207,12 +165,12 @@ func (s *swaggPathWrapper) addRequest(
 	configs["typeRequest"] = reqType
 	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagger(
 		configs,
-		paramsSwagg,
+		swaggerParameters,
 		s.readRequests(requests),
 	))
 }
 
-func (s *swaggPathWrapper) readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger {
+func (s *swaggerPathWrapper) readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger {
 	var responses []swaggerFileGenerator.ResponseSwagger
 	//TODO: CHECK USUAL PARAMETER (STRING, BOOL, ...)
 
@@ -226,7 +184,7 @@ func (s *swaggPathWrapper) readRequests(requests map[int]Request) []swaggerFileG
 			respSwag := swaggerFileGenerator.NewResponseSwagger(key, val.description, elemTypeName, element)
 			responses = append(responses, respSwag)
 			if element == nil {
-				s.definitions = append(s.definitions, ConvertObjectToSwaggParameter(nil, val.object, false))
+				s.definitions = append(s.definitions, ConvertObjectToSwaggerParameter(nil, val.object, false))
 			}
 		} else {
 			respSwag := swaggerFileGenerator.NewResponseSwagger(key, val.description, "", nil)

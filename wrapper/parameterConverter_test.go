@@ -35,18 +35,19 @@ type TestStructFull struct {
 	Substr *TestStructBool
 }
 
-func TestConvertObjectToSwaggParameter(t *testing.T) {
-	t.Run("Test: utils.ConvertObjectToSwaggParameter", func(t *testing.T) {
-		t.Run("Should: return empty swag object", func(t *testing.T) {
+func TestConvertObjectToSwaggerParameter(t *testing.T) {
+	t.Run("Test: utils.ConvertObjectToSwaggerParameter", func(t *testing.T) {
+		t.Run("Should: return SwaggerParameter", func(t *testing.T) {
 			params := map[string]interface{}{
 				"nameOfVariable": "TestStructEmpty",
 				"required": nil,
 			}
 			expected := parameters.NewObjectSwaggerParameter(params, make(map[string]parameters.SwaggParameter), false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructEmpty{}, false))
+			actual := ConvertObjectToSwaggerParameter(nil, &TestStructEmpty{}, false)
+			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return swag object with bool param", func(t *testing.T) {
+		t.Run("Should: return SwaggerParameter", func(t *testing.T) {
 			params := map[string]interface{}{
 				"nameOfVariable": "TestStructBool",
 				"required": nil,
@@ -54,12 +55,13 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"B": parameters.NewBoolSwaggerParameter(nil),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructBool{
+			actual := ConvertObjectToSwaggerParameter(nil, &TestStructBool{
 				B: true,
-			}, false))
+			}, false)
+			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return swag object with arr param", func(t *testing.T) {
+		t.Run("Should: return SwaggerParameter", func(t *testing.T) {
 			params := map[string]interface{}{
 				"nameOfVariable": "TestStructArr",
 				"required": nil,
@@ -67,12 +69,13 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"A": parameters.NewArraySwaggerParameter(nil, parameters.NewBoolSwaggerParameter(nil)),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructArr{
+			actual := ConvertObjectToSwaggerParameter(nil, &TestStructArr{
 				A: []bool{true},
-			}, false))
+			}, false)
+			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return time object", func(t *testing.T) {
+		t.Run("Should: return SwaggerParameter", func(t *testing.T) {
 			params := map[string]interface{}{
 				"nameOfVariable": "TestStructTime",
 				"required": nil,
@@ -80,11 +83,11 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 			expected := parameters.NewObjectSwaggerParameter(params, map[string]parameters.SwaggParameter{
 				"T": parameters.NewStringSwaggerParameter(nil),
 			}, false)
-
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructTime{}, false))
+			actual := ConvertObjectToSwaggerParameter(nil, &TestStructTime{}, false)
+			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return swag object with arr param", func(t *testing.T) {
+		t.Run("Should: return SwaggerParameter", func(t *testing.T) {
 			params := map[string]interface{}{
 				"nameOfVariable": "TestStructSubstr",
 				"required": nil,
@@ -98,12 +101,13 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 					"B": parameters.NewBoolSwaggerParameter(nil),
 				}, true),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructSubstr{
+			actual := ConvertObjectToSwaggerParameter(nil, &TestStructSubstr{
 				Substr: TestStructBool{B: false},
-			}, false))
+			}, false)
+			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return swag object with bool param", func(t *testing.T) {
+		t.Run("Should: return SwaggerParameter", func(t *testing.T) {
 			params := map[string]interface{}{
 				"nameOfVariable": "TestStructFull",
 				"required": nil,
@@ -122,109 +126,26 @@ func TestConvertObjectToSwaggParameter(t *testing.T) {
 					"B": parameters.NewBoolSwaggerParameter(nil),
 				}, true),
 			}, false)
-			assert.Equal(t, expected, ConvertObjectToSwaggParameter(nil, &TestStructFull{
+			actual := ConvertObjectToSwaggerParameter(nil, &TestStructFull{
 				B:      false,
 				S:      "",
 				I:      0,
 				F:      0,
 				A:      []bool{true},
 				Substr: &TestStructBool{B: false},
-			}, false))
-		})
-	})
-}
-
-func TestParameter_GetSwagParameter(t *testing.T) {
-	t.Run("Test: Parameter.GetSwagParameter()", func(t *testing.T) {
-		t.Run("Should: return new bool swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           true,
-			}
-			expected := parameters.NewBoolSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new string swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           "String",
-			}
-			expected := parameters.NewStringSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new int swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           10,
-			}
-			expected := parameters.NewIntegerSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new int swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           int64(10),
-			}
-			expected := parameters.NewIntegerSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new number swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           10.10,
-			}
-			expected := parameters.NewNumberSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new number swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           float64(10),
-			}
-			expected := parameters.NewNumberSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new bool swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           float64(10),
-			}
-			expected := parameters.NewNumberSwaggerParameter(nil)
-			actual := p.GetSwagParameter()
-			assert.Equal(t, expected, actual)
-		})
-
-		t.Run("Should: return new array of bool swag parameter", func(t *testing.T) {
-			p := &parameter{
-				listOfparameters: nil,
-				object:           []bool{},
-			}
-			expected := parameters.NewArraySwaggerParameter(nil, parameters.NewBoolSwaggerParameter(nil))
-			actual := p.GetSwagParameter()
+			}, false)
 			assert.Equal(t, expected, actual)
 		})
 	})
 }
 
-func TestNewParameter(t *testing.T) {
-	t.Run("Test: NewParameter", func(t *testing.T) {
-		expected := &parameter{
-			listOfparameters: nil,
-			object:           nil,
-		}
-		actual := NewParameter(nil, nil)
-		assert.Equal(t, expected, actual)
+func TestParameter_GetSwaggerParameter(t *testing.T) {
+	t.Run("Test: Parameter.getSwaggerParameter()", func(t *testing.T) {
+		t.Run("Should: return new bool swag parameter", func(t *testing.T) {
+			p := NewParameter(nil, true)
+			actual := p.getSwaggerParameter(true)
+			expected := parameters.NewSchemaSwaggParameter(parameters.NewBoolSwaggerParameter(nil))
+			assert.Equal(t, expected, actual)
+		})
 	})
 }

@@ -23,12 +23,24 @@ type testStructFull struct {
 	Substr testStructBool
 }
 
+type testObjectStruct struct {
+	B      bool
+	S      string
+	I      int
+	F      float64
+	A      []bool
+	Substr testStructBool
+}
+
 func TestNewSwaggerRouterWrapper(t *testing.T) {
 	t.Run("Test: NewSwaggerRouterWrapper", func(t *testing.T) {
 		parameters := []Parameter{
 			NewParameter(
-				NewBasicParameterConfig("body", "name", "boolGetParameter", true),
+				NewBasicParameterConfig("header", "name", "boolGetParameter", true),
 				true),
+			NewParameter(
+				NewBasicParameterConfig("body", "object", "object Parameter", true),
+				&testObjectStruct{}),
 		}
 
 		g := gin.Default()
@@ -47,6 +59,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 		srw.NewOauth2PasswordSecurityDefinition(oauth2PasswordSecurity, "http://token.com")
 		oauth2AppSecurity := "Oauth2App"
 		srw.NewOauth2ApplicationSecurityDefinition(oauth2AppSecurity, "http://token.com")
+		srw.Use(func(c *gin.Context) {})
 		emptyGroup := srw.Group("", "health")
 		emptyPath := emptyGroup.Path("/health")
 		emptyPath.GET(

@@ -6,29 +6,35 @@ import (
 	"testing"
 )
 
-func TestSwaggPathWrapper_Generate(t *testing.T) {
-	t.Run("Test: SwaggPathWrapper", func(t *testing.T) {
+type testPathObject struct {
+}
+
+func TestSwaggerPathWrapper_Generate(t *testing.T) {
+	t.Run("Test: SwaggerPathWrapper", func(t *testing.T) {
+		requestConfig := NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"})
+		parameters := []Parameter{
+			NewParameter(
+				NewBasicParameterConfig("body", "name", "boolGetParameter", true),
+				true),
+			NewParameter(
+				NewBasicParameterConfig("body", "name", "boolGetParameter", true),
+				&testPathObject{}),
+		}
+		boolRequests := map[int]Request{
+			200: NewRequest("description", true),
+		}
+		emptyRequests := map[int]Request{
+			200: NewRequest("description", nil),
+		}
+		emptyFunc := func(c *gin.Context) {}
 		t.Run("Should: get path generate without errors", func(t *testing.T) {
 			g := gin.Default()
 			gr := g.Group("/")
-			spw := newSwaggPathWrapper(
+			spw := newSwaggerPathWrapper(
 				"path",
 				"tag",
 				gr)
-			spw.GET(
-				NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
-				[]Parameter{
-					NewParameter(
-						NewBasicParameterConfig("in", "name", "boolGetParameter", true),
-						true),
-				},
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-						object:      true,
-					},
-				},
-				func(c *gin.Context) {})
+			spw.GET(requestConfig, parameters, boolRequests, emptyFunc)
 			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
@@ -37,24 +43,11 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 		t.Run("Should: post path generate without errors", func(t *testing.T) {
 			g := gin.Default()
 			gr := g.Group("/")
-			spw := newSwaggPathWrapper(
+			spw := newSwaggerPathWrapper(
 				"path",
 				"tag",
 				gr)
-			spw.POST(
-				NewRequestConfig("description", "operationid", "summary", nil, []string{"consume"}, []string{"produce"}, []string{"tag"}),
-				[]Parameter{
-					NewParameter(
-						NewBasicParameterConfig("in", "name", "boolGetParameter", true),
-						true),
-				},
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-						object:      true,
-					},
-				},
-				func(c *gin.Context) {})
+			spw.POST(requestConfig, parameters, boolRequests, emptyFunc)
 			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)
@@ -63,55 +56,15 @@ func TestSwaggPathWrapper_Generate(t *testing.T) {
 		t.Run("Should: other types test", func(t *testing.T) {
 			g := gin.Default()
 			gr := g.Group("/")
-			spw := newSwaggPathWrapper(
+			spw := newSwaggerPathWrapper(
 				"path",
 				"tag",
 				gr)
-			spw.DELETE(
-				nil,
-				nil,
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-					},
-				},
-				func(c *gin.Context) {})
-			spw.HEAD(
-				nil,
-				nil,
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-					},
-				},
-				func(c *gin.Context) {})
-			spw.OPTIONS(
-				nil,
-				nil,
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-					},
-				},
-				func(c *gin.Context) {})
-			spw.PATCH(
-				nil,
-				nil,
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-					},
-				},
-				func(c *gin.Context) {})
-			spw.PUT(
-				nil,
-				nil,
-				map[int]Request{
-					200: {
-						description: "getReqDef",
-					},
-				},
-				func(c *gin.Context) {})
+			spw.DELETE(requestConfig, parameters, emptyRequests, emptyFunc)
+			spw.HEAD(requestConfig, parameters, emptyRequests, emptyFunc)
+			spw.OPTIONS(requestConfig, parameters, emptyRequests, emptyFunc)
+			spw.PATCH(requestConfig, parameters, emptyRequests, emptyFunc)
+			spw.PUT(requestConfig, parameters, emptyRequests, emptyFunc)
 			a := spw.generate()
 			_, err := a.ToString()
 			assert.NoError(t, err)

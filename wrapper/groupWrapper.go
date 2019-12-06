@@ -6,45 +6,45 @@ import (
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 )
 
-type SwaggGroupWrapper interface {
+type SwaggerGroupWrapper interface {
 	Use(middleware ...gin.HandlerFunc)
-	Path(string) SwaggPathWrapper
+	Path(string) SwaggerPathWrapper
 	generate() []swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
 }
 
-type swaggGroupWrapper struct {
-	path          string
-	tag           string
-	swaggWrappers []SwaggPathWrapper
-	definitions   []parameters.SwaggParameter
+type swaggerGroupWrapper struct {
+	path            string
+	tag             string
+	swaggerWrappers []SwaggerPathWrapper
+	definitions     []parameters.SwaggParameter
 
 	group *gin.RouterGroup
 }
 
-func (s *swaggGroupWrapper) Use(middlware ...gin.HandlerFunc) {
+func (s *swaggerGroupWrapper) Use(middlware ...gin.HandlerFunc) {
 	s.group.Use(middlware...)
 }
 
-func (s *swaggGroupWrapper) Path(path string) SwaggPathWrapper {
-	res := newSwaggPathWrapper(s.path+path, s.tag, s.group)
-	s.swaggWrappers = append(s.swaggWrappers, res)
+func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
+	res := newSwaggerPathWrapper(s.path+path, s.tag, s.group)
+	s.swaggerWrappers = append(s.swaggerWrappers, res)
 	return res
 }
 
-func newSwaggGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggGroupWrapper {
-	return &swaggGroupWrapper{
-		path:          path,
-		tag:           tag,
-		swaggWrappers: []SwaggPathWrapper{},
-		definitions:   []parameters.SwaggParameter{},
-		group:         group,
+func newSwaggerGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggerGroupWrapper {
+	return &swaggerGroupWrapper{
+		path:            path,
+		tag:             tag,
+		swaggerWrappers: []SwaggerPathWrapper{},
+		definitions:     []parameters.SwaggParameter{},
+		group:           group,
 	}
 }
 
-func (s *swaggGroupWrapper) generate() []swaggerFileGenerator.PathSwagger {
+func (s *swaggerGroupWrapper) generate() []swaggerFileGenerator.PathSwagger {
 	var res []swaggerFileGenerator.PathSwagger
-	for _, val := range s.swaggWrappers {
+	for _, val := range s.swaggerWrappers {
 		for _, def := range val.getDefinitions() {
 			s.definitions = append(s.definitions, def)
 		}
@@ -53,6 +53,6 @@ func (s *swaggGroupWrapper) generate() []swaggerFileGenerator.PathSwagger {
 	return res
 }
 
-func (s *swaggGroupWrapper) getDefinitions() []parameters.SwaggParameter {
+func (s *swaggerGroupWrapper) getDefinitions() []parameters.SwaggParameter {
 	return s.definitions
 }
