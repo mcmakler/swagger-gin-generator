@@ -205,7 +205,7 @@ func (s *swaggPathWrapper) addRequest(
 	}
 
 	configs["typeRequest"] = reqType
-	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagg(
+	s.requests = append(s.requests, swaggerFileGenerator.NewRequestSwagger(
 		configs,
 		paramsSwagg,
 		s.readRequests(requests),
@@ -223,13 +223,13 @@ func (s *swaggPathWrapper) readRequests(requests map[int]Request) []swaggerFileG
 				elemTypeName = reflect.ValueOf(val.object).Elem().Type().Name()
 			}
 			element := ReturnNonStructureObject(nil, val.object)
-			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, elemTypeName, element)
+			respSwag := swaggerFileGenerator.NewResponseSwagger(key, val.description, elemTypeName, element)
 			responses = append(responses, respSwag)
 			if element == nil {
 				s.definitions = append(s.definitions, ConvertObjectToSwaggParameter(nil, val.object, false))
 			}
 		} else {
-			respSwag := swaggerFileGenerator.NewResponseSwagg(key, val.description, "", nil)
+			respSwag := swaggerFileGenerator.NewResponseSwagger(key, val.description, "", nil)
 			responses = append(responses, respSwag)
 		}
 	}

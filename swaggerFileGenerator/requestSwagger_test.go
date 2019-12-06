@@ -10,7 +10,7 @@ import (
 func TestRequestSwagger_ToString(t *testing.T) {
 	t.Run("Test: RequestSwagger.ToString()", func(t *testing.T) {
 		t.Run("Should: return error "+errorEmptyTypeRequest.Error(), func(t *testing.T) {
-			a := NewRequestSwagg(nil, nil, nil)
+			a := NewRequestSwagger(nil, nil, nil)
 			_, actual := a.ToString()
 			expected := errorEmptyTypeRequest
 			assert.Equal(t, expected, actual)
@@ -20,7 +20,7 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			config := map[string]interface{}{
 				"test": 1,
 			}
-			a := NewRequestSwagg(config, nil, nil)
+			a := NewRequestSwagger(config, nil, nil)
 			_, actual := a.ToString()
 			expected := errorEmptyTypeRequest
 			assert.Equal(t, expected, actual)
@@ -30,7 +30,7 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			config := map[string]interface{}{
 				"typeRequest": "GET",
 			}
-			a := NewRequestSwagg(config, nil, nil)
+			a := NewRequestSwagger(config, nil, nil)
 			_, actual := a.ToString()
 			expected := errorEmptyResponses
 			assert.Equal(t, expected, actual)
@@ -41,8 +41,8 @@ func TestRequestSwagger_ToString(t *testing.T) {
 				"typeRequest": "GET",
 			}
 			swaggerParameter := parameters.NewArraySwaggerParameter(nil, nil)
-			responseSwagger := NewResponseSwagg(200, "description", "", nil)
-			a := NewRequestSwagg(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagger{responseSwagger})
+			responseSwagger := NewResponseSwagger(200, "description", "", nil)
+			a := NewRequestSwagger(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagger{responseSwagger})
 			_, actual := a.ToString()
 			expected := parameters.ErrorNillItemsParameter
 			assert.Equal(t, expected, actual)
@@ -52,8 +52,8 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			config := map[string]interface{}{
 				"typeRequest": "GET",
 			}
-			responseSwagger := NewResponseSwagg(-1, "", "", nil)
-			a := NewRequestSwagg(config, nil, []ResponseSwagger{responseSwagger})
+			responseSwagger := NewResponseSwagger(-1, "", "", nil)
+			a := NewRequestSwagger(config, nil, []ResponseSwagger{responseSwagger})
 
 			_, actual := a.ToString()
 			expected := errorWrongCode
@@ -72,8 +72,8 @@ func TestRequestSwagger_ToString(t *testing.T) {
 				"summary":     "summary",
 			}
 			swaggerParameter := parameters.NewBoolSwaggerParameter(nil)
-			responseSwagger := NewResponseSwagg(200, "description", "", nil)
-			a := NewRequestSwagg(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagger{responseSwagger})
+			responseSwagger := NewResponseSwagger(200, "description", "", nil)
+			a := NewRequestSwagger(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagger{responseSwagger})
 			actual, err := a.ToString()
 			assert.NoError(t, err)
 

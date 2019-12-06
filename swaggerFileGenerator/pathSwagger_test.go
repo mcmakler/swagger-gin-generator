@@ -24,7 +24,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 
 		t.Run("Should: return error "+errorEmptyTypeRequest.Error(), func(t *testing.T) {
 			requests := []RequestSwagger{
-				NewRequestSwagg(nil, nil, nil),
+				NewRequestSwagger(nil, nil, nil),
 			}
 			a := NewPathSwagger("path", requests)
 			_, actual := a.ToString()
@@ -36,9 +36,9 @@ func TestPathSwagger_ToString(t *testing.T) {
 			swaggerParameters := map[string]interface{}{
 				"typeRequest": "GET",
 			}
-			responseSwagger := NewResponseSwagg(200, "description", "", nil)
+			responseSwagger := NewResponseSwagger(200, "description", "", nil)
 			requests := []RequestSwagger{
-				NewRequestSwagg(swaggerParameters, nil, []ResponseSwagger{responseSwagger}),
+				NewRequestSwagger(swaggerParameters, nil, []ResponseSwagger{responseSwagger}),
 			}
 			a := NewPathSwagger("path", requests)
 			actual, err := a.ToString()

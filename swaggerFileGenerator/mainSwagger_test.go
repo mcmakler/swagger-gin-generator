@@ -9,8 +9,8 @@ import (
 
 func TestMainSwagger_ToString(t *testing.T) {
 	t.Run("Test: MainSwagger.ToString()", func(t *testing.T) {
-		responseSwagger := NewResponseSwagg(200, "descr", "", nil)
-		requestSwagger := NewRequestSwagg(
+		responseSwagger := NewResponseSwagger(200, "descr", "", nil)
+		requestSwagger := NewRequestSwagger(
 			map[string]interface{}{"typeRequest": "GET"},
 			nil,
 			[]ResponseSwagger{responseSwagger},

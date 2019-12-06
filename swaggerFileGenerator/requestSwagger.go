@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-//TODO: accept
-
 const (
 	descriptionString      = "\n  description: "
 	securityString         = "\n  security:"
@@ -41,7 +39,6 @@ var (
 	errorEmptyResponses   = errors.New("EMPTY_RESPONSES")
 )
 
-//TODO: some checks it need not be empty
 func (r *requestSwagger) ToString() (string, error) {
 	if r.config == nil {
 		return "", errorEmptyTypeRequest
@@ -109,7 +106,7 @@ func (r *requestSwagger) ToString() (string, error) {
 	return res, nil
 }
 
-func NewRequestSwagg(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagger) RequestSwagger {
+func NewRequestSwagger(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagger) RequestSwagger {
 	return &requestSwagger{
 		config:     params,
 		parameters: parameters,

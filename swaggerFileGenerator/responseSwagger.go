@@ -51,7 +51,7 @@ func (r *responseSwagger) ToString() (string, error) {
 	return res, nil
 }
 
-func NewResponseSwagg(code int, descr, schema string, parameter parameters.SwaggParameter) ResponseSwagger {
+func NewResponseSwagger(code int, descr, schema string, parameter parameters.SwaggParameter) ResponseSwagger {
 	return &responseSwagger{
 		code:         code,
 		description:  descr,
