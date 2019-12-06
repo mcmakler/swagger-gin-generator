@@ -98,8 +98,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			},
 			func(c *gin.Context) {})
 
-		path2 := firstGroup.Path("/path2")
-		path2.GET(
+		firstGroup.GET(
+			"/path2",
 			nil,
 			nil,
 			map[int]Request{
@@ -109,7 +109,8 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		path2.POST(
+		firstGroup.POST(
+			"/path2",
 			nil,
 			nil,
 			map[int]Request{

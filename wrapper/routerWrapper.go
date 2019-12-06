@@ -10,11 +10,9 @@ import (
 	"strings"
 )
 
-//TODO: bearer in consts;  json, bson
 //TODO: consts for all parameters
 //TODO: group subgroups
 //TODO: group get, post, ...
-//TODO: params: check case when []string is only one element/ []string{"el"} = "el"
 
 //TODO: params in comments
 //TODO: required in object
@@ -25,6 +23,11 @@ const (
 	InQuery    = "query"
 	InHeader   = "header"
 	InFromData = "fromData"
+
+	securityBearer = "Bearer"
+
+	typesJson = "json"
+	typesBson = "bson"
 
 	filenameString = "swagger.yaml"
 )
@@ -87,7 +90,7 @@ func (s *swaggerWrapper) Generate(filepath string) error {
 	s.definitions = sliceUniqMap(s.definitions)
 	mainSwagg := swaggerFileGenerator.NewMainSwagger(
 		s.configs,
-		s.security, //TODO
+		s.security,
 		s.paths,
 		s.definitions)
 	str, err := mainSwagg.ToString()
@@ -99,30 +102,6 @@ func (s *swaggerWrapper) Generate(filepath string) error {
 		return err
 	}
 	return nil
-}
-
-func (s *swaggerWrapper) NewBasicSecurityDefinition(title string) {
-	s.security = append(s.security, swaggerFileGenerator.NewBasicSecurityDefinition(title))
-}
-
-func (s *swaggerWrapper) NewApiKeySecurityDefinition(title, name string, inHeader bool) {
-	s.security = append(s.security, swaggerFileGenerator.NewApiKeySecurityDefinition(title, name, inHeader))
-}
-
-func (s *swaggerWrapper) NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) {
-	s.security = append(s.security, swaggerFileGenerator.NewOauth2ImplicitSecurityDefinition(title, authorizationUrl))
-}
-
-func (s *swaggerWrapper) NewOauth2PasswordSecurityDefinition(title, tokenURL string) {
-	s.security = append(s.security, swaggerFileGenerator.NewOauth2PasswordSecurityDefinition(title, tokenURL))
-}
-
-func (s *swaggerWrapper) NewOauth2ApplicationSecurityDefinition(title, tokenURL string) {
-	s.security = append(s.security, swaggerFileGenerator.NewOauth2ApplicationSecurityDefinition(title, tokenURL))
-}
-
-func (s *swaggerWrapper) NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) {
-	s.security = append(s.security, swaggerFileGenerator.NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL))
 }
 
 func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
@@ -153,4 +132,28 @@ func writeStringToFile(filepath, s string) error {
 	}
 
 	return nil
+}
+
+func (s *swaggerWrapper) NewBasicSecurityDefinition(title string) {
+	s.security = append(s.security, swaggerFileGenerator.NewBasicSecurityDefinition(title))
+}
+
+func (s *swaggerWrapper) NewApiKeySecurityDefinition(title, name string, inHeader bool) {
+	s.security = append(s.security, swaggerFileGenerator.NewApiKeySecurityDefinition(title, name, inHeader))
+}
+
+func (s *swaggerWrapper) NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2ImplicitSecurityDefinition(title, authorizationUrl))
+}
+
+func (s *swaggerWrapper) NewOauth2PasswordSecurityDefinition(title, tokenURL string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2PasswordSecurityDefinition(title, tokenURL))
+}
+
+func (s *swaggerWrapper) NewOauth2ApplicationSecurityDefinition(title, tokenURL string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2ApplicationSecurityDefinition(title, tokenURL))
+}
+
+func (s *swaggerWrapper) NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) {
+	s.security = append(s.security, swaggerFileGenerator.NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL))
 }
