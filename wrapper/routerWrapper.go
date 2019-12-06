@@ -13,7 +13,6 @@ import (
 //TODO: consts for all parameters
 
 //TODO: params in comments
-//TODO: required in object
 
 const (
 	InBody     = "body"

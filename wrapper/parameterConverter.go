@@ -38,8 +38,6 @@ func (p *parameter) getSwaggerParameter(withSchema bool) parameters.SwaggParamet
 	return obj
 }
 
-//TODO: required
-//TODO: watch the case, when object is a pointer
 func ConvertObjectToSwaggerParameter(params map[string]interface{}, object interface{}, subObj bool) parameters.SwaggParameter {
 	var typ reflect.Type
 	var val reflect.Value
