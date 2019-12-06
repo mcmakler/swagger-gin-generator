@@ -24,10 +24,10 @@ const (
 	InHeader   = "header"
 	InFromData = "fromData"
 
-	securityBearer = "Bearer"
+	SecurityBearer = "Bearer"
 
-	typesJson = "json"
-	typesBson = "bson"
+	TypesJson = "json"
+	TypesBson = "bson"
 
 	filenameString = "swagger.yaml"
 )
