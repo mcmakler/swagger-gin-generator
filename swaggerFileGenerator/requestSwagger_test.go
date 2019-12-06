@@ -1,7 +1,6 @@
 package swaggerFileGenerator
 
 import (
-	"errors"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"github.com/stretchr/testify/assert"
 	"strings"
@@ -37,27 +36,27 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return error NIL_OBJECT_VARIABLE_NAME", func(t *testing.T) {
+		t.Run("Should: return error " + parameters.ErrorNillItemsParameter.Error(), func(t *testing.T) {
 			config := map[string]interface{}{
 				"typeRequest": "GET",
 			}
-			swaggerParameter := parameters.NewObjectSwaggerParameter(nil, nil, false)
+			swaggerParameter := parameters.NewArraySwaggerParameter(nil, nil)
 			responseSwagger := NewResponseSwagg(200, "description", "", nil)
-			a := NewRequestSwagg(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagg{responseSwagger})
+			a := NewRequestSwagg(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagger{responseSwagger})
 			_, actual := a.ToString()
-			expected := errors.New("NIL_OBJECT_VARIABLE_NAME")
+			expected := parameters.ErrorNillItemsParameter
 			assert.Equal(t, expected, actual)
 		})
 
-		t.Run("Should: return error WRONG_HTTP_CODE", func(t *testing.T) {
+		t.Run("Should: return error " + errorWrongCode.Error(), func(t *testing.T) {
 			config := map[string]interface{}{
 				"typeRequest": "GET",
 			}
 			responseSwagger := NewResponseSwagg(-1, "", "", nil)
-			a := NewRequestSwagg(config, nil, []ResponseSwagg{responseSwagger})
+			a := NewRequestSwagg(config, nil, []ResponseSwagger{responseSwagger})
 
 			_, actual := a.ToString()
-			expected := errors.New("WRONG_HTTP_CODE")
+			expected := errorWrongCode
 			assert.Equal(t, expected, actual)
 		})
 
@@ -74,7 +73,7 @@ func TestRequestSwagger_ToString(t *testing.T) {
 			}
 			swaggerParameter := parameters.NewBoolSwaggerParameter(nil)
 			responseSwagger := NewResponseSwagg(200, "description", "", nil)
-			a := NewRequestSwagg(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagg{responseSwagger})
+			a := NewRequestSwagg(config, []parameters.SwaggParameter{swaggerParameter}, []ResponseSwagger{responseSwagger})
 			actual, err := a.ToString()
 			assert.NoError(t, err)
 

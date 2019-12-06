@@ -13,22 +13,22 @@ const (
 )
 
 var (
-	errorWrongCode        = errors.New("WRONG_HTTP_CODE")
-	errorEmptyDescription = errors.New("DESCRIPTION_IS_EMPTY")
+	errorWrongCode        = errors.New("ERROR_WRONG_HTTP_CODE")
+	errorEmptyDescription = errors.New("ERROR_DESCRIPTION_IS_EMPTY")
 )
 
-type ResponseSwagg interface {
+type ResponseSwagger interface {
 	ToString() (string, error)
 }
 
-type responseSwagg struct {
+type responseSwagger struct {
 	code         int
 	description  string
 	linkOnSchema string
 	parameter    parameters.SwaggParameter
 }
 
-func (r *responseSwagg) ToString() (string, error) {
+func (r *responseSwagger) ToString() (string, error) {
 	if r.code < 0 { //TODO: check correct code
 		return "", errorWrongCode
 	}
@@ -51,8 +51,8 @@ func (r *responseSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-func NewResponseSwagg(code int, descr, schema string, parameter parameters.SwaggParameter) ResponseSwagg {
-	return &responseSwagg{
+func NewResponseSwagg(code int, descr, schema string, parameter parameters.SwaggParameter) ResponseSwagger {
+	return &responseSwagger{
 		code:         code,
 		description:  descr,
 		linkOnSchema: schema,

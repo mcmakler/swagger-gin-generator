@@ -13,7 +13,7 @@ func TestMainSwagger_ToString(t *testing.T) {
 		requestSwagger := NewRequestSwagg(
 			map[string]interface{}{"typeRequest": "GET"},
 			nil,
-			[]ResponseSwagg{responseSwagger},
+			[]ResponseSwagger{responseSwagger},
 		)
 		pathSwagger := NewPathSwagger(
 			"path",
@@ -89,7 +89,7 @@ func TestMainSwagger_ToString(t *testing.T) {
 					"title":   "title",
 					"version": "version",
 				},
-				[]SecurityDefinitionSwagg{
+				[]SecurityDefinitionSwagger{
 					NewOauth2AccessCodeSecurityDefinition("", "", ""),
 				},
 				[]PathSwagger{pathSwagger},
@@ -107,7 +107,7 @@ func TestMainSwagger_ToString(t *testing.T) {
 					"title":   "title",
 					"version": "version",
 				},
-				[]SecurityDefinitionSwagg{basicSD},
+				[]SecurityDefinitionSwagger{basicSD},
 				[]PathSwagger{pathSwagger},
 				nil,
 			)

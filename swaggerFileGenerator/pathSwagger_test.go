@@ -38,7 +38,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 			}
 			responseSwagger := NewResponseSwagg(200, "description", "", nil)
 			requests := []RequestSwagger{
-				NewRequestSwagg(swaggerParameters, nil, []ResponseSwagg{responseSwagger}),
+				NewRequestSwagg(swaggerParameters, nil, []ResponseSwagger{responseSwagger}),
 			}
 			a := NewPathSwagger("path", requests)
 			actual, err := a.ToString()

@@ -44,7 +44,7 @@ type SwaggRouterWrapper interface {
 type swaggWrapper struct {
 	configs map[string]interface{}
 
-	security    []swaggerFileGenerator.SecurityDefinitionSwagg
+	security    []swaggerFileGenerator.SecurityDefinitionSwagger
 	paths       []swaggerFileGenerator.PathSwagger
 	definitions []parameters.SwaggParameter
 
@@ -56,7 +56,7 @@ type swaggWrapper struct {
 func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggRouterWrapper {
 	return &swaggWrapper{
 		configs:     config.ToMap(),
-		security:    []swaggerFileGenerator.SecurityDefinitionSwagg{},
+		security:    []swaggerFileGenerator.SecurityDefinitionSwagger{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
 		groups:      []SwaggGroupWrapper{},

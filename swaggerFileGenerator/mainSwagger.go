@@ -34,7 +34,7 @@ type MainSwagger interface {
 
 type mainSwagger struct {
 	config              map[string]interface{}
-	securityDefinitions []SecurityDefinitionSwagg
+	securityDefinitions []SecurityDefinitionSwagger
 	paths               []PathSwagger
 	definitions         []parameters.SwaggParameter
 }
@@ -98,7 +98,7 @@ func (m *mainSwagger) ToString() (string, error) {
 	return res, nil
 }
 
-func NewMainSwagger(config map[string]interface{}, securityDefinitions []SecurityDefinitionSwagg, paths []PathSwagger, definitions []parameters.SwaggParameter) MainSwagger {
+func NewMainSwagger(config map[string]interface{}, securityDefinitions []SecurityDefinitionSwagger, paths []PathSwagger, definitions []parameters.SwaggParameter) MainSwagger {
 	return &mainSwagger{
 		config:              config,
 		securityDefinitions: securityDefinitions,

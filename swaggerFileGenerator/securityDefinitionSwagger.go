@@ -22,21 +22,21 @@ var (
 	errorEmptyOauth2SecurityUrl  = errors.New("EMPTY_OAUTH2_URL")
 )
 
-type SecurityDefinitionSwagg interface {
+type SecurityDefinitionSwagger interface {
 	ToString() (string, error)
 }
 
-type basicSecurityDefinitionSwagg struct {
+type basicSecurityDefinitionSwagger struct {
 	title string
 }
 
-func NewBasicSecurityDefinition(title string) SecurityDefinitionSwagg {
-	return &basicSecurityDefinitionSwagg{
+func NewBasicSecurityDefinition(title string) SecurityDefinitionSwagger {
+	return &basicSecurityDefinitionSwagger{
 		title: title,
 	}
 }
 
-func (b *basicSecurityDefinitionSwagg) ToString() (string, error) {
+func (b *basicSecurityDefinitionSwagger) ToString() (string, error) {
 	if b.title == "" {
 		return "", errorEmptySecurityTitle
 	}
@@ -44,21 +44,21 @@ func (b *basicSecurityDefinitionSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-type apiKeySecurityDefinitionSwagg struct {
+type apiKeySecurityDefinitionSwagger struct {
 	title    string
 	name     string
 	inHeader bool
 }
 
-func NewApiKeySecurityDefinition(title, name string, inHeader bool) SecurityDefinitionSwagg {
-	return &apiKeySecurityDefinitionSwagg{
+func NewApiKeySecurityDefinition(title, name string, inHeader bool) SecurityDefinitionSwagger {
+	return &apiKeySecurityDefinitionSwagger{
 		title:    title,
 		name:     name,
 		inHeader: inHeader,
 	}
 }
 
-func (b *apiKeySecurityDefinitionSwagg) ToString() (string, error) {
+func (b *apiKeySecurityDefinitionSwagger) ToString() (string, error) {
 	if b.title == "" {
 		return "", errorEmptySecurityTitle
 	}
@@ -75,15 +75,15 @@ func (b *apiKeySecurityDefinitionSwagg) ToString() (string, error) {
 	return res, nil
 }
 
-type oauth2SecurityDefinitionSwagg struct {
+type oauth2SecurityDefinitionSwagger struct {
 	title    string
 	flow     string
 	tokenURL string
 	authURL  string
 }
 
-func NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) SecurityDefinitionSwagg {
-	return &oauth2SecurityDefinitionSwagg{
+func NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) SecurityDefinitionSwagger {
+	return &oauth2SecurityDefinitionSwagger{
 		flow:     "implicit",
 		title:    title,
 		tokenURL: "",
@@ -91,8 +91,8 @@ func NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string) Securit
 	}
 }
 
-func NewOauth2PasswordSecurityDefinition(title, tokenURL string) SecurityDefinitionSwagg {
-	return &oauth2SecurityDefinitionSwagg{
+func NewOauth2PasswordSecurityDefinition(title, tokenURL string) SecurityDefinitionSwagger {
+	return &oauth2SecurityDefinitionSwagger{
 		flow:     "password",
 		title:    title,
 		tokenURL: tokenURL,
@@ -100,8 +100,8 @@ func NewOauth2PasswordSecurityDefinition(title, tokenURL string) SecurityDefinit
 	}
 }
 
-func NewOauth2ApplicationSecurityDefinition(title, tokenURL string) SecurityDefinitionSwagg {
-	return &oauth2SecurityDefinitionSwagg{
+func NewOauth2ApplicationSecurityDefinition(title, tokenURL string) SecurityDefinitionSwagger {
+	return &oauth2SecurityDefinitionSwagger{
 		flow:     "application",
 		title:    title,
 		tokenURL: tokenURL,
@@ -109,8 +109,8 @@ func NewOauth2ApplicationSecurityDefinition(title, tokenURL string) SecurityDefi
 	}
 }
 
-func NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) SecurityDefinitionSwagg {
-	return &oauth2SecurityDefinitionSwagg{
+func NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL string) SecurityDefinitionSwagger {
+	return &oauth2SecurityDefinitionSwagger{
 		flow:     "accessCode",
 		title:    title,
 		tokenURL: tokenURL,
@@ -118,7 +118,7 @@ func NewOauth2AccessCodeSecurityDefinition(title, authorizationUrl, tokenURL str
 	}
 }
 
-func (b *oauth2SecurityDefinitionSwagg) ToString() (string, error) {
+func (b *oauth2SecurityDefinitionSwagger) ToString() (string, error) {
 	if b.title == "" {
 		return "", errorEmptySecurityTitle
 	}

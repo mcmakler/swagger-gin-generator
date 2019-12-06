@@ -54,7 +54,7 @@ type SwaggPathWrapper interface {
 
 	generate() swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
-	readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagg
+	readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger
 }
 
 type swaggPathWrapper struct {
@@ -212,8 +212,8 @@ func (s *swaggPathWrapper) addRequest(
 	))
 }
 
-func (s *swaggPathWrapper) readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagg {
-	var responses []swaggerFileGenerator.ResponseSwagg
+func (s *swaggPathWrapper) readRequests(requests map[int]Request) []swaggerFileGenerator.ResponseSwagger {
+	var responses []swaggerFileGenerator.ResponseSwagger
 	//TODO: CHECK USUAL PARAMETER (STRING, BOOL, ...)
 
 	for key, val := range requests {

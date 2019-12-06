@@ -33,7 +33,7 @@ type RequestSwagger interface {
 type requestSwagger struct {
 	config     map[string]interface{}
 	parameters []parameters.SwaggParameter
-	responses  []ResponseSwagg
+	responses  []ResponseSwagger
 }
 
 var (
@@ -109,7 +109,7 @@ func (r *requestSwagger) ToString() (string, error) {
 	return res, nil
 }
 
-func NewRequestSwagg(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagg) RequestSwagger {
+func NewRequestSwagg(params map[string]interface{}, parameters []parameters.SwaggParameter, resp []ResponseSwagger) RequestSwagger {
 	return &requestSwagger{
 		config:     params,
 		parameters: parameters,
