@@ -1,6 +1,7 @@
 package wrapper
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -10,8 +11,10 @@ import (
 type SwaggerGroupWrapper interface {
 	Use(middleware ...gin.HandlerFunc)
 	Path(path string) SwaggerPathWrapper
+	Group(path, tag string) SwaggerGroupWrapper
 	generate() []swaggerFileGenerator.PathSwagger
 	getDefinitions() []parameters.SwaggParameter
+	getSubgroups() []SwaggerGroupWrapper
 	GET(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
 	POST(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
 	DELETE(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc)
@@ -26,6 +29,7 @@ type swaggerGroupWrapper struct {
 	tag         string
 	paths       map[string]SwaggerPathWrapper
 	definitions []parameters.SwaggParameter
+	subgroups   []SwaggerGroupWrapper
 
 	group *gin.RouterGroup
 }
@@ -40,12 +44,20 @@ func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
 	return res
 }
 
+func (s *swaggerGroupWrapper) Group(path, tag string) SwaggerGroupWrapper {
+	group := s.group.Group(s.path + path)
+	res := newSwaggerGroupWrapper(s.path+path, tag, group)
+	s.subgroups = append(s.subgroups, res)
+	return res
+}
+
 func newSwaggerGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggerGroupWrapper {
 	return &swaggerGroupWrapper{
 		path:        path,
 		tag:         tag,
 		paths:       make(map[string]SwaggerPathWrapper),
 		definitions: []parameters.SwaggParameter{},
+		subgroups:   []SwaggerGroupWrapper{},
 		group:       group,
 	}
 }
@@ -58,11 +70,24 @@ func (s *swaggerGroupWrapper) generate() []swaggerFileGenerator.PathSwagger {
 		}
 		res = append(res, val.generate())
 	}
+	fmt.Println(s.path)
+	for _, val := range s.subgroups {
+		for _, path := range val.generate() {
+			res = append(res, path)
+		}
+		for _, def := range val.getDefinitions() {
+			s.definitions = append(s.definitions, def)
+		}
+	}
 	return res
 }
 
 func (s *swaggerGroupWrapper) getDefinitions() []parameters.SwaggParameter {
 	return s.definitions
+}
+
+func (s *swaggerGroupWrapper) getSubgroups() []SwaggerGroupWrapper {
+	return s.subgroups
 }
 
 func (s *swaggerGroupWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Request, handlerFunc ...gin.HandlerFunc) {

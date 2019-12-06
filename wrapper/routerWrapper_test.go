@@ -120,7 +120,20 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		secondGroup := srw.Group("/group2", "secondGroup")
+
+		oneAndHalfGroup := srw.Group("/oneAdHalf", "oneAdHalfGroup")
+		secondGroup := oneAndHalfGroup.Group("/group2", "secondGroup")
+		secondGroup.DELETE(
+			"",
+			NewRequestConfig("description", "", "summary", []string{oauth2PasswordSecurity, oauth2AppSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
+			parameters,
+			map[int]Request{
+				200: {
+					description: "getReqDef",
+					object:      &testStructFull{},
+				},
+			},
+			func(c *gin.Context) {})
 		paht22 := secondGroup.Path("/path2")
 		paht22.DELETE(
 			NewRequestConfig("description", "operationid3", "summary", []string{oauth2PasswordSecurity, oauth2AppSecurity}, []string{"consume"}, []string{"produce"}, []string{"tag"}),
