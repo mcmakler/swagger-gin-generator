@@ -4,6 +4,7 @@ import (
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"reflect"
+	"strings"
 	"time"
 )
 
@@ -52,18 +53,21 @@ func ConvertObjectToSwaggerParameter(params map[string]interface{}, object inter
 	}
 
 	properties := make(map[string]parameters.SwaggParameter)
-
-	if reflect.TypeOf(object).Kind() == reflect.Struct {
-		for i := 0; i < typ.NumField(); i++ {
-			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface(), true, false)
-		}
-	}
-
 	if params == nil {
 		params = make(map[string]interface{})
 	}
+	params["required"] = []string{}
+
+	if reflect.TypeOf(object).Kind() == reflect.Struct {
+		for i := 0; i < typ.NumField(); i++ {
+			if strings.Contains(typ.Field(i).Tag.Get("binding"), "required") {
+				params["required"] = append(params["required"].([]string), typ.Field(i).Name)
+			}
+			properties[typ.Field(i).Name] = setValueByType(nil, val.Field(i).Interface(), true, false)
+		}
+	}
 	params["nameOfVariable"] = typ.Name()
-	params["required"] = nil //TODO: add required params
+	//params["required"] = nil //TODO: add required params
 	res := parameters.NewObjectSwaggerParameter(params, properties, subObj)
 
 	return res

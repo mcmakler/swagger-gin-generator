@@ -15,8 +15,8 @@ type testResponse struct {
 }
 
 type testStructFull struct {
-	B      bool
-	S      string
+	B      bool   `binding:"required"`
+	S      string `binding:"required"`
 	I      int
 	F      float64
 	A      []bool
@@ -27,8 +27,8 @@ type testObjectStruct struct {
 	B      bool
 	S      string
 	I      int
-	F      float64
-	A      []bool
+	F      float64 `binding:"required"`
+	A      []bool  `binding:"required"`
 	Substr testStructBool
 }
 

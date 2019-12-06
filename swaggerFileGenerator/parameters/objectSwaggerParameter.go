@@ -35,7 +35,8 @@ func (a *objectSwaggerParameter) ToString() (string, error) {
 		res = "\n" + a.config["nameOfVariable"].(string) + ":"
 	}
 	res += typeString + objectType
-	if val, ok := a.config["required"]; ok && val != nil {
+	if val, ok := a.config["required"]; ok && len(val.([]string)) > 0 {
+		res += requiredString
 		for _, val := range val.([]string) {
 			res += requiredIndentStr + val
 		}
