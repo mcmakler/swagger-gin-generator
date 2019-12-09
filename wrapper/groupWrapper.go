@@ -87,6 +87,7 @@ func (s *swaggerGroupWrapper) getDefinitions() []parameters.SwaggParameter {
 }
 
 func (s *swaggerGroupWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
+	s.group.GET(s.path, handlerFunc...)
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}

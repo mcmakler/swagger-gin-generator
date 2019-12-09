@@ -60,7 +60,7 @@ func (s *swaggerPathWrapper) GET(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.GET(s.path, handlerFuncP...)
+	//s.group.GET(s.path, handlerFuncP...)
 	fmt.Println("GET:" + s.group.BasePath() + s.path)
 	fmt.Println(s.group)
 	s.addRequest(config, inputParameters, requests, "get")
