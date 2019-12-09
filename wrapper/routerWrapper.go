@@ -7,11 +7,8 @@ import (
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"html/template"
 	"io"
-	"net/http"
 	"os"
 	"strings"
 )
@@ -57,7 +54,6 @@ type SwaggerRouterWrapper interface {
 	OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 	PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 	PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
-	setBasePath()
 }
 
 type swaggerWrapper struct {
@@ -120,7 +116,7 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 		return err
 	}
 	templateJson := template.Must(template.New("json").Parse(jsonStr))
-	s.mainGroup.GET(filenameStringJson, nil, nil,
+	s.mainGroup.GET(pathUrl[:strings.LastIndex(pathUrl, "/")] + filenameStringJson, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
@@ -159,16 +155,6 @@ func (s *swaggerWrapper) generate() (string, error) {
 		s.paths,
 		s.definitions)
 	return mainSwagg.ToString()
-}
-
-func (s *swaggerWrapper) setBasePath() {
-	s.mainGroup.GET("/api/doc/*any",
-		NewRequestConfig("GGet swagger", "", "", nil, nil, nil, nil),
-		nil,
-		map[int]Response{
-			http.StatusOK: NewResponse("ok", nil),
-		},
-		ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
 
 func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
