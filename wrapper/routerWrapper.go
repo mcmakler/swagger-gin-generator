@@ -138,7 +138,7 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 			c.Render(200, render.HTML{
 				Template: templateDoc,
 				Data: map[string]string{
-					"templateUrl": filenameStringJson,
+					"templateUrl": templateUrl,
 				},
 			})
 		})
