@@ -34,6 +34,8 @@ const (
 
 	filenameString     = "swagger.yaml"
 	filenameStringJson = "swagger.json"
+
+	templateUrl = "./swagger.json"
 )
 
 type SwaggerRouterWrapper interface {
