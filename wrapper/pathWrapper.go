@@ -61,7 +61,7 @@ func (s *swaggerPathWrapper) GET(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.GET(s.path, handlerFuncP...)
+	s.group.GET(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "get")
 }
 
