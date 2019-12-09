@@ -68,13 +68,12 @@ type swaggerWrapper struct {
 }
 
 func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRouterWrapper {
-	group := r.Group("")
 	return &swaggerWrapper{
 		configs:     config.ToMap(),
 		security:    []swaggerFileGenerator.SecurityDefinitionSwagger{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
-		mainGroup:   newSwaggerGroupWrapper("", "", group),
+		mainGroup:   newSwaggerGroupWrapper("", "", r.Group("")),
 	}
 }
 
