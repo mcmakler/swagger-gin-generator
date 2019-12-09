@@ -117,24 +117,24 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 	if err != nil {
 		return err
 	}
-	t := template.Must(template.New("json").Parse(jsonStr))
+	templateJson := template.Must(template.New("json").Parse(jsonStr))
 	s.mainGroup.GET(filenameStringJson, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
 		func(c *gin.Context) {
 			c.Render(200, render.HTML{
-				Template: t,
+				Template: templateJson,
 			})
 		})
-	t = template.Must(template.New("body").Parse(indexTemplate))
+	templateDoc := template.Must(template.New("body").Parse(indexTemplate))
 	s.mainGroup.GET(pathUrl, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
 		func(c *gin.Context) {
 			c.Render(200, render.HTML{
-				Template: t,
+				Template: templateDoc,
 				Data: map[string]string{
 					"templateUrl": filenameStringJson,
 				},
