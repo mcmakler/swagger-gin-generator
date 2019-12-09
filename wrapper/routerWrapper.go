@@ -1,6 +1,7 @@
 package wrapper
 
 import (
+	yaml "github.com/ghodss/yaml"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -27,6 +28,7 @@ const (
 	TypesBson = "bson"
 
 	filenameString = "swagger.yaml"
+	filenameStringJson = "swagger.json"
 )
 
 type SwaggerRouterWrapper interface {
@@ -98,6 +100,14 @@ func (s *swaggerWrapper) Generate(filepath string) error {
 		return err
 	}
 	err = writeStringToFile(filepath+filenameString, str)
+	if err != nil {
+		return err
+	}
+	jsonStr, err :=yaml.YAMLToJSON([]byte(str))
+	if err != nil {
+		return err
+	}
+	err = writeStringToFile(filepath+filenameStringJson, string(jsonStr))
 	if err != nil {
 		return err
 	}
