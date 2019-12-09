@@ -40,6 +40,7 @@ type SwaggerRouterWrapper interface {
 	Use(middleware ...gin.HandlerFunc)
 	GenerateFiles(filepath string) error
 	GenerateBasePath(pathUrl string) error
+	GenerateWithoutSwagger() error
 	generate() (string, error)
 	NewBasicSecurityDefinition(title string)
 	NewApiKeySecurityDefinition(title, name string, inHeader bool)
@@ -139,6 +140,11 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 			})
 		})
 	return nil
+}
+
+func (s *swaggerWrapper) GenerateWithoutSwagger() error {
+	_, err :=  s.generate()
+	return err
 }
 
 func (s *swaggerWrapper) generate() (string, error) {
