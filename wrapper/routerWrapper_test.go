@@ -190,7 +190,9 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 				},
 			},
 			func(c *gin.Context) {})
-		err := srw.Generate("")
+		err := srw.GenerateBasePath("api/doc")
+		assert.NoError(t, err)
+		err = srw.GenerateFiles("")
 		assert.NoError(t, err)
 	})
 }
