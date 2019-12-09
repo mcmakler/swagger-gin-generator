@@ -73,12 +73,12 @@ func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRou
 		security:    []swaggerFileGenerator.SecurityDefinitionSwagger{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
-		mainGroup:   newSwaggerGroupWrapper("", "", *r.Group("")),
+		mainGroup:   newSwaggerGroupWrapper("", "", r.Group("")),
 	}
 }
 
-func (s *swaggerWrapper) Use(middlware ...gin.HandlerFunc) {
-	s.mainGroup.Use(middlware...)
+func (s *swaggerWrapper) Use(middleware ...gin.HandlerFunc) {
+	s.mainGroup.Use(middleware...)
 }
 
 func (s *swaggerWrapper) Group(path, tag string) SwaggerGroupWrapper {

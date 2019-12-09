@@ -28,7 +28,7 @@ type swaggerPathWrapper struct {
 	requests    []swaggerFileGenerator.RequestSwagger
 	definitions []parameters.SwaggParameter
 
-	group gin.RouterGroup
+	group *gin.RouterGroup
 }
 
 type Response struct {
@@ -43,7 +43,7 @@ func NewResponse(description string, object interface{}) Response {
 	}
 }
 
-func newSwaggerPathWrapper(path, tag string, group gin.RouterGroup) SwaggerPathWrapper {
+func newSwaggerPathWrapper(path, tag string, group *gin.RouterGroup) SwaggerPathWrapper {
 	return &swaggerPathWrapper{
 		path:        path,
 		tag:         tag,
