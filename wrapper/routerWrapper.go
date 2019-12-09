@@ -116,7 +116,7 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 		return err
 	}
 	templateJson := template.Must(template.New("json").Parse(jsonStr))
-	s.mainGroup.GET(pathUrl[:strings.LastIndex(pathUrl, "/")] + filenameStringJson, nil, nil,
+	s.mainGroup.GET(pathUrl[:(strings.LastIndex(pathUrl, "/")+1)] + filenameStringJson, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
