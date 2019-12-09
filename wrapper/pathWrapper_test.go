@@ -21,10 +21,10 @@ func TestSwaggerPathWrapper_Generate(t *testing.T) {
 				&testPathObject{}),
 		}
 		boolRequests := map[int]Response{
-			200: NewRequest("description", true),
+			200: NewResponse("description", true),
 		}
 		emptyRequests := map[int]Response{
-			200: NewRequest("description", nil),
+			200: NewResponse("description", nil),
 		}
 		emptyFunc := func(c *gin.Context) {}
 		t.Run("Should: get path generate without errors", func(t *testing.T) {

@@ -36,7 +36,7 @@ type Response struct {
 	object      interface{}
 }
 
-func NewRequest(description string, object interface{}) Response {
+func NewResponse(description string, object interface{}) Response {
 	return Response{
 		description: description,
 		object:      object,

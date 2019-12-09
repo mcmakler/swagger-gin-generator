@@ -198,7 +198,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 func TestSwaggerRouterWrapper(t *testing.T) {
 	t.Run("Test of SwaggerRouterWrapper.GET, POST, ...", func(t *testing.T) {
 		emptyRequests := map[int]Response{
-			200: NewRequest("description", nil),
+			200: NewResponse("description", nil),
 		}
 		emptyFunc := func(c *gin.Context) {}
 		g := gin.Default()

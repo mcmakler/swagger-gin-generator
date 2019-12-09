@@ -6,7 +6,10 @@ import (
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"io"
+	"net/http"
 	"os"
 	"strings"
 )
@@ -27,14 +30,14 @@ const (
 	TypesJson = "json"
 	TypesBson = "bson"
 
-	filenameString = "swagger.yaml"
+	filenameString     = "swagger.yaml"
 	filenameStringJson = "swagger.json"
 )
 
 type SwaggerRouterWrapper interface {
 	Group(path, tag string) SwaggerGroupWrapper
 	Use(middleware ...gin.HandlerFunc)
-	Generate(filepath string) error
+	Generate(filepath string, generateBasePath bool) error
 	NewBasicSecurityDefinition(title string)
 	NewApiKeySecurityDefinition(title, name string, inHeader bool)
 	NewOauth2ImplicitSecurityDefinition(title, authorizationUrl string)
@@ -48,6 +51,7 @@ type SwaggerRouterWrapper interface {
 	OPTIONS(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 	PATCH(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
 	PUT(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc)
+	setBasePath()
 }
 
 type swaggerWrapper struct {
@@ -82,7 +86,7 @@ func (s *swaggerWrapper) Group(path, tag string) SwaggerGroupWrapper {
 	return s.mainGroup.Group(path, tag)
 }
 
-func (s *swaggerWrapper) Generate(filepath string) error {
+func (s *swaggerWrapper) Generate(filepath string, generateBasePath bool) error {
 	for _, path := range s.mainGroup.generate() {
 		s.paths = append(s.paths, path)
 	}
@@ -103,15 +107,54 @@ func (s *swaggerWrapper) Generate(filepath string) error {
 	if err != nil {
 		return err
 	}
-	jsonStr, err :=yaml.YAMLToJSON([]byte(str))
+	jsonBytes, err := yaml.YAMLToJSON([]byte(str))
+	jsonStr = string(jsonBytes)
 	if err != nil {
 		return err
 	}
-	err = writeStringToFile(filepath+filenameStringJson, string(jsonStr))
+	err = writeStringToFile(filepath+filenameStringJson, jsonStr)
 	if err != nil {
 		return err
+	}
+	if generateBasePath {
+		s.setBasePath()
 	}
 	return nil
+}
+
+func (s *swaggerWrapper) setBasePath() {
+	version := ""
+	host := ""
+	basePath := ""
+	title := ""
+	description := ""
+	schema := []string{}
+	if val, ok := s.configs["version"]; ok {
+		version = val.(string)
+	}
+	if val, ok := s.configs["host"]; ok {
+		host = val.(string)
+	}
+	if val, ok := s.configs["basePath"]; ok {
+		basePath = val.(string)
+	}
+	if val, ok := s.configs["title"]; ok {
+		title = val.(string)
+	}
+	if val, ok := s.configs["description"]; ok {
+		description = val.(string)
+	}
+	if val, ok := s.configs["schema"]; ok {
+		schema = val.([]string)
+	}
+	setSwaggerInfo(version, host, basePath, title, description, schema)
+	s.mainGroup.GET("/api/doc/*any",
+		NewRequestConfig("GGet swagger", "", "", nil, nil, nil, nil),
+		nil,
+		map[int]Response{
+			http.StatusOK: NewResponse("ok", nil),
+		},
+		ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
 
 func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
