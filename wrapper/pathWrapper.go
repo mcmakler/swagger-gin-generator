@@ -1,7 +1,6 @@
 package wrapper
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -61,9 +60,6 @@ func (s *swaggerPathWrapper) GET(
 	handlerFuncP ...gin.HandlerFunc,
 ) {
 	s.group.GET(s.path, handlerFuncP...)
-	fmt.Println(s.group.BasePath())
-	fmt.Println(s.group)
-	fmt.Println()
 	s.addRequest(config, inputParameters, requests, "get")
 }
 
