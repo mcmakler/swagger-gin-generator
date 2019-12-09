@@ -38,7 +38,7 @@ func (s *swaggerGroupWrapper) Use(middlware ...gin.HandlerFunc) {
 }
 
 func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
-	res := newSwaggerPathWrapper(s.path+path, s.tag, s.group)
+	res := newSwaggerPathWrapper(path, s.tag, s.group)
 	s.paths[path] = res
 	return res
 }
