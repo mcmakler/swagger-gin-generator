@@ -1,6 +1,7 @@
 package wrapper
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -44,6 +45,8 @@ func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
 
 func (s *swaggerGroupWrapper) Group(path, tag string) SwaggerGroupWrapper {
 	group := s.group.Group(path)
+	fmt.Println(s.group.BasePath())
+	fmt.Println(s.group.Handlers)
 	res := newSwaggerGroupWrapper(path, tag, group)
 	s.subgroups = append(s.subgroups, res)
 	return res
