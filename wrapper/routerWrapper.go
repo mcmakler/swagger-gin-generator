@@ -3,6 +3,7 @@ package wrapper
 import (
 	yaml "github.com/ghodss/yaml"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/render"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
@@ -116,22 +117,28 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 	if err != nil {
 		return err
 	}
-	template.Must(template.New("json").Parse(jsonStr))
+	t := template.Must(template.New("json").Parse(jsonStr))
 	s.mainGroup.GET(filenameStringJson, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
 		func(c *gin.Context) {
-			c.HTML(200, "json", nil)
+			c.Render(200, render.HTML{
+				Template: t,
+			})
 		})
-
-	template.Must(template.New("body").Parse(indexTemplate))
+	t = template.Must(template.New("body").Parse(indexTemplate))
 	s.mainGroup.GET(pathUrl, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
 		func(c *gin.Context) {
-			c.HTML(200, "body", nil)
+			c.Render(200, render.HTML{
+				Template: t,
+				Data: map[string]string{
+					"templateUrl": filenameStringJson,
+				},
+			})
 		})
 	return nil
 }
