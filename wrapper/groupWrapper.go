@@ -44,7 +44,7 @@ func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
 }
 
 func (s *swaggerGroupWrapper) Group(path, tag string) SwaggerGroupWrapper {
-	group := s.group.Group(s.path + path)
+	group := s.group.Group(path)
 	fmt.Println(s.path + " " + path)
 	fmt.Println(group)
 	res := newSwaggerGroupWrapper(s.path+path, tag, group)
