@@ -24,9 +24,9 @@ type pathSwagger struct {
 }
 
 func (p *pathSwagger) ToString() (string, error) {
-	if p.path == "" {
+	/*if p.path == "" {
 		return "", errorIncorrectPath
-	}
+	}*/
 	if p.requests == nil {
 		return "", errorNullRequests
 	}
