@@ -10,7 +10,7 @@ func TestNewSwaggerGroupWrapper(t *testing.T) {
 	t.Run("Test: newSwaggerGroupWrapper", func(t *testing.T) {
 		g := gin.Default()
 		group := g.Group("path")
-		sgw := newSwaggerGroupWrapper("path", "tag", group)
+		sgw := newSwaggerGroupWrapper("path", "tag", *group)
 		sgw.Use(func(c *gin.Context) {})
 		spw := sgw.Path("path")
 		spw.GET(
@@ -47,7 +47,7 @@ func TestSwaggerGroupWrapper(t *testing.T) {
 		emptyFunc := func(c *gin.Context) {}
 		g := gin.Default()
 		group := g.Group("path")
-		sgw := newSwaggerGroupWrapper("path", "tag", group)
+		sgw := newSwaggerGroupWrapper("path", "tag", *group)
 		sgw.GET(
 			"get",
 			NewRequestConfig("", "", "", nil, nil, nil, nil),
