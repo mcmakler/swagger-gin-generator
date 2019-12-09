@@ -73,7 +73,7 @@ func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRou
 		security:    []swaggerFileGenerator.SecurityDefinitionSwagger{},
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
-		mainGroup:   newSwaggerGroupWrapper("", "", r.Group("").Group("")),
+		mainGroup:   newSwaggerGroupWrapper("", "", r.Group("")),
 	}
 }
 
