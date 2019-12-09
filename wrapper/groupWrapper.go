@@ -1,7 +1,6 @@
 package wrapper
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -38,15 +37,13 @@ func (s *swaggerGroupWrapper) Use(middlware ...gin.HandlerFunc) {
 }
 
 func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
-	res := newSwaggerPathWrapper(s.path + path, s.tag, s.group)
+	res := newSwaggerPathWrapper(s.path + path, path, s.tag, s.group)
 	s.paths[path] = res
 	return res
 }
 
 func (s *swaggerGroupWrapper) Group(path, tag string) SwaggerGroupWrapper {
 	group := s.group.Group(path)
-	fmt.Println(s.group.BasePath())
-	fmt.Println(s.group.Handlers)
 	res := newSwaggerGroupWrapper(s.path+path, tag, group)
 	s.subgroups = append(s.subgroups, res)
 	return res
@@ -87,7 +84,6 @@ func (s *swaggerGroupWrapper) getDefinitions() []parameters.SwaggParameter {
 }
 
 func (s *swaggerGroupWrapper) GET(path string, config structures.Config, parameters []Parameter, requests map[int]Response, handlerFunc ...gin.HandlerFunc) {
-	s.group.GET(s.path+path, handlerFunc...)
 	if _, ok := s.paths[path]; !ok {
 		s.Path(path)
 	}

@@ -32,8 +32,9 @@ func TestSwaggerPathWrapper_Generate(t *testing.T) {
 			gr := g.Group("/")
 			spw := newSwaggerPathWrapper(
 				"path",
+				"path",
 				"tag",
-				*gr)
+				gr)
 			spw.GET(requestConfig, parameters, boolRequests, emptyFunc)
 			a := spw.generate()
 			_, err := a.ToString()
@@ -45,8 +46,9 @@ func TestSwaggerPathWrapper_Generate(t *testing.T) {
 			gr := g.Group("/")
 			spw := newSwaggerPathWrapper(
 				"path",
+				"path",
 				"tag",
-				*gr)
+				gr)
 			spw.POST(requestConfig, parameters, boolRequests, emptyFunc)
 			a := spw.generate()
 			_, err := a.ToString()
@@ -58,8 +60,9 @@ func TestSwaggerPathWrapper_Generate(t *testing.T) {
 			gr := g.Group("/")
 			spw := newSwaggerPathWrapper(
 				"path",
+				"path",
 				"tag",
-				*gr)
+				gr)
 			spw.DELETE(requestConfig, parameters, emptyRequests, emptyFunc)
 			spw.HEAD(requestConfig, parameters, emptyRequests, emptyFunc)
 			spw.OPTIONS(requestConfig, parameters, emptyRequests, emptyFunc)

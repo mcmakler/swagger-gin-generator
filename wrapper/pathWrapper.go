@@ -1,7 +1,6 @@
 package wrapper
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/structures"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
@@ -24,10 +23,11 @@ type SwaggerPathWrapper interface {
 }
 
 type swaggerPathWrapper struct {
-	path        string
-	tag         string
-	requests    []swaggerFileGenerator.RequestSwagger
-	definitions []parameters.SwaggParameter
+	path           string
+	ginRequestPath string
+	tag            string
+	requests       []swaggerFileGenerator.RequestSwagger
+	definitions    []parameters.SwaggParameter
 
 	group *gin.RouterGroup
 }
@@ -44,13 +44,14 @@ func NewResponse(description string, object interface{}) Response {
 	}
 }
 
-func newSwaggerPathWrapper(path, tag string, group *gin.RouterGroup) SwaggerPathWrapper {
+func newSwaggerPathWrapper(path, ginRequestPath, tag string, group *gin.RouterGroup) SwaggerPathWrapper {
 	return &swaggerPathWrapper{
-		path:        path,
-		tag:         tag,
-		requests:    []swaggerFileGenerator.RequestSwagger{},
-		definitions: []parameters.SwaggParameter{},
-		group:       group,
+		path:           path,
+		ginRequestPath: ginRequestPath,
+		tag:            tag,
+		requests:       []swaggerFileGenerator.RequestSwagger{},
+		definitions:    []parameters.SwaggParameter{},
+		group:          group,
 	}
 }
 
@@ -60,9 +61,7 @@ func (s *swaggerPathWrapper) GET(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	//s.group.GET(s.path, handlerFuncP...)
-	fmt.Println("GET:" + s.group.BasePath() + s.path)
-	fmt.Println(s.group)
+	s.group.GET(s.path, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "get")
 }
 
@@ -72,9 +71,7 @@ func (s *swaggerPathWrapper) POST(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.POST(s.path, handlerFuncP...)
-	fmt.Println("Post:" + s.group.BasePath() + s.path)
-	fmt.Println(s.group)
+	s.group.POST(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "post")
 }
 
@@ -84,7 +81,7 @@ func (s *swaggerPathWrapper) DELETE(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.DELETE(s.path, handlerFuncP...)
+	s.group.DELETE(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "delete")
 }
 
@@ -94,7 +91,7 @@ func (s *swaggerPathWrapper) HEAD(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.HEAD(s.path, handlerFuncP...)
+	s.group.HEAD(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "head")
 }
 
@@ -104,7 +101,7 @@ func (s *swaggerPathWrapper) OPTIONS(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.OPTIONS(s.path, handlerFuncP...)
+	s.group.OPTIONS(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "options")
 }
 
@@ -114,7 +111,7 @@ func (s *swaggerPathWrapper) PATCH(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.PATCH(s.path, handlerFuncP...)
+	s.group.PATCH(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "patch")
 }
 
@@ -124,7 +121,7 @@ func (s *swaggerPathWrapper) PUT(
 	requests map[int]Response,
 	handlerFuncP ...gin.HandlerFunc,
 ) {
-	s.group.PUT(s.path, handlerFuncP...)
+	s.group.PUT(s.ginRequestPath, handlerFuncP...)
 	s.addRequest(config, inputParameters, requests, "put")
 }
 
