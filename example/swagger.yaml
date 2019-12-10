@@ -52,12 +52,12 @@ paths:
           schema:
             $ref: '#/definitions/MyType'
       responses:
-        '500':
-          description: failure
         '200':
           description: ok
           schema:
             $ref: '#/definitions/MyType'
+        '500':
+          description: failure
   /url/pathUrl:
     delete:
       tags: 

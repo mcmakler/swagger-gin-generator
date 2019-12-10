@@ -257,11 +257,7 @@ err := wr.GenerateBasePath("/swaggerPath")
 Method set gin handler for path "/swaggerPath, where swagger will be represented.
 Also use path "/swaggerPath/swagger.json", where json code is shown.
 
-``` go
-err := wr.GenerateWithoutSwagger()
-```
-
-This method generates no swagger and can be used in production.
+These methods can be omitted in production.
 
 # Author
 - [Nikita Kharitonov](https://github.com/DreamAndDrum)
