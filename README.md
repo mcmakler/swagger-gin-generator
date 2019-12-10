@@ -2,7 +2,7 @@
 
 # About
 
-Swagger-gin-generation is a library developed to make generation of swagger description file more easier. 
+Swagger-gin-generation is a library developed to make generation of swagger description file easier. 
 
 It represents wrapper for gin router which allows to define swagger configuration during router initialization.
 
