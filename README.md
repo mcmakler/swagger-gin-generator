@@ -1,14 +1,14 @@
 # swagger-gin-generator
 
-#About
+# About
 
 Swagger-gin-generation is a library developed to make generation of swagger description file more easy. 
 
 It represents wrapper for gin router which allows to define swagger configuration during router initialization.
 
-#Usage
+# Usage
 
-##Download
+## Download
 
 To get library use
 
@@ -16,7 +16,7 @@ To get library use
 go get github.com/mcmakler/swagger-gin-generator
 ```
 
-##Initialize wrapper
+## Initialize wrapper
 
 For wrapper using you need to initialize gin router and use it:
 
@@ -77,7 +77,7 @@ Other parameters are token URL or/and authorization URL and depends on Oauth2 au
 
 The other functionality of wr is the same, as group.
 
-##Make group
+## Make group
 
 Group is analog of gin.group, but it has more parameters on initialization and response description.
 
@@ -100,7 +100,7 @@ wrGroupSubgroup := wrGroup.Group("/subgroupurl", "subgroupTag")
 As in gin router, you can add GET, POST, DELETE, HEAD, OPTIONS, PATCH and PUT request.
 These functions has more parameters than in gin. Here is the GET request example.
 
-##GET-example
+## GET-example
 
 First of all, the code:
 
@@ -138,7 +138,7 @@ The responseMap is map of code-wrapper.Response.
 
 
 
-##  wrapper.Parameter
+## wrapper.Parameter
 
 wrapper.Parameter is the representation of response parameter. 
 It has two fields: swagger config and an exemplar of an object, which is parameter representation.
@@ -195,7 +195,7 @@ param := wrapper.NewParameter(
          )
 ```
 
-##Response
+## Response
 
 wrapper.Response is a structure, which is represented by response description and expected response object.
 It generates with wrapper.NewResponse:
@@ -215,7 +215,7 @@ responsesMap := map[int]wrapper.Response{
 }
 ```
 
-##Path
+## Path
 
 Path can be used as group child, when there are some types of requests are send to one url:
 ``` go
@@ -236,7 +236,7 @@ path.POST(
 
 The difference with group is that you don't write a response url.
 
-##Generation
+## Generation
 
 There are three methods for generation.
 
@@ -259,5 +259,5 @@ wr.GenerateWithoutSwagger()
 
 This method generates no swagger and can be used on production.
 
-#Author
+# Author
 - [Nikita Kharitonov](https://github.com/DreamAndDrum)
