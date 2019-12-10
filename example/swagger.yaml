@@ -1,0 +1,95 @@
+swagger: '2.0'
+info:
+  title: Example
+  version: '1.0'
+securityDefinitions:
+  BasicSecurityTitle:
+    type: basic
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+  O2ImpTitle:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: http://authorization.com
+  O2PasTitle:
+    type: oauth2
+    flow: password
+    tokenUrl: http://token.com
+  O2DefTitle:
+    type: oauth2
+    flow: application
+    tokenUrl: http://token.com
+  O2IAccTitle:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: http://authorization.com
+    tokenUrl: http://token.com
+basePath: /
+paths:
+  /url/getpath:
+    get:
+      security:
+      - BasicSecurityTitle: []
+      - Bearer: []
+      description: description
+      consumes:
+      - json
+      produces: 
+      - bson
+      tags: 
+        - getRequestTag
+        - tag
+      operationId: operationId
+      summary: summary
+      parameters:
+        - in: header
+          name: myParam
+          type: string
+        - in: body
+          name: name
+          schema:
+            $ref: '#/definitions/MyType'
+      responses:
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/MyType'
+        '500':
+          description: failure
+  /url/pathUrl:
+    delete:
+      tags: 
+        - tag
+      responses:
+        '200':
+          description: Ok
+    head:
+      tags: 
+        - tag
+      responses:
+        '200':
+          description: Ok
+  /url/subgroupurl/postpath:
+    post:
+      tags: 
+        - subgroupTag
+      responses:
+        '500':
+          description: failure
+        '200':
+          description: ok
+          schema:
+            $ref: '#/definitions/MyType'
+definitions:
+  MyType:
+    type: object
+    properties:
+      StringParam:
+        type: string
+      MySubTypeParam:
+        type: object
+        properties:
+          IntParam:
+            type: integer
