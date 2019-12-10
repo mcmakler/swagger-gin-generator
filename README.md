@@ -2,7 +2,7 @@
 
 # About
 
-Swagger-gin-generation is a library developed to make generation of swagger description file more easy. 
+Swagger-gin-generation is a library developed to make generation of swagger description file more easier. 
 
 It represents wrapper for gin router which allows to define swagger configuration during router initialization.
 
@@ -195,7 +195,7 @@ param := wrapper.NewParameter(
          )
 ```
 
-## Response
+## wrapper.Response
 
 wrapper.Response is a structure, which is represented by response description and expected response object.
 It generates with wrapper.NewResponse:
@@ -217,7 +217,7 @@ responsesMap := map[int]wrapper.Response{
 
 ## Path
 
-Path can be used as group child, when there are some types of requests are send to one url:
+Path can be used as group child, when some types of requests are sent to one url:
 ``` go
 path := wrGroup.Path("/pathUrl")
 wrGroup.GET(
