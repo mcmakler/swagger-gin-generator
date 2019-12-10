@@ -126,7 +126,7 @@ func (s *swaggerPathWrapper) PUT(
 }
 
 func (s *swaggerPathWrapper) generate() swaggerFileGenerator.PathSwagger {
-	res := swaggerFileGenerator.NewPathSwagger(s.swaggerPath, s.requests)
+	res := swaggerFileGenerator.NewPathSwagger(s.ginPath, s.requests)
 	return res
 }
 
