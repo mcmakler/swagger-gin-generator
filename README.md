@@ -6,11 +6,15 @@ Swagger-gin-generation is a library developed to make generation of swagger desc
 
 It represents wrapper for gin router which allows to define swagger configuration during router initialization.
 
+# Example
+
+Here is [example](https://github.com/mcmakler/swagger-gin-generator/tree/master/example) of library using.
+
 # Usage
 
 ## Download
 
-To get library use
+In order to get library use
 
 ``` shell script
 go get github.com/mcmakler/swagger-gin-generator
@@ -18,7 +22,7 @@ go get github.com/mcmakler/swagger-gin-generator
 
 ## Initialize wrapper
 
-For wrapper using you need to initialize gin router and use it:
+For wrapper use you need to initialize gin router and use it:
 
 ``` go
 import "github.com/mcmakler/swagger-gin-generator/wrapper"
@@ -32,7 +36,7 @@ wr := wrapper.NewSwaggerRouterWrapper(
     router)
 ```
 
-Here function wrapper.NewMainConfig set basic swagger parameters:
+Here is function wrapper.NewMainConfig set basic swagger parameters:
 
 ``` go
 wrapper.NewMainConfig(
@@ -42,46 +46,46 @@ wrapper.NewMainConfig(
     )
 ```
 
-The next step is setup authorization.
+The next step is the setup authorization.
 
 ## Setup authorization
 
 There are 6 types of authorization, which can be used together. 
-First parameter in each method is swagger title, which need to be unique. 
-Other params depends on security type.
+The first parameter in each method is a swagger title, which needs to be unique. 
+Other parameters depends on security type.
 
 ``` go
 wr.NewBasicSecurityDefinition("BasicSecurityTitle")
 ```
 
-This method setup basic security with swagger title from parameter.
+This method setups basic security with the swagger title from parameter.
 
 ``` go
 wr.NewApiKeySecurityDefinition(wrapper.SecurityBearer, wrapper.SecurityName, true)
 ```
 
-Method setups new ApiKey authorization with swagger title wrapper.SecurityBearer and request parameter name wrapper.SecurityName.
+The method setups new ApiKey authorization with a swagger title wrapper.SecurityBearer and request parameter name wrapper.SecurityName.
 If the third parameter is true, it will be in header, otherwise - in query.
 
 ``` go
-authorizationUrl = "http://authorization.com"
-tokenUrl = "http://token.com"
-wr.NewOauth2ImplicitSecurityDefinition("O2ImpTitile", authorizationUrl)
-wr.NewOauth2PasswordSecurityDefinition("O2PasTitile", tokenUrl)
-wr.NewOauth2ApplicationSecurityDefinition("O2DefTitile", tokenUrl)
-wr.NewOauth2AccessCodeSecurityDefinition("O2IAccTitile", authorizationUrl, tokenUrl)
+authorizationUrl := "http://authorization.com"
+tokenUrl := "http://token.com"
+wr.NewOauth2ImplicitSecurityDefinition("O2ImpTitle", authorizationUrl)
+wr.NewOauth2PasswordSecurityDefinition("O2PasTitle", tokenUrl)
+wr.NewOauth2ApplicationSecurityDefinition("O2DefTitle", tokenUrl)
+wr.NewOauth2AccessCodeSecurityDefinition("O2IAccTitle", authorizationUrl, tokenUrl)
 ```
 
-These four methods represents  the Oath2 security definition. First parameter is swagger title. 
-Other parameters are token URL or/and authorization URL and depends on Oauth2 authentication type.
+These four methods represent the Oath2 security definition. The first parameter is swagger title. 
+Other parameters are token URL or/and authorization URL and depend on Oauth2 authentication type.
 
-The other functionality of wr is the same, as group.
+The other functionality of wr is the same, as for group.
 
 ## Make group
 
-Group is analog of gin.group, but it has more parameters on initialization and response description.
+A group is an analog of gin.group, but has more parameters on initialization and response description.
 
-Group creates in next way:
+The group creates in next way:
 
 ``` go
 wrGroup := wr.Group("/url", "tag")
@@ -90,7 +94,7 @@ wrGroup := wr.Group("/url", "tag")
 "/url" is the string with URL for gin. 
 "tag" is the swagger tag, which will be used for each response and subgroup of given group, can be empty
 
-You can use middlewares in group and create subgroups:
+You can use middlewares in a group and create subgroups:
 
 ``` go
 wrGroup.Use(someMiddleware, oneMoreMiddleware)
@@ -98,7 +102,7 @@ wrGroupSubgroup := wrGroup.Group("/subgroupurl", "subgroupTag")
 ```
 
 As in gin router, you can add GET, POST, DELETE, HEAD, OPTIONS, PATCH and PUT request.
-These functions has more parameters than in gin. Here is the GET request example.
+These functions have more parameters than in gin. Here is the GET request example.
 
 ## GET-example
 
@@ -107,64 +111,64 @@ First of all, the code:
 ``` go
 wrGroup.GET(
     "/getpath",
-    NewRequestConfig(
+    wrapper.NewRequestConfig(
         "description",                  //description
         "operationId",                  //operationId
         "summary",                      //summary
         []string[                       //Array of security titles
             "BasicSecurityTitle",
-            wrapper.SecurityBearer
+            wrapper.SecurityBearer,
         ], 
         []string{wrapper.TypesJson},    //Accept
         []string{wrapper.TypesBson},    //Produce
-        []string{"getRequestTag"}       //Swagger tag
+        []string{"getRequestTag"},      //Swagger tag
     ),
     parameterArray,
     responseMap,
-    handlerFunction, oneMoreHandlerFunction
+    handlerFunction, oneMoreHandlerFunction,
     )
 ```
 
 The first parameter is GET path, the last parameters - gin handlers.
 
-NewRequestConfig is function for setting swagger request configuration.
-description, operationId and summary are strings, operationId need to be unique.
-Array of security titles is string array which contains swagger titles for security definitions which are used in this request.
+NewRequestConfig is a function for setting swagger request configuration.
+Description, operationId and summary are strings, operationId needs to be unique.
+An array of security titles is a string array which contains swagger titles for security definitions which are used in this request.
 All the parameters can be empty strings or nil.
 
-The parameterArray is arrays of wrapper.Parameter. Can be nil.
+The parameterArray is an array of wrapper.Parameter. Can be nil.
 
-The responseMap is map of code-wrapper.Response.
+The responseMap is a map of code-wrapper.Response.
 
 
 
 ## wrapper.Parameter
 
 wrapper.Parameter is the representation of response parameter. 
-It has two fields: swagger config and an exemplar of an object, which is parameter representation.
-To create parameter call the function NewParameter:
+It has two fields: swagger config and an exemplar of an object, which is a parameter representation.
+To create a parameter call the function NewParameter:
 
 ``` go
 param := wrapper.NewParameter(
-    NewStringParameterConfig(...),
-    ""
-)
+        wrapper.NewRequiredParameterConfig(wrapper.InHeader, "myParam"),
+        "",
+    )
 ```
 
-The fist parameter of this function is swagger configuration generator and the second is exemplar of an object.
+The first parameter of this function is a swagger configuration generator and the second is exemplar of an object.
 
 There are 6 functions for configuration generating:
 
 ``` go
-NewRequiredParameterConfig(in, name)
-NewBasicParameterConfig(in, name, description, required)
-NewArrayParameterConfig(in, name, description, required, minItems, maxItems, uniqueItems)
-NewIntegerParameterConfig(in, name, description, required, defaultValue, min, max, multipleOf, exclusiveMin, exclusiveMax)
-NewNumberParameterConfig(in, name, description, required, defaultValue, min, max, multipleOf, exclusiveMin, exclusiveMax)
-NewStringParameterConfig(in, name, description, required, minLength, maxLength, pattern, enum)
+wrapper.NewRequiredParameterConfig(in, name)
+wrapper.NewBasicParameterConfig(in, name, description, required)
+wrapper.NewArrayParameterConfig(in, name, description, required, minItems, maxItems, uniqueItems)
+wrapper.NewIntegerParameterConfig(in, name, description, required, defaultValue, min, max, multipleOf, exclusiveMin, exclusiveMax)
+wrapper.NewNumberParameterConfig(in, name, description, required, defaultValue, min, max, multipleOf, exclusiveMin, exclusiveMax)
+wrapper.NewStringParameterConfig(in, name, description, required, minLength, maxLength, pattern, enum)
 ```
 
-NewRequiredParameterConfig has two basic parameters which are necessary: in and name.
+NewRequiredParameterConfig has two necessary basic parameters: in and name.
 NewBasicParameterConfig has two additional parameters: description and required.
 
 Other four function are used for Array, Integer, Number and String parameter definition in
@@ -186,12 +190,12 @@ type MyType struct {
 
 ....
 
-param := wrapper.NewParameter(
-             NewRequiredParameterConfig("body","name"),
+myParam := wrapper.NewParameter(
+             wrapper.NewRequiredParameterConfig(wrapper.InBod,"name"),
              &MyType{
                 StringParam:    "string",
                 MySubTypeParam: MySubType{IntParam: 10},
-            }
+            },
          )
 ```
 
@@ -209,8 +213,8 @@ The second parameter can be nil, in that case response will have only descriptio
 In request responses are represented by map where key is http.status:
 
 ``` go
-responsesMap := map[int]wrapper.Response{
-    http.StatusOk:                  wrapper.NewResponse("ok", &MyType),
+responseMap := map[int]wrapper.Response{
+    http.StatusOK:                  wrapper.NewResponse("ok", &MyType{}),
     http.StatusInternalServerError: wrapper.NewResponse("failure", nil),
 }
 ```
@@ -220,17 +224,17 @@ responsesMap := map[int]wrapper.Response{
 Path can be used as group child, when some types of requests are sent to one url:
 ``` go
 path := wrGroup.Path("/pathUrl")
-wrGroup.GET(
+path.DELETE(
     NewRequestConfig(...),
-    parameterArrayGet,
-    responseMapGet,
-    handlersGet...
+    parameterArrayDelete,
+    responseMapDelete,
+    handlersDelete...
     )
-path.POST(
+path.HEAD(
     NewRequestConfig(...),
-    parameterArrayPost,
-    responseMapPost,
-    handlersPost...
+    parameterArrayHead,
+    responseMapHead,
+    handlersHead...
     )
 ``` 
 
@@ -241,23 +245,23 @@ The difference with group is that you don't write a response url.
 There are three methods for generation.
 
 ``` go
-wr.GenerateFiles(pathToFiles)
+err := wr.GenerateFiles(pathToFiles)
 ```
 
 This method generates swagger.yaml and swagger.json files in the folder pathToFiles.
 
 ``` go
-wr.GenerateBasePath("/swaggerPath")
+err := wr.GenerateBasePath("/swaggerPath")
 ```
 
 Method set gin handler for path "/swaggerPath, where swagger will be represented.
 Also use path "/swaggerPath/swagger.json", where json code is shown.
 
 ``` go
-wr.GenerateWithoutSwagger()
+err := wr.GenerateWithoutSwagger()
 ```
 
-This method generates no swagger and can be used on production.
+This method generates no swagger and can be used in production.
 
 # Author
 - [Nikita Kharitonov](https://github.com/DreamAndDrum)
