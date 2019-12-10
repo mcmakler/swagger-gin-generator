@@ -46,15 +46,14 @@ func ginPathToSwaggerPath(path string) string {
 	fmt.Println(path)
 	split := strings.Split(path, "/")
 	path = ""
-	for _, val := range split {
+	for _, val := range split[1:] {
 		fmt.Println(val)
-		path += ""
-		if len(path) > 1 {
-			if string(val[1]) == ":" {
-				val = "{" + val[2:] + "}"
+		if len(val) > 1 {
+			if string(val[0]) == ":" {
+				val = "{" + val[1:] + "}"
 			}
 		}
-		path += val
+		path += "/" + val
 	}
 	return path
 }

@@ -16,7 +16,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 		})
 
 		t.Run("Should: return error "+errorNullRequests.Error(), func(t *testing.T) {
-			a := NewPathSwagger("path", nil)
+			a := NewPathSwagger("/path", nil)
 			_, actual := a.ToString()
 			expected := errorNullRequests
 			assert.Equal(t, expected, actual)
@@ -26,7 +26,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 			requests := []RequestSwagger{
 				NewRequestSwagger(nil, nil, nil),
 			}
-			a := NewPathSwagger("path", requests)
+			a := NewPathSwagger("/path", requests)
 			_, actual := a.ToString()
 			expected := errorEmptyTypeRequest
 			assert.Equal(t, expected, actual)
@@ -40,12 +40,12 @@ func TestPathSwagger_ToString(t *testing.T) {
 			requests := []RequestSwagger{
 				NewRequestSwagger(swaggerParameters, nil, []ResponseSwagger{responseSwagger}),
 			}
-			a := NewPathSwagger("path", requests)
+			a := NewPathSwagger("/path/:status/", requests)
 			actual, err := a.ToString()
 			assert.NoError(t, err)
 
 			str, _ := requests[0].ToString()
-			expected := "\npath:" + strings.Replace(str, "\n", requestsIndentString, -1)
+			expected := "\n/path/{status}/:" + strings.Replace(str, "\n", requestsIndentString, -1)
 			assert.Equal(t, expected, actual)
 		})
 	})
