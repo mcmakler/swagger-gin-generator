@@ -6,6 +6,7 @@ import (
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator"
 	"github.com/mcmakler/swagger-gin-generator/swaggerFileGenerator/parameters"
 	"reflect"
+	"strings"
 )
 
 type SwaggerPathWrapper interface {
@@ -23,7 +24,8 @@ type SwaggerPathWrapper interface {
 }
 
 type swaggerPathWrapper struct {
-	path           string
+	ginPath        string
+	swaggerPath    string
 	ginRequestPath string
 	tag            string
 	requests       []swaggerFileGenerator.RequestSwagger
@@ -46,7 +48,8 @@ func NewResponse(description string, object interface{}) Response {
 
 func newSwaggerPathWrapper(path, ginRequestPath, tag string, group *gin.RouterGroup) SwaggerPathWrapper {
 	return &swaggerPathWrapper{
-		path:           path,
+		ginPath:        path,
+		swaggerPath:    ginPathToSwaggerPath(path),
 		ginRequestPath: ginRequestPath,
 		tag:            tag,
 		requests:       []swaggerFileGenerator.RequestSwagger{},
@@ -126,7 +129,7 @@ func (s *swaggerPathWrapper) PUT(
 }
 
 func (s *swaggerPathWrapper) generate() swaggerFileGenerator.PathSwagger {
-	res := swaggerFileGenerator.NewPathSwagger(s.path, s.requests)
+	res := swaggerFileGenerator.NewPathSwagger(s.swaggerPath, s.requests)
 	return res
 }
 
@@ -174,7 +177,6 @@ func (s *swaggerPathWrapper) addRequest(
 
 func (s *swaggerPathWrapper) readRequests(requests map[int]Response) []swaggerFileGenerator.ResponseSwagger {
 	var responses []swaggerFileGenerator.ResponseSwagger
-	//TODO: CHECK USUAL PARAMETER (STRING, BOOL, ...)
 
 	for key, val := range requests {
 		if val.object != nil {
@@ -195,4 +197,17 @@ func (s *swaggerPathWrapper) readRequests(requests map[int]Response) []swaggerFi
 	}
 
 	return responses
+}
+
+func ginPathToSwaggerPath(path string) string {
+	split := strings.Split(path, "/")
+	path = ""
+	for _, val := range split {
+		path += ""
+		if []rune(val)[1] == []rune(":")[1] {
+			val = "{" + val[2:] + "}"
+		}
+		path += val
+	}
+	return path
 }

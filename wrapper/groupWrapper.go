@@ -23,7 +23,7 @@ type SwaggerGroupWrapper interface {
 }
 
 type swaggerGroupWrapper struct {
-	path        string
+	ginPath     string
 	tag         string
 	paths       map[string]SwaggerPathWrapper
 	definitions []parameters.SwaggParameter
@@ -37,21 +37,21 @@ func (s *swaggerGroupWrapper) Use(middlware ...gin.HandlerFunc) {
 }
 
 func (s *swaggerGroupWrapper) Path(path string) SwaggerPathWrapper {
-	res := newSwaggerPathWrapper(s.path + path, path, s.tag, s.group)
+	res := newSwaggerPathWrapper(s.ginPath+path, path, s.tag, s.group)
 	s.paths[path] = res
 	return res
 }
 
 func (s *swaggerGroupWrapper) Group(path, tag string) SwaggerGroupWrapper {
 	group := s.group.Group(path)
-	res := newSwaggerGroupWrapper(s.path+path, tag, group)
+	res := newSwaggerGroupWrapper(s.ginPath+path, tag, group)
 	s.subgroups = append(s.subgroups, res)
 	return res
 }
 
 func newSwaggerGroupWrapper(path, tag string, group *gin.RouterGroup) SwaggerGroupWrapper {
 	return &swaggerGroupWrapper{
-		path:        path,
+		ginPath:     path,
 		tag:         tag,
 		paths:       make(map[string]SwaggerPathWrapper),
 		definitions: []parameters.SwaggParameter{},

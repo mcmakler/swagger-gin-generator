@@ -13,10 +13,6 @@ import (
 	"strings"
 )
 
-//TODO: consts for all parameters
-
-//TODO: params in comments
-
 const (
 	InBody     = "body"
 	InPath     = "path"
@@ -25,6 +21,7 @@ const (
 	InFromData = "fromData"
 
 	SecurityBearer = "Bearer"
+	SecurityName   = "Authorization"
 
 	TypesJson = "json"
 	TypesBson = "bson"
@@ -117,7 +114,7 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 		return err
 	}
 	templateJson := template.Must(template.New("json").Parse(jsonStr))
-	s.mainGroup.GET(pathUrl[:(strings.LastIndex(pathUrl, "/")+1)] + filenameStringJson, nil, nil,
+	s.mainGroup.GET(pathUrl[:(strings.LastIndex(pathUrl, "/")+1)]+filenameStringJson, nil, nil,
 		map[int]Response{
 			200: NewResponse("ok", nil),
 		},
@@ -143,7 +140,7 @@ func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
 }
 
 func (s *swaggerWrapper) GenerateWithoutSwagger() error {
-	_, err :=  s.generate()
+	_, err := s.generate()
 	return err
 }
 
@@ -167,7 +164,6 @@ func sliceUniqMap(s []parameters.SwaggParameter) []parameters.SwaggParameter {
 	keys := make(map[string]bool)
 	var list []parameters.SwaggParameter
 	for _, entry := range s {
-		//TODO: Maybe some better solution
 		str, _ := entry.ToString()
 		str = strings.Split(str, ":")[0]
 		if _, value := keys[str]; !value {

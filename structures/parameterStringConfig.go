@@ -2,10 +2,10 @@ package structures
 
 type stringParameterConfig struct {
 	basicParameterConfig
-	Format    string //TODO: enum
+	Format    string
 	MinLength int
 	MaxLength int
-	Pattern   string //TODO: enum
+	Pattern   string
 	Enum      []string
 }
 

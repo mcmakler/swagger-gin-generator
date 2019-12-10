@@ -1,7 +1,7 @@
 package structures
 
 type requiredParameterConfig struct {
-	In   string `binding:"required"` //TODO: enum
+	In   string `binding:"required"`
 	Name string `binding:"required"`
 }
 

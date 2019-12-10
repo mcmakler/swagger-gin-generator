@@ -29,7 +29,7 @@ type responseSwagger struct {
 }
 
 func (r *responseSwagger) ToString() (string, error) {
-	if r.code < 0 { //TODO: check correct code
+	if r.code < 0 {
 		return "", errorWrongCode
 	}
 	res := "\n'" + strconv.FormatInt(int64(r.code), 10) + "':"
