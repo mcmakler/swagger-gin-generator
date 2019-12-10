@@ -2,7 +2,6 @@ package swaggerFileGenerator
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -43,11 +42,9 @@ func (p *pathSwagger) ToString() (string, error) {
 }
 
 func ginPathToSwaggerPath(path string) string {
-	fmt.Println(path)
 	split := strings.Split(path, "/")
 	path = ""
 	for _, val := range split[1:] {
-		fmt.Println(val)
 		if len(val) > 1 {
 			if string(val[0]) == ":" {
 				val = "{" + val[1:] + "}"
