@@ -1,6 +1,7 @@
-package example
+package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/mcmakler/swagger-gin-generator/wrapper"
 	"net/http"
@@ -18,6 +19,15 @@ func someMiddleware(c *gin.Context)    {}
 func oneMoreMiddleware(c *gin.Context) {}
 func handlerFunction(c *gin.Context)    {}
 func oneMoreHandlerFunction(c *gin.Context) {}
+
+func main() {
+	err := RunExample()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println("Files generated")
+}
 
 func RunExample() error {
 	router := gin.New()
