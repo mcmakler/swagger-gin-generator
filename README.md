@@ -32,7 +32,9 @@ wr := wrapper.NewSwaggerRouterWrapper(
     wrapper.NewMainConfig(
         "1.0",
         "Example",
-        "Usage example"),
+        "Usage example"
+        "example.com",
+        "/basePath"),
     router)
 ```
 
@@ -42,7 +44,9 @@ Here is function wrapper.NewMainConfig set basic swagger parameters:
 wrapper.NewMainConfig(
     "1.0",            //Version of project
     "Example",        //Name of project
-    "Usage example"   //Description
+    "Usage example"   //Description,
+    "example.com",    //host
+    "/basePath"       //basePath
     )
 ```
 
