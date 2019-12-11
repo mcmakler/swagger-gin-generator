@@ -30,8 +30,8 @@ func NewRequiredMainConfig(version, title string) structures.Config {
 	return structures.NewRequiredMainConfig(version, title)
 }
 
-func NewMainConfig(version, title, description string) structures.Config {
-	return structures.NewMainConfig(version, title, description)
+func NewMainConfig(version, title, description, basePath string) structures.Config {
+	return structures.NewMainConfig(version, title, description, basePath)
 }
 
 func NewRequestConfig(description, operationId, summary string, security, consumes, produces, tags []string) structures.Config {

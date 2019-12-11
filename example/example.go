@@ -35,7 +35,8 @@ func RunExample() error {
 		wrapper.NewMainConfig(
 			"1.0",
 			"Example",
-			"Usage example"),
+			"Usage example",
+			"/basePath"),
 		router)
 
 	//Shall use all the types of authorization
