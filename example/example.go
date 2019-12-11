@@ -11,13 +11,13 @@ type MySubType struct {
 	IntParam int
 }
 type MyType struct {
-	StringParam    string
+	StringParam    string `binding:"required"`
 	MySubTypeParam MySubType
 }
 
-func someMiddleware(c *gin.Context)    {}
-func oneMoreMiddleware(c *gin.Context) {}
-func handlerFunction(c *gin.Context)    {}
+func someMiddleware(c *gin.Context)         {}
+func oneMoreMiddleware(c *gin.Context)      {}
+func handlerFunction(c *gin.Context)        {}
 func oneMoreHandlerFunction(c *gin.Context) {}
 
 func main() {
@@ -72,7 +72,7 @@ func RunExample() error {
 		"",
 	)
 	myParam := wrapper.NewParameter(
-		wrapper.NewRequiredParameterConfig(wrapper.InBody,"name"),
+		wrapper.NewRequiredParameterConfig(wrapper.InBody, "name"),
 		&MyType{
 			StringParam:    "string",
 			MySubTypeParam: MySubType{IntParam: 10},
@@ -90,16 +90,16 @@ func RunExample() error {
 	wrGroup.GET(
 		"/getpath",
 		wrapper.NewRequestConfig(
-			"description", 			//description
-			"operationId", 			//operationId
-			"summary",     			//summary
-			[]string{ 							//Array of security titles
+			"description", //description
+			"operationId", //operationId
+			"summary",     //summary
+			[]string{ //Array of security titles
 				"BasicSecurityTitle",
 				wrapper.SecurityBearer,
 			},
-			[]string{wrapper.TypesJson}, 		//Accept
-			[]string{wrapper.TypesBson}, 		//Produce
-			[]string{"getRequestTag"},   		//Swagger tag
+			[]string{wrapper.TypesJson}, //Accept
+			[]string{wrapper.TypesBson}, //Produce
+			[]string{"getRequestTag"},   //Swagger tag
 		),
 		parameterArray,
 		responseMap,
