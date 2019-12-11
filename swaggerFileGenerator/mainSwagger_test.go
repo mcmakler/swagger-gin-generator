@@ -120,8 +120,8 @@ func TestMainSwagger_ToString(t *testing.T) {
 				infoTitleString + "title" +
 				infoVersionString + "version'" +
 				basePathString + "/" +
-				securityDefinitionString + strings.Replace(strSecurity, "\n", mainIndentString, -1) +
-				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1)
+				securityDefinitionString + strings.ReplaceAll(strSecurity, "\n", mainIndentString) +
+				pathsString + strings.ReplaceAll(strPath, "\n", mainIndentString)
 			assert.Equal(t, expected, actual)
 		})
 
@@ -143,7 +143,7 @@ func TestMainSwagger_ToString(t *testing.T) {
 				infoTitleString + "title" +
 				infoVersionString + "version'" +
 				basePathString + "/" +
-				pathsString + strings.Replace(str, "\n", mainIndentString, -1)
+				pathsString + strings.ReplaceAll(str, "\n", mainIndentString)
 			assert.Equal(t, expected, actual)
 		})
 
@@ -166,7 +166,7 @@ func TestMainSwagger_ToString(t *testing.T) {
 				infoTitleString + "title" +
 				infoVersionString + "version'" +
 				basePathString + "basePath" +
-				pathsString + strings.Replace(str, "\n", mainIndentString, -1)
+				pathsString + strings.ReplaceAll(str, "\n", mainIndentString)
 			assert.Equal(t, expected, actual)
 		})
 
@@ -193,8 +193,8 @@ func TestMainSwagger_ToString(t *testing.T) {
 				infoVersionString + "version'" +
 				infoDescriptionString + "description" +
 				basePathString + "basePath" +
-				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1) +
-				definitionsString + strings.Replace(strDef, "\n", mainIndentString, -1)
+				pathsString + strings.ReplaceAll(strPath, "\n", mainIndentString) +
+				definitionsString + strings.ReplaceAll(strDef, "\n", mainIndentString)
 			assert.Equal(t, expected, actual)
 		})
 	})

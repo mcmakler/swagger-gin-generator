@@ -55,7 +55,7 @@ func (a *schemaSwaggParameter) ToString() (string, error) {
 			return "", err
 		}
 		if a.configs["in"] == "body" {
-			res += linkOnSchemaString + strings.Replace(str, "\n", "\n  ", -1)
+			res += linkOnSchemaString + strings.ReplaceAll(str, "\n", "\n  ")
 			return res, nil
 		}
 		res += str

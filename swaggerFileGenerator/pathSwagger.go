@@ -36,7 +36,7 @@ func (p *pathSwagger) ToString() (string, error) {
 		if err != nil {
 			return "", err
 		}
-		res += strings.Replace(str, "\n", requestsIndentString, -1)
+		res += strings.ReplaceAll(str, "\n", requestsIndentString)
 	}
 	return res, nil
 }

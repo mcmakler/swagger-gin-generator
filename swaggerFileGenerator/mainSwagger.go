@@ -76,7 +76,7 @@ func (m *mainSwagger) ToString() (string, error) {
 			if err != nil {
 				return "", err
 			}
-			res += strings.Replace(str, "\n", mainIndentString, -1)
+			res += strings.ReplaceAll(str, "\n", mainIndentString)
 		}
 	}
 
@@ -86,7 +86,7 @@ func (m *mainSwagger) ToString() (string, error) {
 		if err != nil {
 			return "", err
 		}
-		res += strings.Replace(str, "\n", mainIndentString, -1)
+		res += strings.ReplaceAll(str, "\n", mainIndentString)
 	}
 
 	if m.definitions != nil {
@@ -96,7 +96,7 @@ func (m *mainSwagger) ToString() (string, error) {
 			if err != nil {
 				return "", err
 			}
-			res += strings.Replace(str, "\n", mainIndentString, -1)
+			res += strings.ReplaceAll(str, "\n", mainIndentString)
 		}
 	}
 	return res, nil

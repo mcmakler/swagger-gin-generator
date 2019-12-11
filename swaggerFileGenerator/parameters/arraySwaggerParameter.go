@@ -45,7 +45,7 @@ func (a *arraySwaggerParameter) ToString() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	res += itemsString + strings.Replace(items, "\n", "\n  ", -1)
+	res += itemsString + strings.ReplaceAll(items, "\n", "\n  ")
 	return res, nil
 }
 

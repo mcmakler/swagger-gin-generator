@@ -87,8 +87,8 @@ func TestRequestSwagger_ToString(t *testing.T) {
 				tagsString + tagsIndentString + "tags" +
 				operationIdString + "operationId" +
 				summaryString + "summary"
-			expected += parametersString + strings.Replace(strSwaggerParameter, "\n", parametersIndentString, -1)
-			expected += responsesString + strings.Replace(strResponseSwagger, "\n", parametersIndentString, -1)
+			expected += parametersString + strings.ReplaceAll(strSwaggerParameter, "\n", parametersIndentString)
+			expected += responsesString + strings.ReplaceAll(strResponseSwagger, "\n", parametersIndentString)
 			assert.Equal(t, expected, actual)
 		})
 	})

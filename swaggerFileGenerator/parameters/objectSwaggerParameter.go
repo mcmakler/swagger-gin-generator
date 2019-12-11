@@ -49,7 +49,7 @@ func (a *objectSwaggerParameter) ToString() (string, error) {
 			if err != nil {
 				return "", err
 			}
-			res += strings.Replace(str, "\n", propertyIndentStr, -1)
+			res += strings.ReplaceAll(str, "\n", propertyIndentStr)
 		}
 	}
 	return res, nil

@@ -54,7 +54,7 @@ func TestObjectSwaggerParameter_ToString(t *testing.T) {
 				requiredString + requiredIndentStr + "required" +
 				propertiesStr +
 				propertyIndentStr + "booleanParameter:" +
-				strings.Replace(str, "\n", propertyIndentStr, -1)
+				strings.ReplaceAll(str, "\n", propertyIndentStr)
 			assert.Equal(t, expected, actual)
 		})
 	})

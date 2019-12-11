@@ -51,7 +51,7 @@ func TestResponseSwagg_ToString(t *testing.T) {
 			parameterString, _ := parameter.ToString()
 			expected := "\n'200':" +
 				descriptionString + "description" +
-				linkOnSchemaString + strings.Replace(parameterString, "\n", parametersIndentString, -1)
+				linkOnSchemaString + strings.ReplaceAll(parameterString, "\n", parametersIndentString)
 			assert.Equal(t, expected, actual)
 		})
 	})

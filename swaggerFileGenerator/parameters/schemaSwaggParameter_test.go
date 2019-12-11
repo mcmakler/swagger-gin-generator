@@ -63,7 +63,7 @@ func TestSchemaSwaggerParameter_ToString(t *testing.T) {
 			str, _ := parameter.ToString()
 			expected := inDeficeString + "body" +
 				nameString + "name" +
-				linkOnSchemaString + strings.Replace(str, "\n", "\n  ", -1)
+				linkOnSchemaString + strings.ReplaceAll(str, "\n", "\n  ")
 			assert.Equal(t, expected, actual)
 		})
 

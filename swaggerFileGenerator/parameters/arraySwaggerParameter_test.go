@@ -38,7 +38,7 @@ func TestArraySwaggerParameter_ToString(t *testing.T) {
 				minItemsString + "79" +
 				maxItemsString + "239" +
 				uniqueItemsString + "false" +
-				itemsString + strings.Replace(str, "\n", "\n  ", -1)
+				itemsString + strings.ReplaceAll(str, "\n", "\n  ")
 			assert.Equal(t, expected, actual)
 		})
 	})

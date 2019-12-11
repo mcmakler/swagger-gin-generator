@@ -90,7 +90,7 @@ func (r *requestSwagger) ToString() (string, error) {
 			if err != nil {
 				return "", err
 			}
-			res += strings.Replace(str, "\n", parametersIndentString, -1)
+			res += strings.ReplaceAll(str, "\n", parametersIndentString)
 		}
 	}
 	if r.responses != nil {
@@ -100,7 +100,7 @@ func (r *requestSwagger) ToString() (string, error) {
 			if err != nil {
 				return "", err
 			}
-			res += strings.Replace(str, "\n", responsesIndentString, -1)
+			res += strings.ReplaceAll(str, "\n", responsesIndentString)
 		}
 	}
 	return res, nil

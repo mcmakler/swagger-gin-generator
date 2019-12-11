@@ -45,7 +45,7 @@ func TestPathSwagger_ToString(t *testing.T) {
 			assert.NoError(t, err)
 
 			str, _ := requests[0].ToString()
-			expected := "\n/path/{status}/:" + strings.Replace(str, "\n", requestsIndentString, -1)
+			expected := "\n/path/{status}/:" + strings.ReplaceAll(str, "\n", requestsIndentString)
 			assert.Equal(t, expected, actual)
 		})
 	})
