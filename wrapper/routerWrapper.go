@@ -61,6 +61,8 @@ type swaggerWrapper struct {
 	definitions []parameters.SwaggParameter
 
 	mainGroup SwaggerGroupWrapper
+
+	generatedString string
 }
 
 func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRouterWrapper {
@@ -70,6 +72,7 @@ func NewSwaggerRouterWrapper(config structures.Config, r *gin.Engine) SwaggerRou
 		paths:       []swaggerFileGenerator.PathSwagger{},
 		definitions: []parameters.SwaggParameter{},
 		mainGroup:   newSwaggerGroupWrapper("", "", r.Group("")),
+		generatedString:   "",
 	}
 }
 
@@ -82,15 +85,18 @@ func (s *swaggerWrapper) Group(path, tag string) SwaggerGroupWrapper {
 }
 
 func (s *swaggerWrapper) GenerateFiles(filepath string) error {
-	str, err := s.generate()
+	var err error
+	if s.generatedString == "" {
+		s.generatedString, err = s.generate()
+		if err != nil {
+			return err
+		}
+	}
+	err = writeStringToFile(filepath+filenameString, s.generatedString)
 	if err != nil {
 		return err
 	}
-	err = writeStringToFile(filepath+filenameString, str)
-	if err != nil {
-		return err
-	}
-	jsonBytes, err := yaml.YAMLToJSON([]byte(str))
+	jsonBytes, err := yaml.YAMLToJSON([]byte(s.generatedString))
 	jsonStr := string(jsonBytes)
 	if err != nil {
 		return err
@@ -103,11 +109,14 @@ func (s *swaggerWrapper) GenerateFiles(filepath string) error {
 }
 
 func (s *swaggerWrapper) GenerateBasePath(pathUrl string) error {
-	str, err := s.generate()
-	if err != nil {
-		return err
+	var err error
+	if s.generatedString == "" {
+		s.generatedString, err = s.generate()
+		if err != nil {
+			return err
+		}
 	}
-	jsonBytes, err := yaml.YAMLToJSON([]byte(str))
+	jsonBytes, err := yaml.YAMLToJSON([]byte(s.generatedString))
 	jsonStr := string(jsonBytes)
 	if err != nil {
 		return err
