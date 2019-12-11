@@ -42,13 +42,26 @@ func RunExample() error {
 
 	//Shall use all the types of authorization
 	wr.NewBasicSecurityDefinition("BasicSecurityTitle")
-	wr.NewApiKeySecurityDefinition(wrapper.SecurityBearer, wrapper.SecurityName, true)
+	wr.NewApiKeySecurityDefinition(
+		wrapper.SecurityBearer,
+		wrapper.SecurityName,
+		true)
+
 	authorizationUrl := "http://authorization.com"
 	tokenUrl := "http://token.com"
-	wr.NewOauth2ImplicitSecurityDefinition("O2ImpTitle", authorizationUrl)
-	wr.NewOauth2PasswordSecurityDefinition("O2PasTitle", tokenUrl)
-	wr.NewOauth2ApplicationSecurityDefinition("O2DefTitle", tokenUrl)
-	wr.NewOauth2AccessCodeSecurityDefinition("O2IAccTitle", authorizationUrl, tokenUrl)
+	wr.NewOauth2ImplicitSecurityDefinition(
+		"O2ImpTitle",
+		authorizationUrl)
+	wr.NewOauth2PasswordSecurityDefinition(
+		"O2PasTitle",
+		tokenUrl)
+	wr.NewOauth2ApplicationSecurityDefinition(
+		"O2DefTitle",
+		tokenUrl)
+	wr.NewOauth2AccessCodeSecurityDefinition(
+		"O2IAccTitle",
+		authorizationUrl,
+		tokenUrl)
 
 	//Creating of group
 	wrGroup := wr.Group("/url", "tag")
