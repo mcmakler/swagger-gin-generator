@@ -15,6 +15,7 @@ const (
 
 	securityDefinitionString = "\nsecurityDefinitions:"
 
+	hostString = "\nhost: "
 	basePathString = "\nbasePath: "
 	pathsString    = "\npaths:"
 
@@ -59,6 +60,14 @@ func (m *mainSwagger) ToString() (string, error) {
 	if val, ok := m.config["description"]; ok {
 		res += infoDescriptionString + val.(string)
 	}
+	if val, ok := m.config["host"]; ok {
+		res += hostString + val.(string)
+	}
+	if val, ok := m.config["basePath"]; !ok {
+		res += basePathString + "/"
+	} else {
+		res += basePathString + val.(string)
+	}
 
 	if m.securityDefinitions != nil && len(m.securityDefinitions) > 0 {
 		res += securityDefinitionString
@@ -71,11 +80,6 @@ func (m *mainSwagger) ToString() (string, error) {
 		}
 	}
 
-	if val, ok := m.config["basePath"]; !ok {
-		res += basePathString + "/"
-	} else {
-		res += basePathString + val.(string)
-	}
 	res += pathsString
 	for _, path := range m.paths {
 		str, err := path.ToString()

@@ -119,8 +119,8 @@ func TestMainSwagger_ToString(t *testing.T) {
 			expected := swaggerString + infoString +
 				infoTitleString + "title" +
 				infoVersionString + "version'" +
-				securityDefinitionString + strings.Replace(strSecurity, "\n", mainIndentString, -1) +
 				basePathString + "/" +
+				securityDefinitionString + strings.Replace(strSecurity, "\n", mainIndentString, -1) +
 				pathsString + strings.Replace(strPath, "\n", mainIndentString, -1)
 			assert.Equal(t, expected, actual)
 		})

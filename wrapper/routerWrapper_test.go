@@ -48,7 +48,7 @@ func TestNewSwaggerRouterWrapper(t *testing.T) {
 			NewRequiredMainConfig("version", "title"),
 			g)
 		srw = NewSwaggerRouterWrapper(
-			NewMainConfig("version", "title", "description", "/"),
+			NewMainConfig("version", "title", "description", "example", "/"),
 			g)
 		basicSecurity := "Basic"
 		srw.NewBasicSecurityDefinition(basicSecurity)
@@ -208,7 +208,7 @@ func TestSwaggerRouterWrapper(t *testing.T) {
 		emptyFunc := func(c *gin.Context) {}
 		g := gin.Default()
 		sgw := NewSwaggerRouterWrapper(
-			NewMainConfig("version", "title", "description", "/"),
+			NewMainConfig("version", "title", "description", "example", "/"),
 			g)
 		sgw.GET(
 			"get",

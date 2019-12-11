@@ -36,6 +36,7 @@ func RunExample() error {
 			"1.0",
 			"Example",
 			"Usage example",
+			"example.com",
 			"/basePath"),
 		router)
 
