@@ -27,8 +27,21 @@ securityDefinitions:
     flow: accessCode
     authorizationUrl: http://authorization.com
     tokenUrl: http://token.com
-basePath: /
+basePath: /basePath
 paths:
+  /url/pathUrl:
+    delete:
+      tags: 
+        - tag
+      responses:
+        '200':
+          description: Ok
+    head:
+      tags: 
+        - tag
+      responses:
+        '200':
+          description: Ok
   /url/getpath:
     get:
       security:
@@ -59,19 +72,6 @@ paths:
             $ref: '#/definitions/MyType'
         '500':
           description: failure
-  /url/pathUrl:
-    delete:
-      tags: 
-        - tag
-      responses:
-        '200':
-          description: Ok
-    head:
-      tags: 
-        - tag
-      responses:
-        '200':
-          description: Ok
   /url/subgroupurl/postpath:
     post:
       tags: 

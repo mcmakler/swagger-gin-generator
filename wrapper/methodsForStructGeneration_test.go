@@ -22,7 +22,7 @@ func TestMethodsForStuctGeneration(t *testing.T) {
 		assert.NotNil(t, actual)
 		actual = NewRequiredMainConfig("version", "title")
 		assert.NotNil(t, actual)
-		actual = NewMainConfig("version", "title", "")
+		actual = NewMainConfig("version", "title", "", "/")
 		assert.NotNil(t, actual)
 		actual = NewRequestConfig("", "", "", nil, nil, nil, nil)
 		assert.NotNil(t, actual)
