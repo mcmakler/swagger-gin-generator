@@ -95,7 +95,7 @@ wr.NewOauth2AccessCodeSecurityDefinition("O2IAccTitle", authorizationUrl, tokenU
 These four methods represent the Oath2 security definition. The first parameter is swagger title. 
 Other parameters are token URL or/and authorization URL and depend on Oauth2 authentication type.
 
-The .yaml code generated with security commands is
+Security commands will generate the next .yaml code:
 
 ``` yaml
 securityDefinitions:
@@ -185,7 +185,7 @@ The parameterArray is an array of wrapper.Parameter. Can be nil.
 
 The responseMap is a map of code-wrapper.Response.
 
-The result of GET method generation is (parameters and responses omitted): 
+The result of GET method generation is (parameters and responses are omitted): 
 
 ``` yaml
 paths:
@@ -201,7 +201,7 @@ paths:
       - bson
       tags: 
         - getRequestTag
-        - tag
+        - tag               #this tag is added by group definition
       operationId: operationId
       summary: summary
       parameters:
