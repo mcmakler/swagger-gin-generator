@@ -9,6 +9,7 @@ func (c *mainConfig) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"version": c.version,
 		"title":   c.title,
+		"description": c.description,
 	}
 }
 

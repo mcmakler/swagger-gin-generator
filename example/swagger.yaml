@@ -2,6 +2,7 @@ swagger: '2.0'
 info:
   title: Example
   version: '1.0'
+  description: Usage example
 securityDefinitions:
   BasicSecurityTitle:
     type: basic
