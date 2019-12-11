@@ -50,6 +50,18 @@ wrapper.NewMainConfig(
     )
 ```
 
+The .yaml code generated in this part is:
+
+``` yaml
+swagger: '2.0'
+info:
+  title: Example
+  version: '1.0'
+  description: Usage example
+host: example.com
+basePath: /basePath
+```
+
 The next step is the setup authorization.
 
 ## Setup authorization
@@ -82,6 +94,35 @@ wr.NewOauth2AccessCodeSecurityDefinition("O2IAccTitle", authorizationUrl, tokenU
 
 These four methods represent the Oath2 security definition. The first parameter is swagger title. 
 Other parameters are token URL or/and authorization URL and depend on Oauth2 authentication type.
+
+The .yaml code generated with security commands is
+
+``` yaml
+securityDefinitions:
+  BasicSecurityTitle:
+    type: basic
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+  O2ImpTitle:
+    type: oauth2
+    flow: implicit
+    authorizationUrl: http://authorization.com
+  O2PasTitle:
+    type: oauth2
+    flow: password
+    tokenUrl: http://token.com
+  O2DefTitle:
+    type: oauth2
+    flow: application
+    tokenUrl: http://token.com
+  O2IAccTitle:
+    type: oauth2
+    flow: accessCode
+    authorizationUrl: http://authorization.com
+    tokenUrl: http://token.com
+```
 
 The other functionality of wr is the same, as for group.
 
@@ -144,7 +185,30 @@ The parameterArray is an array of wrapper.Parameter. Can be nil.
 
 The responseMap is a map of code-wrapper.Response.
 
+The result of GET method generation is (parameters and responses omitted): 
 
+``` yaml
+paths:
+  /url/getpath:
+    get:
+      security:
+      - BasicSecurityTitle: []
+      - Bearer: []
+      description: description
+      consumes:
+      - json
+      produces: 
+      - bson
+      tags: 
+        - getRequestTag
+        - tag
+      operationId: operationId
+      summary: summary
+      parameters:
+        ...
+      responses:
+        ...
+```
 
 ## wrapper.Parameter
 
@@ -185,22 +249,49 @@ You can use your own types, if all the fields are PUBLIC:
 
 ``` go
 type MySubType struct {
-    IntParam int
+	IntParam int
 }
 type MyType struct {
-    StringParam string
-    MySubTypeParam MySubType
+	StringParam    string     `binding:"required"`
+	MySubTypeParam MySubType
 }
 
 ....
 
 myParam := wrapper.NewParameter(
-             wrapper.NewRequiredParameterConfig(wrapper.InBod,"name"),
+             wrapper.NewRequiredParameterConfig(wrapper.InBody,"name"),
              &MyType{
                 StringParam:    "string",
                 MySubTypeParam: MySubType{IntParam: 10},
             },
          )
+```
+
+This code defined structure in definitions and add ref to GET:
+
+``` yaml
+/url/getpath:
+  get:
+    ...
+    parameters:
+      - in: body
+        name: name
+        schema:
+          $ref: '#/definitions/MyType'
+...
+definitions:
+  MyType:
+    type: object
+    required: 
+      - StringParam
+    properties:
+      StringParam:
+        type: string
+      MySubTypeParam:
+        type: object
+        properties:
+          IntParam:
+            type: integer
 ```
 
 ## wrapper.Response
@@ -221,6 +312,21 @@ responseMap := map[int]wrapper.Response{
     http.StatusOK:                  wrapper.NewResponse("ok", &MyType{}),
     http.StatusInternalServerError: wrapper.NewResponse("failure", nil),
 }
+```
+
+In GET definition in .yaml this code will define:
+
+``` yaml
+/url/getpath:
+  get:
+    ...
+    responses:
+      '200':
+        description: ok
+        schema:
+          $ref: '#/definitions/MyType'
+      '500':
+        description: failure
 ```
 
 ## Path
