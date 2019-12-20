@@ -10,6 +10,11 @@ It represents wrapper for gin router which allows to define swagger configuratio
 
 Here is [example](https://github.com/mcmakler/swagger-gin-generator/tree/master/example) of library using.
 
+# Problems to solve
+
+- Require hand-changing of structure to the other in request/response swagger definition
+- Require hand-adding of new responses in swagger definition
+
 # Usage
 
 ## Download
